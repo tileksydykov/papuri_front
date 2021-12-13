@@ -1,0 +1,58 @@
+@import "vars.styl"
+
+:root
+  --color__bg #ffffff
+  --color__text #313131
+  --color__text_secondary #525252
+  --color__link #1a1fff
+  --color__link_visited #bb00c9
+  --color__lines #959595
+  --color__light_lines #c9c9c9
+  --color__shadow #959595
+  --color__light__shadow #d5d5d5
+  --color_loading_background linear-gradient(110deg, #eeeeee 8%, #ffffff 18%, #eeeeee 33%);
+  --color_input_background #ffffff
+  --color_input_font #000
+  --color_btn_primary #3400ba
+  --color_btn_danger #ba0000
+  --color_btn_cyan #00cbc1
+  @media screen
+    &[data-theme="dark"]
+      --color__bg #1c1c1c
+      --color__text #fdfdfd
+      --color__text_secondary #e0e0e0
+      --color__link #9cebff
+      --color__link_visited #f570ff
+      --color__lines #747474
+      --color__shadow #9a9a9a
+      --color__light__shadow #787878
+      --color_loading_background linear-gradient(110deg, #797979 8%, #c6c6c6 18%, #6f6f6f 33%);
+      --color_input_background #000000
+      --color_input_font #f5f5f5
+    &[data-theme="dark-green"]
+      --color__bg linear-gradient(130deg, #000000 60%, #143800 100%);
+      --color__text #b4fd95
+      --color__text_secondary #c3ffa6
+      --color__link #52ffeb
+      --color__link_visited #63a6f5
+      --color__lines #1bfd0d
+      --color__shadow #00ff0d
+      --color__light__shadow #43b100
+      --color_loading_background linear-gradient(110deg, #29b400 8%, #4cff00 18%, #29b400 33%);
+      --color_input_background #205300
+      --color_input_font #74ff4d
+$background_color = var(--color__bg)
+$text_color = var(--color__text)
+$text_secondary = var(--color__text_secondary)
+$link_color = var(--color__link)
+$link_color_visited = var(--color__link_visited)
+$lines_color = var(--color__lines)
+$light_lines_color = var(--color__light_lines)
+$shadow_color = var(--color__shadow)
+$light_shadow_color = var(--color__light__shadow)
+$loading_background = var(--color_loading_background)
+$input_background_color = var(--color_input_background)
+$input_front_color = var(--color_input_font)
+$tbn_primary_color = var(--color_btn_primary)
+$tbn_danger_color = var(--color_btn_danger)
+$tbn_cyan_color = var(--color_btn_cyan)
