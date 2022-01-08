@@ -43,7 +43,6 @@ export default {
   border-bottom 1px solid $light_shadow_color
   box-shadow 1px 1px 3px $light_shadow_color
   width 100%
-  height 20px
   text-align center
   padding 10px
   .navbar-item

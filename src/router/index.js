@@ -6,11 +6,13 @@ const routes = [
         path: '/',
         name: 'Index',
         component: Index,
-    }, {
+    },
+    {
         path: '/popular',
         name: 'Popular',
         component: ()=> import('../views/index/AllBooks'),
-    }, {
+    },
+    {
         path: '/auth',
         component: () => import("../views/user/Auth"),
         children: [
@@ -25,11 +27,13 @@ const routes = [
                 component: () => import("../components/auth/Registration"),
             }
         ]
-    }, {
+    },
+    {
         path: '/chapter/:id',
         name: 'Chapter',
         component: () => import("../views/book/ChapterView"),
-    }, {
+    },
+    {
         path: '/u/:username',
         name: 'Profile',
         component: () => import('../views/user/Profile'),
@@ -48,7 +52,8 @@ const routes = [
                 component: () => import("../components/profile/Activity"),
             },
         ]
-    }, {
+    },
+    {
         path: '/book/:id',
         name: 'Book',
         component: () => import('../views/book/BookView'),
@@ -57,11 +62,13 @@ const routes = [
                 path: '',
                 name: 'Chapters',
                 component: () => import('../components/book/Chapters')
-            }, {
+            },
+            {
                 path: 'volume',
                 name: 'Volumes',
                 component: () => import('../components/book/Volumes')
-            }, {
+            },
+            {
                 path: 'create',
                 name: 'CreateToBook',
                 component: () => import('../components/book/create/Index'),
@@ -70,13 +77,15 @@ const routes = [
                         path: '',
                         name: 'CreateVolume',
                         component: () => import('../components/book/create/CreateVolume')
-                    }, {
+                    },
+                    {
                         path: 'chapter',
                         name: 'CreateChapter',
                         component: () => import('../components/book/create/CreateChapter')
                     }
                 ],
-            }, {
+            },
+            {
                 path: 'settings',
                 name: 'BookSettings',
                 component: () => import('../components/book/settings/Index'),
@@ -93,10 +102,16 @@ const routes = [
                 ],
             }
         ]
-    }, {
+    },
+    {
         path: '/book/create',
         name: 'CreateBook',
         component: () => import('../views/book/BookCreate')
+    },
+    {
+        path: '/editor/:id',
+        name: 'Editor',
+        component: () => import('../views/repo-editor/RepoEditor')
     }
 ]
 

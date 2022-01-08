@@ -18,5 +18,9 @@ export default {
         create: async (ctx, {name}) => {
             await Axios.post("/api/v1/repos", {name})
         },
+        getAll: async (ctx) => {
+            let r = await Axios.get("/api/v1/repos")
+            ctx.commit('setAll', r.data.result)
+        },
     }
 }

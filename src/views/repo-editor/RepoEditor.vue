@@ -1,11 +1,14 @@
 <template lang="pug">
-
+.page-wrapper
+  .f-container
+    p editor
 </template>
 
 <script>
 export default {
-  name: "RepoEditor"
-
+  name: "RepoEditor",
+  mounted () {
+  }
 }
 </script>
 
