@@ -89,7 +89,6 @@ export default {
   left 0
   .cont
     padding 10px
-    margin 10px
     .close
       float right
     ul

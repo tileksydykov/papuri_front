@@ -9,7 +9,7 @@ import BookList from "../book/BookList";
 export default {
   name: "MyBooks",
   components: {BookList},
-  computed:{
+  computed: {
   },
   methods: {
   },

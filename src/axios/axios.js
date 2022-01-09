@@ -6,7 +6,7 @@ const axiosApiInstance = axios.create();
 // Request interceptor for API calls
 axiosApiInstance.interceptors.request.use(
     async config => {
-        const value = localStorage.getItem("token")
+        const value = getToken()
         const keys = JSON.parse(value)
         if (keys && keys.access_token) {
             config.headers = {
@@ -24,7 +24,7 @@ axiosApiInstance.interceptors.request.use(
 axiosApiInstance.interceptors.response.use((response) => {
     return response
 }, async function (error) {
-    if (!(error.response)){
+    if (!(error.response)) {
         return  Promise.reject(error)
     }
     const originalRequest = error.config;
@@ -45,12 +45,32 @@ axiosApiInstance.interceptors.response.use((response) => {
 });
 
 const refreshAccessToken = async () =>{
-    const value = localStorage.getItem("token")
+    const value = getToken()
     const keys = JSON.parse(value)
     let res = await axiosApiInstance.post("/api/auth/refresh", keys)
     if (res.status === 200) {
         localStorage.setItem("token", JSON.stringify(res.data))
         return res.data.access_token
+    }
+}
+
+const getToken = () => {
+    return localStorage.getItem("token")
+}
+
+axiosApiInstance.wsOpen = (wsUrl) => {
+    axiosApiInstance.ws && axiosApiInstance.ws.close(true)
+    let wsOrigin = window.location.origin
+    wsOrigin = wsOrigin.replace("http://", "ws://")
+    wsOrigin = wsOrigin.replace("https://", "wss://")
+    axiosApiInstance.ws = new WebSocket(wsOrigin + wsUrl)
+    axiosApiInstance.ws.onmessage = (message) => {
+        let m = JSON.parse(message.data)
+        store.dispatch("repos/" + m.type, m.data)
+    }
+    let accessToken = JSON.parse(getToken()).access_token
+    axiosApiInstance.ws.onopen = () => {
+        axiosApiInstance.ws.send(JSON.stringify({type: "auth", data: accessToken}))
     }
 }
 

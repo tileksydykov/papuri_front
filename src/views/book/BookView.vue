@@ -38,9 +38,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      book: 'books/getCurrentBook',
       user: 'getUser',
-      relation: 'books/getCurrentBookRelation'
     }),
     owner() {
       return this.user && this.user.id && this.user.id === this.book.user_id
@@ -71,14 +69,8 @@ export default {
   },
   methods: {
     ...mapActions({
-      get: "books/fetchBook",
-      loadVolumes: "books/fetchBookVolumes",
-      clearCurrentBook: "books/clearCurrentBook",
-      setViewToCurrentBook: "books/setView"
     }),
     ...mapMutations({
-      setBook: "books/setCurrentBook",
-      setVolumes: "books/setCurrentVolumes"
     }),
     count(){
       this.data ++
@@ -92,11 +84,7 @@ export default {
   },
   mounted() {
     console.log("mounted")
-    if (this.book.id != this.$route.params.id) {
-      this.clearCurrentBook()
-    }
     this.get({id: this.$route.params.id})
-    this.loadVolumes({id: this.$route.params.id})
   },
   watch: {
     book() {
