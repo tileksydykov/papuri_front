@@ -2,46 +2,39 @@
 .page-wrapper
   .f-container
     .editor
-      .file-manager
-        SlVueTree(v-model="nodes")
-        p {{ repo.name }}
-        ul
-          li(v-for="fileName in files") {{ fileName }}
-      .ed
+      Editor
 </template>
 
 <script>
 import {mapActions, mapGetters} from "vuex";
-import SlVueTree from "../../components/editor/tree";
+import Editor from "../../components/editor";
 
 export default {
   name: "RepoEditor",
-  components: {SlVueTree},
+  components: {Editor},
   data(){
     return {
-      nodes: [
-        {title: 'Item1', isLeaf: true},
-        {title: 'Item2', isLeaf: true, data: { visible: false }},
-        {title: 'Folder1'},
-        {
-          title: 'Folder2', isExpanded: true, children: [
-            {title: 'Item3', isLeaf: true},
-            {title: 'Item4', isLeaf: true}
-          ]
-        }
-      ]
+
     }
   },
   computed: {
     ...mapGetters({
       repo: "repos/getCurrent",
       files: "repos/listFiles",
-    })
+    }),
+    listOne () {
+      return this.items.filter(item => item.list === 1)
+    },
+    listTwo () {
+      return this.items.filter(item => item.list === 2)
+    }
   },
   methods: {
     ...mapActions({
       openWs: "repos/beginWs"
-    })
+    }),
+
+
   },
   mounted () {
     this.openWs({id: this.$route.params.id})
@@ -49,4 +42,8 @@ export default {
 }
 </script>
 
-<style scoped lang="stylus"></style>
+<style scoped lang="stylus">
+
+
+
+</style>
