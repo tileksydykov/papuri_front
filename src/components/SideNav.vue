@@ -4,9 +4,16 @@
     span.close.clickable( v-if="!isFixed" @click="close")
       font-awesome-icon(icon="times")
     ul.list
-      li(v-if="user && loggedIn")
-        AvatarIcon(:user="user" :size="40" )
-        router-link( :to="{name: 'Activity', params: {username: user_name}}" ).title &nbsp; {{ user.user_name }}
+      li(
+        v-if="user && loggedIn"
+        )
+        AvatarIcon(
+          :user="user"
+          :size="40"
+          )
+        router-link(
+          :to="{name: 'Activity', params: {username: user_name}}"
+          ).title &nbsp; {{ user.user_name }}
       li Тема: &nbsp;
         select(@change="onThemeChange($event)" :value="theme")
           option( v-for="t in themes" :value="t.name") {{ t.translated }}
