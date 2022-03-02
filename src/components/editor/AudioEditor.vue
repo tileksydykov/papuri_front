@@ -1,10 +1,10 @@
 <template lang="pug">
-
+p audio editor
 </template>
 
 <script>
 export default {
-  name: "TextEditor"
+  name: "AudioEditor"
 }
 </script>
 

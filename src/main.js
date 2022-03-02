@@ -6,7 +6,6 @@ import messages from "./locales"
 import {createI18n} from 'vue-i18n';
 import mixins from './mixins'
 import icons from './styles/icons'
-import editor from './editor'
 
 const i18n = createI18n({
     locale: 'ru',
@@ -16,7 +15,6 @@ const i18n = createI18n({
 
 const app = createApp(App)
 icons(app)
-editor(app)
 app.mixin(mixins)
 app.use(router)
 app.use(i18n)
