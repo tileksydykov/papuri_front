@@ -7,7 +7,7 @@ BookList()
 import BookList from "../book/BookList";
 
 export default {
-  name: "MyBooks",
+  name: "MyRepos",
   components: {BookList},
   computed: {
   },

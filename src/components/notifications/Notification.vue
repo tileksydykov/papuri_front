@@ -1,7 +1,5 @@
 <template lang="pug">
-.notification(
-  :class="{danger: value.type === 'danger', info: value.type === 'info'}"
-  )
+.notification(:class="c")
   .notification-title {{ value.title }}
   .notification-body {{ value.body }}
 </template>
@@ -11,6 +9,11 @@ import {mapMutations} from "vuex";
 
 export default {
   name: "Notification",
+  data() {
+    return {
+      c: {}
+    }
+  },
   props: {
     value: {
       type: Object,
@@ -26,6 +29,9 @@ export default {
     setTimeout(() => {
       this.delete(this.value)
     }, this.value.time * 1000)
+    if (this.value.type) {
+      this.c[this.value.type] = true;
+    }
   }
 }
 </script>
@@ -37,6 +43,7 @@ export default {
 .danger
   background-color #ff7185 !important
   color #ffffff
+
 .notification
   margin 5px
   min-height 20px

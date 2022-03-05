@@ -1,6 +1,8 @@
 <template lang="pug">
 .side-nav(:class="{closed: !open, absolute: !isFixed}")
   .cont
+    a.bars( v-if="!isFixed && (isFixed || !open)" @click="toggleMenu")
+      font-awesome-icon(icon="bars")
     span.close.clickable( v-if="!isFixed" @click="close")
       font-awesome-icon(icon="times")
     ul.list
@@ -45,9 +47,6 @@ export default {
         },{
           name: "light",
           translated: "Светлая"
-        }, {
-          name: "dark-green",
-          translated: "Nvidia"
         }
       ]
     }
@@ -78,13 +77,15 @@ export default {
     onThemeChange(event) {
       this.setTheme(event.target.value)
     },
+    toggleMenu(){
+      this.$store.commit("toggleMenu")
+    }
   }
 }
 </script>
 
 <style lang="stylus" scoped>
 .side-nav
-  padding-top 25px
   color $text_color
   background $background_color
   max-width 100vw
@@ -109,7 +110,16 @@ export default {
           text-decoration none
           font-size 16px
           font-weight 500
-
+.bars
+  border-radius 3px
+  padding 5px
+  margin 3px
+  color $text_color
+  text-decoration none
+  transition .3s
+  float right
+  transform translate(40px, -10px)
+  background $background_color
 .closed
   transform translateX(-300px)
 </style>

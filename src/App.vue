@@ -1,6 +1,5 @@
 <template lang="pug">
 Notifications
-Header
 div(:style="{'display': 'inline-flex'}").w-100
   SideNav
   router-view

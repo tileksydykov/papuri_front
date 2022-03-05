@@ -1,13 +1,11 @@
 <template lang="pug">
-.page-wrapper
-  .f-container
-    .editor
-      Editor
+.editor
+  Editor
 </template>
 
 <script>
 import {mapActions, mapGetters} from "vuex";
-import Editor from "../../components/editor";
+import Editor from "../editor";
 
 export default {
   name: "RepoEditor",
@@ -51,7 +49,7 @@ export default {
     }
   },
   mounted () {
-    this.openWs({id: this.$route.params.id})
+    // this.openWs({id: this.$route.params.id})
   }
 }
 </script>

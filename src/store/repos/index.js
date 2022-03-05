@@ -19,17 +19,27 @@ export default {
     },
     actions: {
         create: async (ctx, {name}) => {
-            await Axios.post("/api/v1/repos", {name})
+            let m = await Axios.post("/api/v1/repos", {name})
+            if (m.status === 200) {
+                ctx.dispatch("notification/pushNotification", {
+                    title: `Repo "${name}" created` ,
+                    body: "Success",
+                    type: "info"
+                }, { root: true })
+                return m.data.result
+            }
+            return null
         },
         getAll: async (ctx) => {
             let r = await Axios.get("/api/v1/repos")
             ctx.commit('setAll', r.data.result)
         },
         beginWs: async (ctx, {id}) => {
-            await Axios.wsOpen(`/api/v1/repos/${id}/websocket`)
+            await Axios.wsOpen(`/api/v1/repos/w/${id}/`)
         },
-        repo: async (ctx, repo) => {
-            ctx.commit("setCurrent", repo)
+        fetchCurrent: async (ctx, repo) => {
+            let r = await Axios.get(`/api/v1/repos/u/${repo.username}/${repo.repo}`)
+            ctx.commit('setCurrent', r.data.result)
         },
         files: async (ctx, list) => {
             ctx.commit("setFiles", list)

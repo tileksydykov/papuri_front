@@ -1,6 +1,5 @@
 <template lang="pug">
 nav.navbar
-    router-link(:to="{name: 'Index'}").navbar-item Almana
     a.clickable.navbar-item( v-if="!isFixed" @click="toggleMenu")
       font-awesome-icon(icon="bars")
 </template>

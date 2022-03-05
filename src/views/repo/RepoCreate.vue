@@ -1,7 +1,8 @@
 <template lang="pug">
 .page-wrapper
   .container
-    | create book
+    br
+    p create book
     .p-10
       input(v-model="name" placeholder="Title")
     button.btn(@click="createBook({name})") Создать
@@ -11,7 +12,7 @@
 import {mapActions} from "vuex";
 
 export default {
-  name: "BookCreate",
+  name: "RepoCreate",
   data(){
     return {
       name: "",
@@ -22,13 +23,13 @@ export default {
       create: "repos/create"
     }),
     async createBook(book){
-      let bookFromDb = await this.create(book)
-      this.$router.push({name: 'Chapters', params: bookFromDb})
+      let repo = await this.create(book)
+      await this.$router.push({name: 'RepoEditor', params: {username: repo.user_name, repo: repo.name}})
     }
   }
 }
 </script>
 
-<style scoped>
+<style scoped lang="stylus">
 
 </style>

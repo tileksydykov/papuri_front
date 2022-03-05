@@ -31,10 +31,10 @@ const routes = [
     {
         path: '/chapter/:id',
         name: 'Chapter',
-        component: () => import("../views/book/ChapterView"),
+        component: () => import("../views/repo/ChapterView"),
     },
     {
-        path: '/u/:username',
+        path: '/:username',
         name: 'Profile',
         component: () => import('../views/user/Profile'),
         children : [
@@ -43,24 +43,24 @@ const routes = [
                 name: 'Settings',
                 component: () => import("../components/profile/Settings"),
             }, {
-                path: 'books',
-                name: 'MyBooks',
-                component: () => import("../components/profile/MyBooks"),
+                path: 'repos',
+                name: 'MyRepos',
+                component: () => import("../components/profile/MyRepos"),
             }, {
                 path: '',
                 name: 'Activity',
                 component: () => import("../components/profile/Activity"),
-            },
+            }
         ]
     },
     {
-        path: '/book/:id',
-        name: 'Book',
-        component: () => import('../views/book/BookView'),
+        path: '/:username/:repo',
+        name: 'Repo',
+        component: () => import('../views/repo/RepoView'),
         children: [
             {
                 path: '',
-                name: 'Chapters',
+                name: 'RepoOverview',
                 component: () => import('../components/book/Chapters')
             },
             {
@@ -69,21 +69,9 @@ const routes = [
                 component: () => import('../components/book/Volumes')
             },
             {
-                path: 'create',
-                name: 'CreateToBook',
-                component: () => import('../components/book/create/Index'),
-                children: [
-                    {
-                        path: '',
-                        name: 'CreateVolume',
-                        component: () => import('../components/book/create/CreateVolume')
-                    },
-                    {
-                        path: 'chapter',
-                        name: 'CreateChapter',
-                        component: () => import('../components/book/create/CreateChapter')
-                    }
-                ],
+                path: 'editor',
+                name: 'RepoEditor',
+                component: () => import('../components/repo-editor/RepoEditor')
             },
             {
                 path: 'settings',
@@ -106,12 +94,12 @@ const routes = [
     {
         path: '/book/create',
         name: 'CreateBook',
-        component: () => import('../views/book/BookCreate')
+        component: () => import('../views/repo/RepoCreate')
     },
     {
         path: '/editor/:id',
         name: 'Editor',
-        component: () => import('../views/repo-editor/RepoEditor')
+        component: () => import('../components/repo-editor/RepoEditor')
     }
 ]
 

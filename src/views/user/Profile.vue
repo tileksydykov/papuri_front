@@ -26,7 +26,7 @@ export default {
         {
           name: "Activity"
         },{
-          name: "MyBooks"
+          name: "MyRepos"
         },{
           name: "Settings"
         }

@@ -3,7 +3,7 @@
   .container
     .card
       .card-body
-        | Привет случайный пользователь
+        | Сайт на разработке
 </template>
 
 <script>
@@ -18,6 +18,7 @@ export default {
 
   },
   mounted() {
+
   }
 }
 </script>

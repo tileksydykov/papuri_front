@@ -1,7 +1,7 @@
 <template lang="pug">
 ul
   li(v-for="repo in repos")
-    router-link(:to="{name: 'Editor', params: {id: repo.id}}") {{ repo.name }}
+    router-link(:to="{name: 'RepoOverview', params: {username: repo.user_name, repo: repo.name}}") {{ repo.user_name }}/{{ repo.name }}
 </template>
 
 <script>

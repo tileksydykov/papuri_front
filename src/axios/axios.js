@@ -37,8 +37,8 @@ axiosApiInstance.interceptors.response.use((response) => {
         await store.dispatch("logout")
     }
     await store.dispatch("notification/pushNotification", {
-        title: "Network Error " + error,
-        body: error,
+        title: error.response.data.error,
+        body: error.response.data.error,
         type: 'danger'
     })
     return Promise.reject(error);
