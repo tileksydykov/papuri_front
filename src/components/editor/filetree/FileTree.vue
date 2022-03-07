@@ -1,5 +1,6 @@
 <template lang="pug">
-Folder(:thisFolder="{id: 0, name: 'Repo'}")
+.file-tree-cont
+  Folder(:thisFolder="{id: 0, path: ''}")
 </template>
 
 <script>
@@ -11,5 +12,11 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-
+.file-tree-cont
+  overflow-x scroll
+  height 100%
+.link
+  cursor pointer
+  :hover
+    font-weight bold
 </style>

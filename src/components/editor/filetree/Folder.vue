@@ -6,16 +6,17 @@
     @drop="onDrop($event)"
     @dragover.prevent
     @dragenter.prevent
-    ) {{ thisFolder.name }}
-  Folder(
-    v-for="folder in folders(thisFolder.id)"
-    :key="folder.id"
-    :thisFolder="folder")
-  File(
-    v-for="file in files(thisFolder.id)"
-    :key="file.id"
-    :file="file"
-    @click="select(file.id)"
+    ) {{ repo.name }}
+  span.link(@click="addFileToThisFolder") :+:
+  .folder-content(:class="{'close-folder': !open, 'open-folder': open}")
+    Folder(
+      v-for="folder in folders(thisFolder.id)"
+      :key="folder.id"
+      :thisFolder="folder")
+    File(
+      v-for="file in files(thisFolder.id)"
+      :key="file.id"
+      :file="file"
     )
 
 .folder(
@@ -28,16 +29,19 @@
     @drop="onDrop($event)"
     @dragover.prevent
     @dragenter.prevent
+    @click="toggle"
     ) {{ thisFolder.name }}
-  Folder(
-    v-for="folder in folders(thisFolder.id)"
-    :key="folder.id"
-    :thisFolder="folder")
-  File(
-    v-for="file in files(thisFolder.id)"
-    :key="file.id"
-    :file="file"
-    @click="select(file.id)")
+  span.link(@click="addFileToThisFolder") +
+  .folder-content(:class="{'close-folder': !open, 'open-folder': open}")
+    Folder(
+      v-for="folder in folders(thisFolder.id)"
+      :key="folder.id"
+      :thisFolder="folder")
+    File(
+      v-for="file in files(thisFolder.id)"
+      :key="file.id"
+      :file="file"
+      )
 </template>
 
 <script>
@@ -47,6 +51,11 @@ import File from "./File";
 export default {
   name: "Folder",
   components: {File},
+  data() {
+    return {
+      open: true,
+    }
+  },
   props: {
     thisFolder: {
       required: true,
@@ -57,6 +66,7 @@ export default {
     ...mapGetters({
       folders: 'repo/getFoldersByFolderId',
       files: 'repo/getFilesByFolderId',
+      repo: 'repos/getCurrent'
     }),
   },
   methods: {
@@ -65,7 +75,8 @@ export default {
       moveFolder: 'repo/moveFolder',
     }),
     ...mapMutations({
-      select: 'repo/selectFile'
+      select: 'repo/selectFile',
+      addFiles: 'repo/addFiles'
     }),
     startDrag (evt, item, type) {
       evt.dataTransfer.dropEffect = 'move'
@@ -79,15 +90,27 @@ export default {
       if (itemType === 'file') {
         this.moveFile({
           fileId: itemID,
-          toFolder: this.thisFolder.id,
+          toFolder: this.thisFolder,
         })
       }
       else if (itemType === 'folder') {
         this.moveFolder({
           folderId: itemID,
-          toFolder: this.thisFolder.id
+          toFolder: this.thisFolder
         })
       }
+    },
+    addFileToThisFolder(){
+      this.addFiles({
+        id: Math.random(),
+        name: '',
+        path: this.thisFolder.path,
+        editing: true,
+        folderId: this.thisFolder.id
+      })
+    },
+    toggle(){
+      this.open = !this.open
     }
   },
 }
@@ -96,4 +119,12 @@ export default {
 <style scoped lang="stylus">
 .folder
   transition .3s
+  cursor pointer
+  overflow hidden
+.close-folder
+  height 0
+.open-folder
+  height auto
+.folder-content
+  transition 0.2s
 </style>

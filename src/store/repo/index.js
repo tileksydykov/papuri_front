@@ -1,56 +1,23 @@
+import {orderFiles} from "./functions";
 
 export default {
     namespaced: true,
     state: {
-        files: [
-            {
-                id: 1,
-                name: 'index.txt',
-                content: '',
-                folderId: 2
-            },
-            {
-                id: 3,
-                name: 'main.txt',
-                content: '',
-                folderId: 2
-            },
-            {
-                id: 2,
-                name: 'himik.txt',
-                content: '',
-                folderId: 2
-            },
-            {
-                id: 4,
-                name: 'tilek.txt',
-                content: '',
-                folderId: 2
-            }
-        ],
-        folders: [
-            {
-                id: 1,
-                name: 'folder 1',
-                parent: 0
-            },
-            {
-                id: 2,
-                name: 'folder 2',
-                parent: 1
-            },
-            {
-                id: 3,
-                name: 'folder 3',
-                parent: 0
-            },
-        ],
+        files: [],
+        folders: [],
         selectedFileId: -1,
     },
     mutations: {
         setFolders: (state, data) => state.folders = data,
         setFiles: (state, data) => state.files = data,
-        selectFile: (state, id) => state.selectedFileId = id
+        selectFile: (state, id) => state.selectedFileId = id,
+        addFiles: (state, file) => state.files.push(file),
+        saveFile: (state, file) => {
+            state.files.map(f => f.id === file.id ? file: f)
+            const {files, folders} = orderFiles(state.files)
+            state.files = files
+            state.folders = folders
+        }
     },
     getters: {
         getFolders: state => state.folders,
@@ -75,12 +42,19 @@ export default {
                 }
                 return isChild(arr, arr.find(f => f.id === folder.parent), toId);
             }
-            if (isChild(folders, folders.find(f => f.id === toFolder), folderId)) return
+            if (isChild(folders, folders.find(f => f.id === toFolder.id), folderId)) return
             folders = folders.map(f => f.id === folderId ? {...f, parent: toFolder}: f)
             ctx.commit('setFolders', folders)
         },
         moveFile(ctx, {fileId, toFolder}){
-            const files = ctx.getters.getFiles.map(f => f.id === fileId ? {...f, folderId: toFolder}: f)
+            const files = ctx.getters.getFiles.map(f => {
+                if (f.id === fileId){
+                    f.folderId = toFolder.id
+                    f.path = toFolder.path + '/' + f.name
+
+                }
+                return f
+            })
             ctx.commit('setFiles', files)
         },
     }
