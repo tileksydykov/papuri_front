@@ -63,7 +63,8 @@ export default {
   },
   methods: {
     ...mapActions({
-      get: "repos/fetchCurrent"
+      get: "repos/fetchCurrent",
+      getFiles: "repo/fetchFiles",
     }),
     ...mapMutations({
       setRepo: "repos/setCurrent"
@@ -72,10 +73,10 @@ export default {
   async mounted() {
     // empty the state
     this.setRepo({})
+    this.getFiles(this.$route.params)
     await this.get(this.$route.params)
   },
-  watch: {
-  }
+  watch: {}
 }
 </script>
 

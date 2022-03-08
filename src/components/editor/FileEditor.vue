@@ -19,21 +19,27 @@ p(v-if="!file") file not choosen
           )
             component(:is="block.container" :block="block")
       .block.d-flex
-        .add-button(@click="addText") + Text
-        .add-button(@click="addImage") + Image
-        .add-button(@click="addVideo") + Video
-        .add-button(@click="addAudio") + Audio
-        .add-button(@click="addTest") + Test
-    .preview( v-html="'<br> hello'" )
+        .add-button(@click="addText") +&nbsp;
+          font-awesome-icon(icon="envelope-open-text")
+        .add-button(@click="addImage") +&nbsp;
+          font-awesome-icon(icon="image")
+        .add-button(@click="addVideo") +&nbsp;
+          font-awesome-icon(icon="video")
+        .add-button(@click="addAudio") +&nbsp;
+          font-awesome-icon(icon="file-audio")
+        .add-button(@click="addTest") +&nbsp;
+          font-awesome-icon(icon="file-alt")
+    .preview( v-html="preview" )
 </template>
 
 <script>
-import {mapGetters} from "vuex";
+import {mapGetters, mapMutations} from "vuex";
 import TextEditor from "./text-editor/TextEditor";
 import VideoEditor from "./VideoEditor";
 import ImageEditor from "./ImageEditor";
 import TestEditor from "./TestEditor";
 import AudioEditor from "./AudioEditor";
+import {Engine} from "../../engine";
 
 export default {
   name: "FileEditor",
@@ -46,25 +52,25 @@ export default {
   },
   data(){
     return {
-      blocks: [
-        {
-          id: 0,
-          container: 'TextEditor',
-          data: {
-            text: ''
-          },
-        }
-      ],
-      lastId: 20
+      blocks: [],
+      lastId: 20,
     }
   },
   computed: {
     ...mapGetters({
       file: "repo/getSelectedFile"
-    })
+    }),
+    preview () {
+      return this.file.content.replaceAll('\n', '<br>')
+    }
   },
   methods: {
-    render(){},
+    ...mapMutations({
+      saveContent: "repo/saveContent"
+    }),
+    render(){
+      this.saveContent(Engine.fromBlocksToText(this.blocks))
+    },
     addText(){
       this.blocks.push({
         id: ++this.lastId,
@@ -73,6 +79,7 @@ export default {
           text: ''
         },
       })
+      this.render()
     },
     addVideo(){
       this.blocks.push({
@@ -82,6 +89,7 @@ export default {
           videoId: ''
         },
       })
+      this.render()
     },
     addImage(){
       this.blocks.push({
@@ -91,6 +99,7 @@ export default {
           imageId: ''
         },
       })
+      this.render()
     },
     addTest(){
       this.blocks.push({
@@ -101,6 +110,7 @@ export default {
           options: [],
         },
       })
+      this.render()
     },
     addAudio(){
       this.blocks.push({
@@ -110,6 +120,7 @@ export default {
           audioId: ''
         },
       })
+      this.render()
     },
     startDrag (evt, item) {
       evt.dataTransfer.dropEffect = 'move'
@@ -126,6 +137,7 @@ export default {
       arr.splice(fromIndex, 1);
       arr.splice(toIndex, 0, element);
       this.blocks = arr;
+      this.render()
     }
   }
 }

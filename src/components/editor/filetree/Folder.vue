@@ -23,14 +23,16 @@
   v-else
   style="margin-left: 10px"
   )
-  span(
+  span.folder-title(
     draggable='true'
     @dragstart="startDrag($event, thisFolder, 'folder')"
     @drop="onDrop($event)"
     @dragover.prevent
     @dragenter.prevent
     @click="toggle"
-    ) {{ thisFolder.name }}
+    )
+    font-awesome-icon.secondary(icon="folder")
+    span  &nbsp;{{ thisFolder.name }}
   span.link(@click="addFileToThisFolder") +
   .folder-content(:class="{'close-folder': !open, 'open-folder': open}")
     Folder(
@@ -47,6 +49,7 @@
 <script>
 import {mapActions, mapGetters, mapMutations} from "vuex";
 import File from "./File";
+import {uuidv4} from "../../../store/repo/functions";
 
 export default {
   name: "Folder",
@@ -86,27 +89,30 @@ export default {
     },
     onDrop (evt) {
       const itemType = evt.dataTransfer.getData('itemType')
-      const itemID = parseInt(evt.dataTransfer.getData('itemID'))
+      const itemID = evt.dataTransfer.getData('itemID')
       if (itemType === 'file') {
         this.moveFile({
           fileId: itemID,
           toFolder: this.thisFolder,
+          username: this.repo.user_name,
+          repo: this.repo.name,
         })
       }
       else if (itemType === 'folder') {
         this.moveFolder({
-          folderId: itemID,
+          folderId: parseInt(itemID),
           toFolder: this.thisFolder
         })
       }
     },
-    addFileToThisFolder(){
+    addFileToThisFolder () {
       this.addFiles({
-        id: Math.random(),
+        id: uuidv4(),
         name: '',
         path: this.thisFolder.path,
         editing: true,
-        folderId: this.thisFolder.id
+        folderId: this.thisFolder.id,
+        content: '',
       })
     },
     toggle(){
@@ -127,4 +133,7 @@ export default {
   height auto
 .folder-content
   transition 0.2s
+.folder-title
+  &:hover
+    font-weight bolder
 </style>

@@ -1,11 +1,12 @@
 import {orderFiles} from "./functions";
+import {Axios} from "../../axios/axios";
 
 export default {
     namespaced: true,
     state: {
         files: [],
         folders: [],
-        selectedFileId: -1,
+        selectedFileId: '',
     },
     mutations: {
         setFolders: (state, data) => state.folders = data,
@@ -17,6 +18,14 @@ export default {
             const {files, folders} = orderFiles(state.files)
             state.files = files
             state.folders = folders
+        },
+        saveContent: (state, content) => {
+            state.files = state.files.map(f => {
+                if (f.id === state.selectedFileId) {
+                    f.content = content
+                }
+                return f
+            })
         }
     },
     getters: {
@@ -28,7 +37,7 @@ export default {
     },
     actions: {
         moveFolder(ctx, {folderId, toFolder}){
-            if (folderId === toFolder) return;
+            if (folderId === toFolder.id) return;
             let folders = ctx.getters.getFolders
             const isChild = (arr, folder, toId) => {
                 if (!folder) {
@@ -43,19 +52,45 @@ export default {
                 return isChild(arr, arr.find(f => f.id === folder.parent), toId);
             }
             if (isChild(folders, folders.find(f => f.id === toFolder.id), folderId)) return
-            folders = folders.map(f => f.id === folderId ? {...f, parent: toFolder}: f)
+            folders = folders.map(f => f.id === folderId ? {...f, parent: toFolder.id}: f)
             ctx.commit('setFolders', folders)
         },
-        moveFile(ctx, {fileId, toFolder}){
+        moveFile(ctx, {fileId, toFolder, username, repo}){
             const files = ctx.getters.getFiles.map(f => {
                 if (f.id === fileId){
                     f.folderId = toFolder.id
                     f.path = toFolder.path + '/' + f.name
-
                 }
+                ctx.dispatch('updateFiles', {username, repo, files: [f]})
                 return f
             })
             ctx.commit('setFiles', files)
         },
+        async createFile(ctx, {username, repo, file}){
+            ctx.commit('saveFile', file)
+            const url = `api/v1/repos/files/${username}/${repo}`
+            let res = await Axios.post(url, file)
+            if ( res.status === 200 ) {
+                ctx.commit('saveFile', file)
+            }
+        },
+        async fetchFiles(ctx, {username, repo}){
+            const url = `api/v1/repos/files/${username}/${repo}`
+            let res = await Axios.get(url)
+            if (res.status === 200){
+                const {files, folders} = orderFiles(res.data.result)
+                ctx.commit('setFolders', folders)
+                ctx.commit('setFiles', files)
+            }
+        },
+        async updateFiles (ctx, {username, repo, files}) {
+            const url = `api/v1/repos/files/${username}/${repo}`
+            let res = await Axios.patch(url, files)
+            if (res.status === 200) {
+                const {files, folders} = orderFiles(res.data.result)
+                ctx.commit('setFolders', folders)
+                ctx.commit('setFiles', files)
+            }
+        }
     }
 }
