@@ -1,9 +1,6 @@
 <template lang="pug">
 p(v-if="!file") file not choosen
 .editors-container(v-else)
-  div.editor_header.right.d-flex
-    div() split |
-    div() | preview
   p {{ file.name }}
   .d-flex
     .blocks
@@ -33,13 +30,13 @@ p(v-if="!file") file not choosen
 </template>
 
 <script>
-import {mapGetters, mapMutations} from "vuex";
-import TextEditor from "./text-editor/TextEditor";
+import {mapActions, mapGetters, mapMutations} from "vuex";
+import TextEditor from "./TextEditor";
 import VideoEditor from "./VideoEditor";
 import ImageEditor from "./ImageEditor";
 import TestEditor from "./TestEditor";
 import AudioEditor from "./AudioEditor";
-import {Engine} from "../../engine";
+import {Engine} from "@/engine";
 
 export default {
   name: "FileEditor",
@@ -58,7 +55,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      file: "repo/getSelectedFile"
+      file: "repo/getSelectedFile",
+      repo: "repos/getCurrent"
     }),
     preview () {
       return this.file.content.replaceAll('\n', '<br>')
@@ -68,8 +66,19 @@ export default {
     ...mapMutations({
       saveContent: "repo/saveContent"
     }),
+    ...mapActions({
+      updateFiles: "repo/updateFiles"
+    }),
+    save(file){
+      this.updateFiles({
+        username: this.repo.user_name,
+        repo: this.repo.name,
+        files: [file]
+      })
+    },
     render(){
       this.saveContent(Engine.fromBlocksToText(this.blocks))
+      this.save(this.file)
     },
     addText(){
       this.blocks.push({

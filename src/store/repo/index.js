@@ -1,5 +1,5 @@
 import {orderFiles} from "./functions";
-import {Axios} from "../../axios/axios";
+import {Axios} from "@/axios/axios";
 
 export default {
     namespaced: true,

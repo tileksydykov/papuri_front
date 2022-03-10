@@ -20,10 +20,12 @@
         select(@change="onThemeChange($event)" :value="theme")
           option( v-for="t in themes" :value="t.name") {{ t.translated }}
       li
-        router-link(:to="{name: 'Popular'}").navbar-item Все книги
+        router-link(:to="{name: 'Popular'}").navbar-item AllRepos
+      li
+        router-link(:to="{name: 'Media'}").navbar-item Media
 
       li(v-if="!loggedIn")
-        router-link(:to="{name: 'Login'}" ).navbar-item Вход
+        router-link(:to="{name: 'Login'}" ).navbar-item Login
       li
         label isFixed
         input(type="checkbox" :checked="isFixed" @change="isFixedChanged($event)")

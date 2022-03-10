@@ -100,6 +100,11 @@ const routes = [
         path: '/editor/:id',
         name: 'Editor',
         component: () => import('../components/repo-editor/RepoEditor')
+    },
+    {
+        path: '/media',
+        name: 'Media',
+        component: () => import('../views/user/Media')
     }
 ]
 

@@ -4,6 +4,7 @@ import style from "./style"
 import repos from "./repos"
 import repo from "./repo"
 import chapters from "./chapters"
+import media from "./media"
 import notification from "./notification"
 
 const store = createStore({
@@ -16,6 +17,7 @@ const store = createStore({
         repos,
         repo,
         chapters,
+        media,
         notification,
     },
     actions: {
