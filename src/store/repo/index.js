@@ -1,5 +1,6 @@
 import {orderFiles} from "./functions";
 import {Axios} from "@/axios/axios";
+import {Engine} from "@/engine";
 
 export default {
     namespaced: true,
@@ -7,11 +8,17 @@ export default {
         files: [],
         folders: [],
         selectedFileId: '',
+        blocks: [],
     },
     mutations: {
         setFolders: (state, data) => state.folders = data,
+        setBlocks: (state, data) => state.blocks = data,
+        addBlocks: (state, data) => state.blocks.push(data),
         setFiles: (state, data) => state.files = data,
-        selectFile: (state, id) => state.selectedFileId = id,
+        selectFile: (state, id) => {
+            state.selectedFileId = id
+            state.blocks = Engine.fromTextToBlocks(state.files.find(f => f.id===state.selectedFileId).content)
+        },
         addFiles: (state, file) => state.files.push(file),
         saveFile: (state, file) => {
             state.files.map(f => f.id === file.id ? file: f)
@@ -26,9 +33,11 @@ export default {
                 }
                 return f
             })
+
         }
     },
     getters: {
+        getBlocks: state => state.blocks,
         getFolders: state => state.folders,
         getFiles: state => state.files,
         getFilesByFolderId: state => id => state.files.filter(f => f.folderId === id),

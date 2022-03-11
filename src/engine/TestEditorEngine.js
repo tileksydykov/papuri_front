@@ -1,13 +1,13 @@
 import {uuidv4} from "@/store/repo/functions";
 
-export const TextEditorEngine = {
+export const TestEditorEngine = {
     fromBlock(block) {
-        return block.data.text
+        return `:test ${block.data.title}`
     },
     toBlock(text) {
         return {
             id: uuidv4(),
-            container: "TextEditor",
+            container: "TestEditor",
             data: {
                 text
             }

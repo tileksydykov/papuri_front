@@ -14,7 +14,7 @@ p(v-if="!file") file not choosen
             @dragstart="startDrag($event, block)"
             @drop="onDrop($event, block)"
           )
-            component(:is="block.container" :block="block")
+            component(:is="block.container" :block="block" @save="saveBlock")
       .block.d-flex
         .add-button(@click="addText") +&nbsp;
           font-awesome-icon(icon="envelope-open-text")
@@ -31,12 +31,13 @@ p(v-if="!file") file not choosen
 
 <script>
 import {mapActions, mapGetters, mapMutations} from "vuex";
-import TextEditor from "./TextEditor";
-import VideoEditor from "./VideoEditor";
-import ImageEditor from "./ImageEditor";
-import TestEditor from "./TestEditor";
-import AudioEditor from "./AudioEditor";
+import TextEditor from "./blocks/TextEditor";
+import VideoEditor from "./blocks/VideoEditor";
+import ImageEditor from "./blocks/ImageEditor";
+import TestEditor from "./blocks/TestEditor";
+import AudioEditor from "./blocks/AudioEditor";
 import {Engine} from "@/engine";
+import {uuidv4} from "@/store/repo/functions";
 
 export default {
   name: "FileEditor",
@@ -49,22 +50,27 @@ export default {
   },
   data(){
     return {
-      blocks: [],
       lastId: 20,
+      contentParsed: false,
     }
   },
   computed: {
     ...mapGetters({
       file: "repo/getSelectedFile",
-      repo: "repos/getCurrent"
+      repo: "repos/getCurrent",
+      blocks: "repo/getBlocks"
     }),
     preview () {
       return this.file.content.replaceAll('\n', '<br>')
     }
   },
+  mounted() {
+  },
   methods: {
     ...mapMutations({
-      saveContent: "repo/saveContent"
+      saveContent: "repo/saveContent",
+      setBlocks: "repo/setBlocks",
+      addBlocks: "repo/addBlocks"
     }),
     ...mapActions({
       updateFiles: "repo/updateFiles"
@@ -76,58 +82,60 @@ export default {
         files: [file]
       })
     },
+    saveBlock(){
+      this.saveContent(Engine.fromBlocksToText(this.blocks))
+      this.save(this.file)
+    },
     render(){
       this.saveContent(Engine.fromBlocksToText(this.blocks))
       this.save(this.file)
     },
     addText(){
-      this.blocks.push({
-        id: ++this.lastId,
+      this.addBlock({
         container: 'TextEditor',
         data: {
           text: ''
         },
       })
-      this.render()
     },
     addVideo(){
-      this.blocks.push({
-        id: ++this.lastId,
+      this.addBlock({
         container: 'VideoEditor',
         data: {
           videoId: ''
         },
       })
-      this.render()
     },
     addImage(){
-      this.blocks.push({
-        id: ++this.lastId,
+      this.addBlock({
         container: 'ImageEditor',
         data: {
           imageId: ''
         },
       })
-      this.render()
     },
     addTest(){
-      this.blocks.push({
-        id: ++this.lastId,
+      this.addBlock({
         container: 'TestEditor',
         data: {
           title: '',
           options: [],
         },
       })
-      this.render()
     },
     addAudio(){
-      this.blocks.push({
-        id: ++this.lastId,
+      this.addBlock({
         container: 'AudioEditor',
         data: {
           audioId: ''
         },
+      })
+    },
+    addBlock({container, data}) {
+      this.addBlocks({
+        id: uuidv4(),
+        container,
+        data,
       })
       this.render()
     },

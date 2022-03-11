@@ -1,13 +1,13 @@
 import {uuidv4} from "@/store/repo/functions";
 
-export const TextEditorEngine = {
+export const VideoEditorEngine = {
     fromBlock(block) {
-        return block.data.text
+        return `:video ${block.data.url}`
     },
     toBlock(text) {
         return {
             id: uuidv4(),
-            container: "TextEditor",
+            container: "VideoEditor",
             data: {
                 text
             }
