@@ -65,6 +65,7 @@ export default {
     }
   },
   mounted() {
+    this.fetchMedia()
   },
   methods: {
     ...mapMutations({
@@ -73,7 +74,8 @@ export default {
       addBlocks: "repo/addBlocks"
     }),
     ...mapActions({
-      updateFiles: "repo/updateFiles"
+      updateFiles: "repo/updateFiles",
+      fetchMedia: "media/getFiles"
     }),
     save(file){
       this.updateFiles({
@@ -110,7 +112,7 @@ export default {
       this.addBlock({
         container: 'ImageEditor',
         data: {
-          imageId: ''
+          imageId: '0'
         },
       })
     },
@@ -119,7 +121,7 @@ export default {
         container: 'TestEditor',
         data: {
           title: '',
-          options: [],
+          options: [''],
         },
       })
     },
@@ -145,7 +147,7 @@ export default {
       evt.dataTransfer.setData('itemID', item.id)
     },
     onDrop (evt, block) {
-      const itemID = parseInt(evt.dataTransfer.getData('itemID'))
+      const itemID = evt.dataTransfer.getData('itemID')
 
       const toIndex = this.blocks.indexOf(block);
       const fromIndex = this.blocks.indexOf(this.blocks.find(b => b.id === itemID))
@@ -153,7 +155,7 @@ export default {
       const element = arr[fromIndex];
       arr.splice(fromIndex, 1);
       arr.splice(toIndex, 0, element);
-      this.blocks = arr;
+      this.setBlocks(arr)
       this.render()
     }
   }

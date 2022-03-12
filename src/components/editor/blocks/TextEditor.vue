@@ -3,13 +3,8 @@ textarea(v-model="block.data.text" @keyup="save")
 </template>
 
 <script>
-let timeout;
-function debounce(callback, wait) {
-  return (...args) => {
-    clearTimeout(timeout);
-    timeout = setTimeout(function () { callback.apply(this, args); }, wait);
-  };
-}
+import {debounce} from "@/components/editor/blocks/functions";
+
 export default {
   name: "TextEditor",
   props: {
@@ -49,4 +44,5 @@ textarea
   border-radius 0
   border none
   outline none
+  min-height 100px
 </style>

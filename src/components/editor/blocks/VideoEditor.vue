@@ -1,13 +1,46 @@
 <template lang="pug">
-p video editor
+.p-5
+  span Video <br>
+  small.secondary upload all needed media in "Media" and select there
+  br
+  select( v-model="block.data.id" @change="save")
+    option(
+      v-for="m in media"
+      :key="m.id"
+      :value="nameId(m.id, m.name)"
+      :selected="nameId(m.id, m.name) === block.data.id")
+      | {{ nameId(m.id, m.name) }}
 </template>
 
 <script>
+import {mapGetters} from "vuex";
+
 export default {
-  name: "VideoEditor"
+  name: "VideoEditor",
+  props: {
+    block: {
+      type: Object,
+      required: true,
+    }
+  },
+  computed: {
+    ...mapGetters({
+      media: "media/getVideos"
+    })
+  },
+  methods: {
+    save(){
+      this.$emit("save", this.block)
+    },
+    nameId(id, name){
+      return id+"-"+name
+    }
+  }
 }
 </script>
 
 <style scoped lang="stylus">
-
+select
+  padding 0
+  border-radius 0
 </style>
