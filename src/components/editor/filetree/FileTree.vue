@@ -13,8 +13,7 @@ export default {
 
 <style lang="stylus" scoped>
 .file-tree-cont
-  overflow-x scroll
-  height 100%
+  width 1000px
 .link
   cursor pointer
   :hover

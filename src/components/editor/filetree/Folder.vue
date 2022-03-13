@@ -124,15 +124,14 @@ export default {
 
 <style scoped lang="stylus">
 .folder
-  transition .3s
+  width 100%
   cursor pointer
-  overflow hidden
 .close-folder
   height 0
+  &.folder-content
+    display none
 .open-folder
   height auto
-.folder-content
-  transition 0.2s
 .folder-title
   &:hover
     font-weight bolder

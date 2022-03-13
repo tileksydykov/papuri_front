@@ -4,7 +4,7 @@
   br
   input(v-model="block.data.title" @change="save" placeholder="title")
   hr
-  span(@click="addOption") &nbsp;+
+  span.clickable(@click="addOption") + Add Option
   hr
   template(v-for="(opt, index) in block.data.options")
     span -&nbsp;

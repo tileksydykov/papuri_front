@@ -15,7 +15,9 @@ export default {
 
 <style lang="stylus" scoped>
 .file-tree
-  width 200px
+  width 30%
+  overflow-x scroll
+  height 100%
 .file-editor
   width 100%
 </style>

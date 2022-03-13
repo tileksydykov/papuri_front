@@ -172,7 +172,7 @@ export default {
   box-shadow 1px 1px 5px grey
 .add-button
   margin 10px
-  background white
+  background $background_color
   text-align center
   cursor pointer
 </style>
