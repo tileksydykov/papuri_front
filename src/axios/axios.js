@@ -1,7 +1,9 @@
 import store from "../store";
 
 const axios = require('axios');
-const axiosApiInstance = axios.create();
+const axiosApiInstance = axios.create({
+    baseURL: "/"
+});
 
 // Request interceptor for API calls
 axiosApiInstance.interceptors.request.use(
