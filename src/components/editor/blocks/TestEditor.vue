@@ -40,7 +40,6 @@ export default {
       block.data.options.push('')
     }
   },
-
 }
 </script>
 

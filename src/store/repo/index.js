@@ -9,10 +9,12 @@ export default {
         folders: [],
         selectedFileId: '',
         blocks: [],
+        info: {}
     },
     mutations: {
         setFolders: (state, data) => state.folders = data,
         setBlocks: (state, data) => state.blocks = data,
+        setInfo: (state, data) => state.info = data,
         addBlocks: (state, data) => state.blocks.push(data),
         setFiles: (state, data) => state.files = data,
         selectFile: (state, id) => {
@@ -40,6 +42,7 @@ export default {
         getBlocks: state => state.blocks,
         getFolders: state => state.folders,
         getFiles: state => state.files,
+        getInfo: state => state.info,
         getFilesByFolderId: state => id => state.files.filter(f => f.folderId === id),
         getFoldersByFolderId: state => id => state.folders.filter(f => f.parent === id),
         getSelectedFile: state => state.files.find(f => f.id===state.selectedFileId),
@@ -99,6 +102,13 @@ export default {
                 const {files, folders} = orderFiles(res.data.result)
                 ctx.commit('setFolders', folders)
                 ctx.commit('setFiles', files)
+            }
+        },
+        async fetchRepoInfo (ctx, {username, repo}) {
+            const url = `api/v1/repos/info/${username}/${repo}`
+            let res = await Axios.get(url)
+            if (res.status === 200) {
+                ctx.commit('setInfo', res.data.result)
             }
         }
     }

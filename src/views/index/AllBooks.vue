@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import BookList from "../../components/book/BookList";
+import BookList from "../../components/repo/BookList";
 
 export default {
   components: {BookList},

@@ -10,10 +10,14 @@
       :value="nameId(m.id, m.name)"
       :selected="nameId(m.id, m.name) === block.data.imageId")
       | {{ nameId(m.id, m.name) }}
+  br
+  br
+  img.image(:src="link(block.data.imageId)")
 </template>
 
 <script>
 import {mapGetters} from "vuex";
+import {Axios} from "@/axios/axios";
 
 export default {
   name: "ImageEditor",
@@ -26,7 +30,7 @@ export default {
   computed: {
     ...mapGetters({
       media: "media/getImages"
-    })
+    }),
   },
   methods: {
     save(){
@@ -34,6 +38,9 @@ export default {
     },
     nameId(id, name){
       return id+"-"+name
+    },
+    link(id){
+      return Axios.generateMediaLink(id.slice(0, id.indexOf("-")))
     }
   }
 }
@@ -43,4 +50,6 @@ export default {
 select
   padding 0
   border-radius 0
+.image
+  width 100%
 </style>

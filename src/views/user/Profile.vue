@@ -15,7 +15,7 @@
 
 <script>
 import {mapActions, mapGetters} from "vuex";
-import BookList from "../../components/book/BookList";
+import BookList from "../../components/repo/BookList";
 
 export default {
   name: 'Profile',

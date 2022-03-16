@@ -4,7 +4,7 @@ BookList()
 </template>
 
 <script>
-import BookList from "../book/BookList";
+import BookList from "../repo/BookList";
 
 export default {
   name: "MyRepos",

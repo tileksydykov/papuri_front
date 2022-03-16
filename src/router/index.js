@@ -61,12 +61,12 @@ const routes = [
             {
                 path: '',
                 name: 'RepoOverview',
-                component: () => import('../components/book/Chapters')
+                component: () => import('../components/repo/Overview')
             },
             {
                 path: 'volume',
                 name: 'Volumes',
-                component: () => import('../components/book/Volumes')
+                component: () => import('../components/repo/Volumes')
             },
             {
                 path: 'editor',
@@ -76,16 +76,16 @@ const routes = [
             {
                 path: 'settings',
                 name: 'BookSettings',
-                component: () => import('../components/book/settings/Index'),
+                component: () => import('../components/repo/settings/Index'),
                 children: [
                     {
                         path: '',
                         name: 'EditBook',
-                        component: () => import('../components/book/settings/Edit')
+                        component: () => import('../components/repo/settings/Edit')
                     }, {
                         path: 'maintainers',
                         name: 'BookMaintainers',
-                        component: () => import('../components/book/settings/Maintainers')
+                        component: () => import('../components/repo/settings/Maintainers')
                     }
                 ],
             }

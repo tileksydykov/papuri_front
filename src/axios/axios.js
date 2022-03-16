@@ -74,4 +74,8 @@ axiosApiInstance.wsOpen = (wsUrl) => {
     }
 }
 
+axiosApiInstance.generateMediaLink = (id) => {
+    return "api/v1/md/"+id
+}
+
 export const Axios = axiosApiInstance

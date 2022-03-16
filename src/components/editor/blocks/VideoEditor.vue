@@ -10,10 +10,15 @@
       :value="nameId(m.id, m.name)"
       :selected="nameId(m.id, m.name) === block.data.id")
       | {{ nameId(m.id, m.name) }}
+  br
+  br
+  video.video(v-if="block.data.id" controls="true") Your browser does not support the video element.
+    source(:src="link(block.data.id)")
 </template>
 
 <script>
 import {mapGetters} from "vuex";
+import {Axios} from "@/axios/axios";
 
 export default {
   name: "VideoEditor",
@@ -34,6 +39,9 @@ export default {
     },
     nameId(id, name){
       return id+"-"+name
+    },
+    link(id){
+      return Axios.generateMediaLink(id.slice(0, id.indexOf("-")))
     }
   }
 }
@@ -43,4 +51,6 @@ export default {
 select
   padding 0
   border-radius 0
+.video
+  width 100%
 </style>

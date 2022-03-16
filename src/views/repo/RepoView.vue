@@ -65,6 +65,7 @@ export default {
     ...mapActions({
       get: "repos/fetchCurrent",
       getFiles: "repo/fetchFiles",
+      getInfo: "repo/fetchRepoInfo",
     }),
     ...mapMutations({
       setRepo: "repos/setCurrent"
@@ -74,6 +75,7 @@ export default {
     // empty the state
     this.setRepo({})
     this.getFiles(this.$route.params)
+    this.getInfo(this.$route.params)
     await this.get(this.$route.params)
   },
   watch: {}
