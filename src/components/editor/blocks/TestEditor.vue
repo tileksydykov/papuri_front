@@ -46,5 +46,4 @@ export default {
 <style scoped lang="stylus">
 input
   padding 2px
-
 </style>

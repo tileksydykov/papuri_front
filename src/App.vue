@@ -1,19 +1,17 @@
 <template lang="pug">
 Notifications
-div(:style="{'display': 'inline-flex'}").w-100
-  SideNav
-  router-view
+
+router-view
 </template>
 
 <script>
 import {mapGetters} from "vuex";
 import Header from "./components/Header";
-import SideNav from "./components/SideNav";
 import Notifications from "./components/notifications/Notifications";
 
 export default {
   name: 'App',
-  components: {Notifications, SideNav, Header},
+  components: {Notifications, Header},
   computed: {
     ...mapGetters({
       loggedIn: "getLoggedIn",
