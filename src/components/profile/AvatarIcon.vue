@@ -27,9 +27,9 @@ export default {
     user(val) {
       this.isNullIcon = !(val.img) || val.img === ''
       if (this.isNullIcon) {
-        this.title = val.user_name.charAt(0)
+        this.title = this.capitalize(val.user_name)
         this.$refs.avatar.style.backgroundColor = '#00b40b'
-      } else {
+      } else if (val.img) {
         this.$refs.avatar.style.backgroundImage = `url(${val.img})`
       }
     },
@@ -43,13 +43,16 @@ export default {
       icon.style.height = val + 'px';
       icon.style.width = val + 'px';
       icon.style.fontSize = val - 15 + 'px'
+    },
+    capitalize(name){
+      return name.charAt(0).toUpperCase()
     }
   },
   mounted() {
     let  val = this.user
     this.isNullIcon = !(val.img) || val.img === ''
     if (this.isNullIcon) {
-      this.title = val.user_name.charAt(0)
+      this.title = this.capitalize(val.user_name)
       this.$refs.avatar.style.backgroundColor = '#00b40b'
     } else {
       this.$refs.avatar.style.backgroundImage = `url(${val.img})`

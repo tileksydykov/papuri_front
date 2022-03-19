@@ -49,7 +49,7 @@ axiosApiInstance.interceptors.response.use((response) => {
 const refreshAccessToken = async () =>{
     const value = getToken()
     const keys = JSON.parse(value)
-    let res = await axiosApiInstance.post("/api/auth/refresh", keys)
+    let res = await axios.post("/api/auth/refresh", keys)
     if (res.status === 200) {
         localStorage.setItem("token", JSON.stringify(res.data))
         return res.data.access_token

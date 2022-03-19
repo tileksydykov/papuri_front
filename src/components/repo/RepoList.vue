@@ -12,6 +12,7 @@ import {mapActions, mapGetters} from "vuex";
 import * as dayjs from 'dayjs'
 
 export default {
+  name: "RepoList",
   methods: {
     ...mapActions({
       getAll: "repos/getAll"

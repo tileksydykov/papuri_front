@@ -22,6 +22,7 @@ const store = createStore({
     },
     actions: {
         appMounted: async (ctx) => {
+            await ctx.dispatch("fetchUser")
             await ctx.dispatch("loadTheme")
             await ctx.dispatch("checkLogin")
             await ctx.dispatch("loadMenuFixed")

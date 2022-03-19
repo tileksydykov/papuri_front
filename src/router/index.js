@@ -92,8 +92,8 @@ const routes = [
         ]
     },
     {
-        path: '/book/create',
-        name: 'CreateBook',
+        path: '/repo/create',
+        name: 'CreateRepo',
         component: () => import('../views/repo/RepoCreate')
     },
     {

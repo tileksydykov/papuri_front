@@ -1,3 +1,5 @@
 export default {
-    test: "english"
+    test: "english",
+    login: "Sign In",
+    signUp: "Sign Up"
 }

@@ -1,14 +1,14 @@
 <template lang="pug">
 .page-wrapper
   .container
-    BookList()
+    RepoList()
 </template>
 
 <script>
-import BookList from "../../components/repo/BookList";
+import RepoList from "../../components/repo/RepoList";
 
 export default {
-  components: {BookList},
+  components: {RepoList},
   computed: {
 
   },

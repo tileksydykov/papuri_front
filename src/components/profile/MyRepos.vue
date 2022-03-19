@@ -1,10 +1,10 @@
 <template lang="pug">
-router-link.clickable(:to="{name: 'CreateBook'}") Создать новую книгу
+router-link.clickable(:to="{name: 'CreateRepo'}") Создать новую книгу
 BookList()
 </template>
 
 <script>
-import BookList from "../repo/BookList";
+import BookList from "../repo/RepoList";
 
 export default {
   name: "MyRepos",

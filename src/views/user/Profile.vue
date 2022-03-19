@@ -1,6 +1,7 @@
 <template lang="pug">
 .page-wrapper(v-if="user")
   .container
+    Header
     .center.title @{{ user.user_name }}
     br
     .center.tabs
@@ -15,11 +16,12 @@
 
 <script>
 import {mapActions, mapGetters} from "vuex";
-import BookList from "../../components/repo/BookList";
+import BookList from "../../components/repo/RepoList";
+import Header from "../../components/Header";
 
 export default {
   name: 'Profile',
-  components: {BookList},
+  components: {Header, BookList},
   data(){
     return {
       tabs: [

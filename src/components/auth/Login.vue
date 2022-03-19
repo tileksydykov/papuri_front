@@ -1,21 +1,26 @@
 <template lang="pug">
-.card
-  .card-body
+.page-wrapper
+  .container
+    Header
+    br
+    .title {{ $t("login") }}
     .login-form
-      .card-body
+      .input-wrapper
         input(v-model="email" placeholder="Email" type="email")
-      .card-body
+      .input-wrapper
         input(v-model="password" placeholder="Password" type="password")
-      button.btn(@click="submit") Войти
-      hr
-      router-link(:to="{name: 'Reg'}") Регистрация
+      .input-wrapper
+        button.btn.black-btn.noot(@click="submit") {{ $t("login") }}
+        router-link(:to="{name: 'Reg'}") {{ $t("signUp") }}
 </template>
 
 <script>
 import {mapGetters} from "vuex";
+import Header from "../Header";
 
 export default {
   name: "Login",
+  components: {Header},
   data() {
     return {
       email: "",
@@ -49,3 +54,7 @@ export default {
   }
 }
 </script>
+
+<style scoped lang="stylus">
+
+</style>

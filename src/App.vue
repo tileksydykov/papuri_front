@@ -1,6 +1,5 @@
 <template lang="pug">
 Notifications
-
 router-view
 </template>
 

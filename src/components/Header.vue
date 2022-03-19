@@ -1,20 +1,42 @@
 <template lang="pug">
-nav.navbar
-    a.clickable.navbar-item( v-if="!isFixed" @click="toggleMenu")
-      font-awesome-icon(icon="bars")
+.header
+  LoginButtons.right(v-if="!loggedIn")
+  .user(v-if="loggedIn").right
+    .menu
+       router-link(:to="{name: 'Index'}")
+        font-awesome-icon(icon="home").menu-icon
+       router-link(:to="{name: 'Index'}")
+        font-awesome-icon(icon="search").menu-icon
+       router-link(:to="{name: 'Index'}")
+        font-awesome-icon(icon="book").menu-icon
+       router-link(:to="{name: 'Index'}")
+        font-awesome-icon(icon="bookmark").menu-icon
+       router-link(:to="{name: 'Index'}")
+        font-awesome-icon(icon="images").menu-icon
+       router-link(:to="{name: 'CreateRepo'}")
+        font-awesome-icon(icon="plus").menu-icon
+    router-link(
+      :to="{name: 'Activity', params: { username: user_name }}"
+    ).user-info
+      .title.noto {{ user.first_name }} {{ user.last_name }}
+      .username.right @{{ user.user_name }}
+    AvatarIcon(
+      :user="user"
+      :size="30"
+    ).icon
+  Date
 </template>
 
 <script>
 import {mapGetters} from "vuex";
+import LoginButtons from "./util/LoginButtons";
+import Date from "./util/Date";
+import BookList from "./repo/RepoList";
+import AvatarIcon from "./profile/AvatarIcon";
 
 export default {
   name: "Header",
-
-  data(){
-    return{
-
-    }
-  },
+  components: {LoginButtons, Date, BookList, AvatarIcon},
   computed: {
     ...mapGetters({
       loggedIn: "getLoggedIn",
@@ -22,39 +44,32 @@ export default {
       isFixed: "isMenuFixed"
     }),
     user_name() {
-      return this.user ? this.user.user_name: ''
+      return this.user ? this.user.user_name: 'A'
     }
   },
   methods: {
-    toggleMenu(){
-      this.$store.commit("toggleMenu")
-    }
   }
 }
 </script>
 
 <style lang="stylus" scoped>
-.navbar
-  z-index 1000
-  position fixed
-  flex-direction row
-  background $background_color
-  border-bottom 1px solid $light_shadow_color
-  box-shadow 1px 1px 3px $light_shadow_color
-  width 100%
-  text-align center
-  padding 10px
-  .navbar-item
-    border-radius 3px
-    padding 5px
-    margin 3px
+.user
+  display flex
+  .title
     color $text_color
     text-decoration none
-    transition .3s
-    &:hover
-      background $light_shadow_color
-  .right
-    right 0
-    left auto
-
+    padding-top 3px
+    font-size 15px
+  .username
+    font-size 12px
+    color $text_secondary
+  .icon
+    margin 7px
+.menu
+  display flex
+  padding 10px 20px
+  font-size 20px
+  .menu-icon
+    color $text_secondary
+    padding 0 10px
 </style>

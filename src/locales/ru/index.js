@@ -1,3 +1,6 @@
 export default {
-    test: "русский"
+    test: "русский",
+    login: "Войти",
+    signUp: "Регистрация",
+    recentlyAdded: "Последние добавленные"
 }
