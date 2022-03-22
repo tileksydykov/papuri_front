@@ -4,6 +4,8 @@
 </template>
 
 <script>
+import {Axios} from "../../axios/axios";
+
 export default {
   name: "AvatarIcon",
   props: {
@@ -30,7 +32,7 @@ export default {
         this.title = this.capitalize(val.user_name)
         this.$refs.avatar.style.backgroundColor = '#00b40b'
       } else if (val.img) {
-        this.$refs.avatar.style.backgroundImage = `url(${val.img})`
+        this.$refs.avatar.style.backgroundImage = `url(${Axios.generateMediaLink(val.img)})`
       }
     },
     size(val) {
@@ -55,7 +57,7 @@ export default {
       this.title = this.capitalize(val.user_name)
       this.$refs.avatar.style.backgroundColor = '#00b40b'
     } else {
-      this.$refs.avatar.style.backgroundImage = `url(${val.img})`
+      this.$refs.avatar.style.backgroundImage = `url(${Axios.generateMediaLink(val.img)})`
     }
     this.setSize(this.size)
   }

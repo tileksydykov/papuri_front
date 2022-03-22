@@ -1,16 +1,19 @@
 <template lang="pug">
 Notifications
-router-view
+div.router
+  router-view
+MobileMenu.m-only
 </template>
 
 <script>
 import {mapGetters} from "vuex";
 import Header from "./components/Header";
 import Notifications from "./components/notifications/Notifications";
+import MobileMenu from "./components/MobileMenu";
 
 export default {
   name: 'App',
-  components: {Notifications, Header},
+  components: {MobileMenu, Notifications, Header},
   computed: {
     ...mapGetters({
       loggedIn: "getLoggedIn",

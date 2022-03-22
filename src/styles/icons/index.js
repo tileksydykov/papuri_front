@@ -1,10 +1,10 @@
 import {
-    faBars, faBook, faBookmark, faColumns, faEnvelopeOpenText,
+    faBars, faBook, faBookmark, faColumns, faCompactDisc, faEnvelopeOpenText,
     faEye,
     faFile,
     faFileAlt, faFileAudio,
     faFileCode,
-    faFolder, faHome, faImage, faImages, faLightbulb, faPlus, faSearch, faTextHeight,
+    faFolder, faHome, faImage, faImages, faLightbulb, faMemory, faPlus, faSearch, faTextHeight,
     faTimes,
     faUserSecret, faVideo
 } from "@fortawesome/free-solid-svg-icons";
@@ -32,7 +32,9 @@ library.add(
     faBook,
     faBookmark,
     faImages,
-    faPlus
+    faPlus,
+    faCompactDisc,
+    faMemory
 )
 
 export default function (app) {

@@ -64,6 +64,12 @@ export default {
                 commit("setLoggedIn", false)
             }
         },
+        saveUser: async ({commit}, {first_name, last_name, img, email}) => {
+            const res = await Axios.post("api/v1/user/me", {first_name, last_name, img, email})
+            if (res.status === 200) {
+                commit("setUser", res.data.result)
+            }
+        },
         checkLogin: async ({commit, dispatch}) => {
             const logInData = JSON.parse(localStorage.getItem("token"))
             let logged = (logInData) && logInData.access_token

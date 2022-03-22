@@ -1,6 +1,6 @@
 <template lang="pug">
 router-link.clickable(:to="{name: 'CreateRepo'}") Создать новую книгу
-BookList()
+BookList
 </template>
 
 <script>

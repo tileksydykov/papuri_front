@@ -1,15 +1,17 @@
 <template lang="pug">
 .editor
+  Header
   Editor
 </template>
 
 <script>
-import {mapActions, mapGetters} from "vuex";
+import {mapActions, mapGetters, mapMutations} from "vuex";
 import Editor from "../editor";
+import Header from "../Header";
 
 export default {
   name: "RepoEditor",
-  components: {Editor},
+  components: {Header, Editor},
   data(){
     return {
 
@@ -29,9 +31,14 @@ export default {
   },
   methods: {
     ...mapActions({
-      openWs: "repos/beginWs"
+      openWs: "repos/beginWs",
+      get: "repos/fetchCurrent",
+      getFiles: "repo/fetchFiles",
+      getInfo: "repo/fetchRepoInfo",
     }),
-
+    ...mapMutations({
+      setRepo: "repos/setCurrent"
+    }),
     handle(markdownText){
       const htmlText = markdownText
           .replace(/^### (.*$)/gim, '<h3>$1</h3>')
@@ -50,6 +57,10 @@ export default {
   },
   mounted () {
     // this.openWs({id: this.$route.params.id})
+    this.setRepo({})
+    this.getFiles(this.$route.params)
+    this.getInfo(this.$route.params)
+    this.get(this.$route.params)
   }
 }
 </script>

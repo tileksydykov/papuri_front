@@ -31,7 +31,6 @@ export default {
         setFiles: (state, files) => state.files = files,
         setInfo: (state, info) => state.info = info,
         updateUploadingFile: (state, file) => state.uploadingFiles = state.uploadingFiles.map(f => f.id === file.id ? file: f),
-
     },
     actions: {
         upload(ctx, file){
@@ -49,6 +48,11 @@ export default {
                     ctx.commit('updateUploadingFile', file)
                 }
             })
+        },
+        async updateMedia(ctx){
+            if (ctx.getters.files.length < 1) {
+                ctx.dispatch('getFiles')
+            }
         },
         async getFiles(ctx) {
             let files = await Axios.get('/api/v1/media')

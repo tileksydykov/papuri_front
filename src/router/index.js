@@ -8,16 +8,12 @@ const routes = [
         component: Index,
     },
     {
-        path: '/popular',
-        name: 'Popular',
-        component: ()=> import('../views/index/AllBooks'),
-    },
-    {
         path: '/auth',
         component: () => import("../views/user/Auth"),
+        name: "Auth",
         children: [
             {
-                path: 'login',
+                path: '',
                 name: 'Login',
                 component: () => import("../components/auth/Login"),
             },
@@ -27,11 +23,6 @@ const routes = [
                 component: () => import("../components/auth/Registration"),
             }
         ]
-    },
-    {
-        path: '/chapter/:id',
-        name: 'Chapter',
-        component: () => import("../views/repo/ChapterView"),
     },
     {
         path: '/:username',
@@ -69,11 +60,6 @@ const routes = [
                 component: () => import('../components/repo/Volumes')
             },
             {
-                path: 'editor',
-                name: 'RepoEditor',
-                component: () => import('../components/repo-editor/RepoEditor')
-            },
-            {
                 path: 'settings',
                 name: 'BookSettings',
                 component: () => import('../components/repo/settings/Index'),
@@ -92,14 +78,14 @@ const routes = [
         ]
     },
     {
-        path: '/repo/create',
-        name: 'CreateRepo',
-        component: () => import('../views/repo/RepoCreate')
+        path: '/:username/:repo/editor',
+        name: 'RepoEditor',
+        component: () => import('../components/repo-editor/RepoEditor')
     },
     {
-        path: '/editor/:id',
-        name: 'Editor',
-        component: () => import('../components/repo-editor/RepoEditor')
+        path: '/create',
+        name: 'CreateRepo',
+        component: () => import('../views/repo/RepoCreate')
     },
     {
         path: '/media',
@@ -112,5 +98,10 @@ const router = createRouter({
     history: createWebHistory(),
     routes,
 })
+
+// router.beforeEach((to, from) => {
+//     console.log(from, to)
+//     return true
+// })
 
 export default router

@@ -2,7 +2,7 @@
 .header
   LoginButtons.right(v-if="!loggedIn")
   .user(v-if="loggedIn").right
-    .menu
+    .menu.m-hidden
        router-link(:to="{name: 'Index'}")
         font-awesome-icon(icon="home").menu-icon
        router-link(:to="{name: 'Index'}")
@@ -11,7 +11,7 @@
         font-awesome-icon(icon="book").menu-icon
        router-link(:to="{name: 'Index'}")
         font-awesome-icon(icon="bookmark").menu-icon
-       router-link(:to="{name: 'Index'}")
+       router-link(:to="{name: 'Media'}")
         font-awesome-icon(icon="images").menu-icon
        router-link(:to="{name: 'CreateRepo'}")
         font-awesome-icon(icon="plus").menu-icon

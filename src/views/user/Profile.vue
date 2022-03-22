@@ -2,7 +2,8 @@
 .page-wrapper(v-if="user")
   .container
     Header
-    .center.title @{{ user.user_name }}
+    .center.title {{ user.first_name }} {{ user.last_name }}
+    .center.name @{{ user.user_name }}
     br
     .center.tabs
       label.m-5.tab-item.clickable(

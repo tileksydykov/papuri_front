@@ -18,8 +18,8 @@ export default {
         listFiles: state => state.files,
     },
     actions: {
-        create: async (ctx, {name}) => {
-            let m = await Axios.post("/api/v1/repos", {name})
+        create: async (ctx, {name, title}) => {
+            let m = await Axios.post("/api/v1/repos", {name, title})
             if (m.status === 200) {
                 ctx.dispatch("notification/pushNotification", {
                     title: `Repo "${name}" created` ,
