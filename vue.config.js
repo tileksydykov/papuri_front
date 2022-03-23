@@ -21,6 +21,9 @@ module.exports = {
             ),
         );
     },
+    transpileDependencies: [
+        'vue-meta',
+    ],
 };
 
 function addStyleResource(rule) {

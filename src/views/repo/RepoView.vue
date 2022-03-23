@@ -5,7 +5,7 @@
     br
     .repository-view
       .repository-view-left
-        RepoCover(:repo="repo").self-center
+        RepoCover(:repo="repo" :size="200").self-center
         .loading(v-if="!repo.name")
           .w-25.loading-background
           .w-50.loading-background

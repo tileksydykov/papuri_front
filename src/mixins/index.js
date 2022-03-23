@@ -1,5 +1,8 @@
+import store from "@/store";
+
 export default {
     methods: {
+        setTitle: (title) => store.commit("setTitle", title),
         shortenNumbers: (number) => {
             if (number < 1_000) {
                 return number + ""

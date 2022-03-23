@@ -27,6 +27,10 @@ export default {
       password: ""
     }
   },
+  metaInfo: {
+    title: "Login",
+    i18n: "login"
+  },
   computed: {
      ...mapGetters({
        loggedIn: "getLoggedIn"
@@ -44,8 +48,9 @@ export default {
     if (this.loggedIn){
       this.$router.push({name: 'Index'})
     }
+    this.setTitle(this.$t("login"))
   },
-  watch:{
+  watch: {
     loggedIn(val){
       if (val) {
         this.$router.push({name: 'Index'})

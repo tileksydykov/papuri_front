@@ -25,13 +25,14 @@ export default {
   },
   mounted() {
     this.$store.dispatch("appMounted");
+    this.setTitle("Alatoo")
   },
 
-  watch:{
+  watch: {
     theme(val){
       document.documentElement.dataset.theme = val;
     },
-    title(val) {
+    title(val){
       document.title = val
     }
   }

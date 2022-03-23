@@ -1,7 +1,7 @@
 <template lang="pug">
 ul.repo-list
   li.repo-card(v-for="repo in repos")
-    RepoCover(:repo="repo" size="120").self-center
+    RepoCover(:repo="repo" :size="120").self-center
     .date.secondary {{ date(repo) }}
     .secondary(v-if="repo.name.length === 0") no name
     .title

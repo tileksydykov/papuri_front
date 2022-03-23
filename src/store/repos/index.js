@@ -43,6 +43,6 @@ export default {
         },
         files: async (ctx, list) => {
             ctx.commit("setFiles", list)
-        }
+        },
     }
 }

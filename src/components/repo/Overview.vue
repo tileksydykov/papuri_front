@@ -16,6 +16,9 @@ export default {
     size(bytes){
       return this.bytesToSize(bytes)
     }
+  },
+  mounted() {
+    this.setTitle()
   }
 }
 </script>

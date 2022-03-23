@@ -88,6 +88,21 @@ const routes = [
         component: () => import('../views/repo/RepoCreate')
     },
     {
+        path: '/search',
+        name: 'Search',
+        component: () => import('../views/Search')
+    },
+    {
+        path: '/bookmarks',
+        name: 'Bookmarks',
+        component: () => import('../views/Bookmarks')
+    },
+    {
+        path: '/current-book',
+        name: 'CurrentBook',
+        component: () => import('../views/CurrentBook')
+    },
+    {
         path: '/media',
         name: 'Media',
         component: () => import('../views/user/Media')
@@ -99,8 +114,16 @@ const router = createRouter({
     routes,
 })
 
-// router.beforeEach((to, from) => {
-//     console.log(from, to)
+// router.beforeEach(async (to) => {
+//     console.log("matches", to.matched.slice(-1)[0])
+//     let metaInfo =  typeof to.matched.slice(-1)[0].components.default  === "function" ?
+//         (await to.matched.slice(-1)[0].components.default()).default.metaInfo :
+//         to.matched.slice(-1)[0].components.default.metaInfo
+//     if (metaInfo) {
+//         store.commit('setTitle', metaInfo.title)
+//     }else {
+//         store.commit("setTitle", "default")
+//     }
 //     return true
 // })
 

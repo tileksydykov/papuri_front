@@ -9,7 +9,7 @@ import notification from "./notification"
 
 const store = createStore({
     state: {
-        title: 'App'
+        title: 'App Title'
     },
     modules: {
         auth,
@@ -31,7 +31,7 @@ const store = createStore({
     getters: {
         title: state => state.title
     },
-    setters: {
+    mutations: {
         setTitle: (state, t) => state.title = t
     }
 })
