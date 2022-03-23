@@ -72,7 +72,7 @@ export default {
       text-overflow ellipsis
       display -webkit-box
       -webkit-line-clamp 1
-      -webkit-box-orient: vertical;
+      -webkit-box-orient vertical
     .date
       width 100%
       font-size .7em

@@ -1,17 +1,16 @@
 <template lang="pug">
-.page-wrapper
-  .container
-    Header
-    br
-    .title {{ $t("login") }}
-    .login-form
-      .input-wrapper
-        input(v-model="email" placeholder="Email" type="email")
-      .input-wrapper
-        input(v-model="password" placeholder="Password" type="password")
-      .input-wrapper
-        button.btn.black-btn.noot(@click="submit") {{ $t("login") }}
-        router-link(:to="{name: 'Reg'}") {{ $t("signUp") }}
+
+Header
+br
+.title {{ $t("login") }}
+.login-form
+  .input-wrapper
+    input(v-model="email" placeholder="Email" type="email")
+  .input-wrapper
+    input(v-model="password" placeholder="Password" type="password")
+  .input-wrapper
+    button.btn.black-btn.noot(@click="submit") {{ $t("login") }}
+    router-link(:to="{name: 'Reg'}") {{ $t("signUp") }}
 </template>
 
 <script>

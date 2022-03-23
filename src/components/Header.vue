@@ -3,17 +3,35 @@
   LoginButtons.right(v-if="!loggedIn")
   .user(v-if="loggedIn").right
     .menu.m-hidden
-       router-link(:to="{name: 'Index'}")
+       router-link(
+         :to="{name: 'Index'}"
+         :class="{active: activeIcon === 'Index'}"
+         )
         font-awesome-icon(icon="home").menu-icon
-       router-link(:to="{name: 'Search'}")
+       router-link(
+         :to="{name: 'Search'}"
+         :class="{active: activeIcon === 'Search'}"
+         )
         font-awesome-icon(icon="search").menu-icon
-       router-link(:to="{name: 'CurrentBook'}")
+       router-link(
+         :to="{name: 'CurrentBook'}"
+         :class="{active: activeIcon === 'CurrentBook'}"
+         )
         font-awesome-icon(icon="book").menu-icon
-       router-link(:to="{name: 'Bookmarks'}")
+       router-link(
+         :to="{name: 'Bookmarks'}"
+         :class="{active: activeIcon === 'Bookmarks'}"
+         )
         font-awesome-icon(icon="bookmark").menu-icon
-       router-link(:to="{name: 'Media'}")
+       router-link(
+         :to="{name: 'Media'}"
+         :class="{active: activeIcon === 'Media'}"
+         )
         font-awesome-icon(icon="images").menu-icon
-       router-link(:to="{name: 'CreateRepo'}")
+       router-link(
+         :to="{name: 'CreateRepo'}"
+         :class="{active: activeIcon === 'CreateRepo'}"
+         )
         font-awesome-icon(icon="plus").menu-icon
     router-link(
       :to="{name: 'Activity', params: { username: user_name }}"
@@ -37,6 +55,11 @@ import AvatarIcon from "./profile/AvatarIcon";
 export default {
   name: "Header",
   components: {LoginButtons, Date, BookList, AvatarIcon},
+  data(){
+    return {
+
+    }
+  },
   computed: {
     ...mapGetters({
       loggedIn: "getLoggedIn",
@@ -45,10 +68,12 @@ export default {
     }),
     user_name() {
       return this.user ? this.user.user_name: 'A'
+    },
+    activeIcon(){
+      return this.$route.name
     }
   },
-  methods: {
-  }
+  methods: {},
 }
 </script>
 
@@ -67,9 +92,16 @@ export default {
     margin 7px
 .menu
   display flex
-  padding 10px 20px
+  padding 2px 20px
   font-size 20px
+  a
+    transition 0.4s
   .menu-icon
-    color $text_secondary
-    padding 0 10px
+    color $lines_color
+    padding 8px 11px
+  .active
+    background $light_lines_color
+    border-radius 5px
+    .menu-icon
+      color $text_color !important
 </style>

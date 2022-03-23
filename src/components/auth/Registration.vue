@@ -1,21 +1,19 @@
 <template lang="pug">
-.page-wrapper
-  .container
-    Header
-    br
-    .title {{ $t("signUp") }}
-    .login-form
-      .input-wrapper
-        input(v-model="name" placeholder="Name" required="true" type="email")
-      .input-wrapper
-        input(v-model="surname" placeholder="Surname" required="true" type="text")
-      .input-wrapper
-        input(v-model="email" placeholder="Username" required="true" type="text")
-      .input-wrapper
-        input(v-model="password" placeholder="Password" required="true" type="password")
-      .input-wrapper
-        button.btn.black-btn.noot(@click="submit") {{ $t("signUp") }}
-        router-link(:to="{name: 'Login'}") {{ $t("login") }}
+Header
+br
+.title {{ $t("signUp") }}
+.login-form
+  .input-wrapper
+    input(v-model="name" placeholder="Name" required="true" type="email")
+  .input-wrapper
+    input(v-model="surname" placeholder="Surname" required="true" type="text")
+  .input-wrapper
+    input(v-model="email" placeholder="Username" required="true" type="text")
+  .input-wrapper
+    input(v-model="password" placeholder="Password" required="true" type="password")
+  .input-wrapper
+    button.btn.black-btn.noot(@click="submit") {{ $t("signUp") }}
+    router-link(:to="{name: 'Login'}") {{ $t("login") }}
 </template>
 
 <script>

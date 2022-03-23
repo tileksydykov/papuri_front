@@ -1,6 +1,7 @@
 import {Axios} from "@/axios/axios";
 import {uuidv4} from "@/store/repo/functions";
 import {getExt} from "@/store/media/functions";
+import {AUDIO_EXTENSIONS, IMAGE_EXTENSIONS, VIDEO_EXTENSIONS} from "../../constants/constants";
 
 export default {
     namespaced: true,
@@ -14,16 +15,13 @@ export default {
         files: state => state.files,
         info: state => state.info,
         getImages: state => state.files.filter( file => {
-            const exts = ["jpg", "png", "gif", "jpeg", "raw"]
-            return exts.indexOf(getExt(file.name)) > -1
+            return IMAGE_EXTENSIONS.indexOf(getExt(file.name)) > -1
         }),
         getVideos: state => state.files.filter( file => {
-            const exts = ["mp4"]
-            return exts.indexOf(getExt(file.name)) > -1
+            return VIDEO_EXTENSIONS.indexOf(getExt(file.name)) > -1
         }),
         getAudios: state => state.files.filter( file => {
-            const exts = ["mp3"]
-            return exts.indexOf(getExt(file.name)) > -1
+            return AUDIO_EXTENSIONS.indexOf(getExt(file.name)) > -1
         })
     },
     mutations: {
