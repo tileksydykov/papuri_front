@@ -9,7 +9,7 @@ export default {
         folders: [],
         selectedFileId: '',
         blocks: [],
-        info: {}
+        info: {},
     },
     mutations: {
         setFolders: (state, data) => state.folders = data,
@@ -35,7 +35,6 @@ export default {
                 }
                 return f
             })
-
         }
     },
     getters: {

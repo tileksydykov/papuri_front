@@ -59,11 +59,11 @@ export default {
         const data = []
         if (this.info.media_types) {
           this.info.media_types.forEach(type => {
-            if(type.type === ""){
-              labels.push("other")
-            }else {
-              labels.push(type.type)
-            }
+            // if(type.type === ""){
+            //   labels.push("other")
+            // }else {
+            //   labels.push(type.type)
+            // }
             data.push(type.sum)
           })
         }
@@ -77,7 +77,11 @@ export default {
                 '#ff6b6b',
                 '#6bff7f',
                 '#b8992a',
-                '#c234ea'
+                '#c234ea',
+                '#2d9300',
+                '#3a0097',
+                '#000000',
+                '#ff0000',
               ],
             },
           ],

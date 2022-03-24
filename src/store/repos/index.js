@@ -6,16 +6,20 @@ export default {
         current: {},
         all: [],
         files: [],
+        reading: {},
     },
     mutations: {
         setCurrent: (state, data) => state.current = data,
         setAll: (state, data) => state.all = data,
         setFiles: (state, data) => state.files = data,
+        setReadingId: (state, data) => state.readingId = data,
+        makeCurrentReading: (state) => state.reading = Object.assign({}, state.current)
     },
     getters: {
         getCurrent: state => state.current,
         listAll: state => state.all,
         listFiles: state => state.files,
+        getReading: state => state.reading,
     },
     actions: {
         create: async (ctx, {name, title}) => {

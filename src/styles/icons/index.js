@@ -4,7 +4,7 @@ import {
     faFile,
     faFileAlt, faFileAudio,
     faFileCode,
-    faFolder, faHome, faImage, faImages, faLightbulb, faMemory, faPlus, faSearch, faTextHeight,
+    faFolder, faHome, faImage, faImages, faLightbulb, faMemory, faMoon, faPlus, faSearch, faSun, faTextHeight,
     faTimes,
     faUserSecret, faVideo
 } from "@fortawesome/free-solid-svg-icons";
@@ -34,7 +34,9 @@ library.add(
     faImages,
     faPlus,
     faCompactDisc,
-    faMemory
+    faMemory,
+    faMoon,
+    faSun,
 )
 
 export default function (app) {

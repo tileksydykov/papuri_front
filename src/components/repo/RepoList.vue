@@ -2,7 +2,8 @@
 ul.repo-list
   li.repo-card(v-for="repo in repos")
     RepoCover(:repo="repo" :size="120").self-center
-    .date.secondary {{ date(repo) }}
+    // .date.secondary {{ date(repo) }}
+    br
     .secondary(v-if="repo.name.length === 0") no name
     .title
       router-link(v-if="repo.name" :to="link(repo)") {{ repo.title ? repo.title:"-|-"  }}

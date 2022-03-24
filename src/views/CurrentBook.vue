@@ -2,14 +2,20 @@
 .page-wrapper
   .container
     Header
-    h1 Current Book
+    h2.noto {{ readingRepo.title }}
 </template>
 
 <script>
 import Header from "@/components/Header";
+import {mapGetters} from "vuex";
 export default {
   name: "CurrentBook",
-  components: {Header}
+  components: {Header},
+  computed: {
+    ...mapGetters({
+      readingRepo: "repos/getReading"
+    })
+  }
 }
 </script>
 

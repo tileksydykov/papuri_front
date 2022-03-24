@@ -42,11 +42,23 @@
       :user="user"
       :size="30"
     ).icon
-  Date
+  .d-flex
+    Date
+    .change-theme
+      font-awesome-icon(
+        v-if="theme === 'dark'"
+        icon="sun"
+        @click="setTheme('light')"
+        )
+      font-awesome-icon(
+        @click="setTheme('dark')"
+        v-if="theme === 'light'"
+        icon="moon"
+        )
 </template>
 
 <script>
-import {mapGetters} from "vuex";
+import {mapGetters, mapMutations} from "vuex";
 import LoginButtons from "./util/LoginButtons";
 import Date from "./util/Date";
 import BookList from "./repo/RepoList";
@@ -64,7 +76,8 @@ export default {
     ...mapGetters({
       loggedIn: "getLoggedIn",
       user: "getUser",
-      isFixed: "isMenuFixed"
+      isFixed: "isMenuFixed",
+      theme: "getTheme"
     }),
     user_name() {
       return this.user ? this.user.user_name: 'A'
@@ -73,7 +86,11 @@ export default {
       return this.$route.name
     }
   },
-  methods: {},
+  methods: {
+    ...mapMutations({
+      setTheme: "setTheme"
+    })
+  },
 }
 </script>
 
@@ -102,8 +119,13 @@ export default {
     color $lines_color
 
   .active
-    background $light_lines_color
+    background $background_selected_color
     border-radius 5px
     .menu-icon
       color $text_color !important
+.change-theme
+  padding 12px
+  svg
+    height 25px
+    width 25px
 </style>

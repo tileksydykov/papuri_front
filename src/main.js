@@ -4,14 +4,12 @@ import router from './router'
 import store from "./store";
 import mixins from './mixins'
 import icons from './styles/icons'
-import {createMetaManager} from 'vue-meta'
 import i18n from "./locales";
 
 const app = createApp(App)
 icons(app)
 app.mixin(mixins)
 app.use(router)
-app.use(createMetaManager())
 app.use(i18n)
 app.use(store)
 app.mount('#app')

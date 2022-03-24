@@ -1,6 +1,7 @@
 @import "vars.styl"
 :root
   --color__bg #fcfcfc
+  --color__selected_bg #ffffff
   --color__text #313131
   --color__text_secondary #525252
   --color__link #1a1fff
@@ -17,19 +18,21 @@
   --color_btn_cyan #00cbc1
   @media screen
     &[data-theme="dark"]
-      --color__bg #5a5a5a
+      --color__bg #1f1f1f
       --color__text #fdfdfd
       --color__text_secondary #e0e0e0
-      --color__link #9cebff
-      --color__link_visited #f570ff
+      --color__link #88e5fd
+      --color__link_visited #70faff
       --color__lines #747474
       --color__shadow #9a9a9a
       --color__light__shadow #787878
       --color_loading_background linear-gradient(110deg, #797979 8%, #c6c6c6 18%, #6f6f6f 33%);
-      --color_input_background #000000
+      --color_input_background #242424
       --color_input_font #f5f5f5
+      --color__selected_bg #555555
 
 $background_color = var(--color__bg)
+$background_selected_color = var(--color__selected_bg)
 $text_color = var(--color__text)
 $text_secondary = var(--color__text_secondary)
 $link_color = var(--color__link)
