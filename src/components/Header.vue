@@ -96,9 +96,11 @@ export default {
   font-size 20px
   a
     transition 0.4s
+    padding 3px 11px
+    margin 5px
   .menu-icon
     color $lines_color
-    padding 8px 11px
+
   .active
     background $light_lines_color
     border-radius 5px

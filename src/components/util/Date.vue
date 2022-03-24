@@ -39,7 +39,7 @@ export default {
     padding 0 5px
   .date-right
     color $text_secondary
-    padding-top 8px
+    padding-top 9px
     line-height 16px
     font-size 12px
 </style>
