@@ -2,19 +2,41 @@
 .page-wrapper
   .container
     Header
-    h2.noto {{ readingRepo.title }}
+    h2.noto(v-if="readingRepo && readingRepo.repo") {{ readingRepo.repo.title }}
 </template>
 
 <script>
 import Header from "@/components/Header";
-import {mapGetters} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 export default {
   name: "CurrentBook",
   components: {Header},
+  methods: {
+    ...mapActions({
+      fetchFiles: "repos/getReadingFiles",
+      fetchReading: "repos/getReading"
+    })
+  },
   computed: {
     ...mapGetters({
-      readingRepo: "repos/getReading"
+      readingRepo: "repos/getReading",
+      readingFiles: "repos/listReadingFiles"
     })
+  },
+  mounted() {
+    if (!this.$route.params.internal) {
+      this.fetchReading()
+    }
+  },
+  watch: {
+    readingRepo(reading){
+      if(reading && reading.repo){
+        this.fetchFiles({
+          username: reading.repo.user_name,
+          repo: reading.repo.name
+        })
+      }
+    }
   }
 }
 </script>

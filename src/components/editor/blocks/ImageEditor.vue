@@ -12,7 +12,7 @@
       | {{ nameId(m.id, m.name) }}
   br
   br
-  img.image(:src="link(block.data.imageId)")
+  img.image.center(:src="link(block.data.imageId)")
 </template>
 
 <script>
@@ -51,5 +51,7 @@ select
   padding 0
   border-radius 0
 .image
-  width 100%
+  width auto
+  max-width 100%
+  max-height 500px
 </style>

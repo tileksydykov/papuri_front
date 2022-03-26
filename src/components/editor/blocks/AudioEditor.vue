@@ -12,8 +12,10 @@
       | {{ nameId(m.id, m.name) }}
   br
   br
-  audio(v-if="block.data.id" controls="true") Your browser does not support the audio element.
+  audio(v-if="block.data.id && block.data.id !== 'undefined'" controls="true") Your browser does not support the audio element.
     source(:src="link(block.data.id)")
+  p.secondary.center(v-else) Audio not selected
+
 </template>
 
 <script>

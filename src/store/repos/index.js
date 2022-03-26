@@ -7,18 +7,24 @@ export default {
         all: [],
         files: [],
         reading: {},
+        readingFiles: {},
+        readings: [],
     },
     mutations: {
         setCurrent: (state, data) => state.current = data,
         setAll: (state, data) => state.all = data,
         setFiles: (state, data) => state.files = data,
-        setReadingId: (state, data) => state.readingId = data,
+        setReadings: (state, data) => state.readings = data,
+        setReadingFiles: (state, data) => state.readingFiles = data,
+        setReading: (state, data) => state.reading = data,
         makeCurrentReading: (state) => state.reading = Object.assign({}, state.current)
     },
     getters: {
         getCurrent: state => state.current,
         listAll: state => state.all,
         listFiles: state => state.files,
+        readings: state => state.readings,
+        listReadingFiles: state => state.readingFiles,
         getReading: state => state.reading,
     },
     actions: {
@@ -48,5 +54,31 @@ export default {
         files: async (ctx, list) => {
             ctx.commit("setFiles", list)
         },
+        getReading: async (ctx) => {
+            let r = await Axios.get("/api/v1/repos/reading/last")
+            ctx.commit('setReading', r.data.result)
+            return r.data.result
+        },
+        getReadingFiles: async (ctx, {username, repo}) => {
+            const url = `api/v1/repos/files/${username}/${repo}`
+            let res = await Axios.get(url)
+            if (res.status === 200){
+                ctx.commit('setReadingFiles', res.data.result)
+            }
+        },
+        async setReading (ctx, {username, repo}) {
+            const url = `api/v1/repos/reading/${username}/${repo}`
+            let res = await Axios.post(url)
+            if (res.status === 200) {
+                ctx.commit('setReading', res.data.result)
+            }
+        },
+        async fetchReadings (ctx) {
+            const url = `api/v1/repos/reading`
+            let res = await Axios.get(url)
+            if (res.status === 200) {
+                ctx.commit('setReadings', res.data.result)
+            }
+        }
     }
 }

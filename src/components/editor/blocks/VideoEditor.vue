@@ -12,8 +12,9 @@
       | {{ nameId(m.id, m.name) }}
   br
   br
-  video.video(v-if="block.data.id" controls="true") Your browser does not support the video element.
+  video.video(v-if="block.data.id && block.data.id !== 'undefined'" controls="true") Your browser does not support the video element.
     source(:src="link(block.data.id)")
+  p.secondary.center(v-else) Video not selected
 </template>
 
 <script>

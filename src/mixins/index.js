@@ -1,4 +1,5 @@
 import store from "@/store";
+import * as dayjs from "dayjs";
 
 export default {
     methods: {
@@ -66,6 +67,7 @@ export default {
             }
             result = result.replace(/^_/, '').replace(/_$/, ''); // trim
             return result
-        }
+        },
+        dayjs,
     }
 }
