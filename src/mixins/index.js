@@ -3,7 +3,9 @@ import * as dayjs from "dayjs";
 
 export default {
     methods: {
-        setTitle: (title) => store.commit("setTitle", title),
+        setTitle: (title) => {
+            store.commit("setTitle", title + " | Alatoo")
+        },
         shortenNumbers: (number) => {
             if (number < 1_000) {
                 return number + ""
