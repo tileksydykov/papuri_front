@@ -1,5 +1,5 @@
 <template lang="pug">
-p(v-if="!file") file not choosen
+p(v-if="!file") {{ $t("fileNotChosen") }}
 .editors-container(v-else)
   p {{ file.name }}
   .d-flex

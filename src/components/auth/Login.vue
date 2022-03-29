@@ -26,10 +26,6 @@ export default {
       password: ""
     }
   },
-  metaInfo: {
-    title: "Login",
-    i18n: "login"
-  },
   computed: {
      ...mapGetters({
        loggedIn: "getLoggedIn"
