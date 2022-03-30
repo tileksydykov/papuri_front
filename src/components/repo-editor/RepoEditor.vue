@@ -1,7 +1,9 @@
 <template lang="pug">
-.editor
-  Header
-  Editor
+.page-wrapper
+  .container
+    .editor
+      Header
+      Editor
 </template>
 
 <script>

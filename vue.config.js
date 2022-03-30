@@ -3,7 +3,7 @@ module.exports = {
     devServer: {
         proxy: {
             '/api': {
-                target: 'http://alatoo.kg/',
+                target: 'http://localhost:8090/',
                 ws: true
             },
         }
@@ -21,9 +21,6 @@ module.exports = {
             ),
         );
     },
-    transpileDependencies: [
-        'vue-meta',
-    ],
 };
 
 function addStyleResource(rule) {

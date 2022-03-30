@@ -42,7 +42,9 @@ export default {
         getFolders: state => state.folders,
         getFiles: state => state.files,
         getInfo: state => state.info,
-        getFilesByFolderId: state => id => state.files.filter(f => f.folderId === id),
+        getFilesByFolderId: state => id => {
+            return state.files.filter(f => f.folderId === id).sort((a,b) => a.order_num - b.order_num)
+        },
         getFoldersByFolderId: state => id => state.folders.filter(f => f.parent === id),
         getSelectedFile: state => state.files.find(f => f.id===state.selectedFileId),
     },
