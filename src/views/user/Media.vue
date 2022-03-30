@@ -3,9 +3,7 @@
   .container
     Header
     h2.noto Media
-    .charts
-      DoughnutChart.chart(:chartData="chartData")
-      DoughnutChart.chart(:chartData="fileTypesData")
+    Charts(:chartData="chartData" :fileTypesData="fileTypesData")
     p Total files: {{ info.media_count }} Size: {{ size(info.media_size) }} from {{ size(info.media_allowed) }}
     FileUpload
     hr
@@ -26,14 +24,11 @@ import {mapActions, mapGetters} from "vuex";
 import Header from "../../components/Header";
 import {Axios} from "../../axios/axios";
 import {IMAGE_TYPES} from "../../constants/constants";
-
-import { DoughnutChart } from 'vue-chart-3';
-import { Chart, registerables } from "chart.js";
-Chart.register(...registerables);
+import Charts from "../../components/media/Charts";
 
 export default {
   name: "Media",
-  components: { Header, FileUpload, DoughnutChart},
+  components: {Header, FileUpload, Charts},
   computed: {
     ...mapGetters({
       files: 'media/files',
@@ -160,15 +155,5 @@ export default {
         height 100%
         background-size 100%
         background-position center
-.charts
-  display flex
-  justify-content center
-  .chart
-    height 200px
-    width 50%
-@media screen and (max-width: 620px)
-  .charts
-    flex-direction column
-    .chart
-      width 100%
+
 </style>

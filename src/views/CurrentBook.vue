@@ -3,6 +3,12 @@
   .container
     Header
     h2.noto(v-if="readingRepo && readingRepo.repo") {{ readingRepo.repo.title }}
+    .d-flex
+      .w-25
+        .files(v-for="file in readingFiles" :key="file.id") {{ file.path }}
+      .w-75
+        .file {{  }}
+
 </template>
 
 <script>
