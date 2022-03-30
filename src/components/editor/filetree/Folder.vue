@@ -106,6 +106,7 @@ export default {
       }
     },
     addFileToThisFolder () {
+      const lastFile = this.files(this.thisFolder.id).slice(-1)[0]
       this.addFiles({
         id: uuidv4(),
         name: '',
@@ -113,6 +114,7 @@ export default {
         editing: true,
         folderId: this.thisFolder.id,
         content: '',
+        prev_file_id: lastFile ? lastFile.id : "0"
       })
     },
     toggle(){

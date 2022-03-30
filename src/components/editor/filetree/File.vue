@@ -7,7 +7,7 @@
     :class="{selected}"
     @click="select(file.id)")
     font-awesome-icon.secondary(icon="file-alt")
-    span  &nbsp;{{ file.name }}
+    span  &nbsp;{{ file.name }} -> {{ file.order_num }}
   template(v-else)
     input(
       placeholder='name'

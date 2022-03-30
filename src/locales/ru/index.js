@@ -4,4 +4,5 @@ export default {
     signUp: "Регистрация",
     recentlyAdded: "Последние добавленные",
     save: "сохранить",
+    fileNotChosen: "файл не выбран"
 }

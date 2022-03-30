@@ -25,7 +25,7 @@ export default {
   },
   mounted() {
     this.$store.dispatch("appMounted");
-    this.setTitle("Alatoo")
+    this.setTitle("Main")
   },
 
   watch: {

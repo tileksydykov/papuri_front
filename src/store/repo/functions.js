@@ -1,3 +1,4 @@
+
 export const orderFiles = (files) => {
     const folders = []
     let counter = 1
@@ -34,6 +35,20 @@ export const orderFiles = (files) => {
         const folder = folders.find(f => f.path === folderName)
         file.folderId = folder ? folder.id: 0
         file.name = file.path.split('/').slice(-1).join()
+    })
+    // find folders order
+
+    // find file order
+    let orderCounter = 1
+    console.log(files)
+
+    files.forEach(file => {
+        if(file.prev_file_id !== "0") {
+            const prev = files.find(f => f.id === file.prev_file_id)
+            if (prev) {
+                file.order_num = orderCounter++
+            }
+        }
     })
     return {
         files,

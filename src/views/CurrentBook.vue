@@ -14,6 +14,7 @@
 <script>
 import Header from "@/components/Header";
 import {mapActions, mapGetters} from "vuex";
+
 export default {
   name: "CurrentBook",
   components: {Header},

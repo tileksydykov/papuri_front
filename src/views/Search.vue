@@ -3,13 +3,17 @@
   .container
     Header
     h1 Search
+    p hello
 </template>
 
 <script>
 import Header from "@/components/Header";
 export default {
   name: "Search",
-  components: {Header}
+  components: {Header},
+  mounted() {
+    this.setTitle("Search")
+  }
 }
 </script>
 
