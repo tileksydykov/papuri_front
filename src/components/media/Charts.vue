@@ -8,7 +8,8 @@
 import { DoughnutChart } from 'vue-chart-3';
 import { Chart, registerables } from "chart.js";
 import Charts from "../../components/media/Charts";
-Chart.register(...registerables);export default {
+Chart.register(...registerables);
+export default {
   name: "Charts",
   components: {DoughnutChart, Charts},
   props: {

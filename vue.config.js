@@ -3,7 +3,7 @@ module.exports = {
     devServer: {
         proxy: {
             '/api': {
-                target: 'http://localhost:8090/',
+                target: process.env.DEV === "true" ? 'http://localhost:8090/': 'http://alatoo.kg/',
                 ws: true
             },
         }
