@@ -1,13 +1,19 @@
 <template lang="pug">
 .file-tree-cont
-  Folder(:thisFolder="{id: 0, path: ''}")
+  Folder( :folder="folder[0]")
 </template>
 
 <script>
 import Folder from "./Folder";
+import {mapGetters} from "vuex";
 export default {
   name: "FileTree",
-  components: {Folder}
+  components: {Folder},
+  computed: {
+    ...mapGetters({
+      folder: "repo/getRoot"
+    })
+  }
 }
 </script>
 

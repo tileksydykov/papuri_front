@@ -7,12 +7,14 @@ export default {
     state: {
         files: [],
         folders: [],
+        root: [],
         selectedFileId: '',
         blocks: [],
         info: {},
     },
     mutations: {
         setFolders: (state, data) => state.folders = data,
+        setRoot: (state, data) => state.root = data,
         setBlocks: (state, data) => state.blocks = data,
         setInfo: (state, data) => state.info = data,
         addBlocks: (state, data) => state.blocks.push(data),
@@ -40,6 +42,7 @@ export default {
     getters: {
         getBlocks: state => state.blocks,
         getFolders: state => state.folders,
+        getRoot: state => state.root,
         getFiles: state => state.files,
         getInfo: state => state.info,
         getFilesByFolderId: state => id => {
@@ -91,18 +94,16 @@ export default {
             const url = `api/v1/repos/files/${username}/${repo}`
             let res = await Axios.get(url)
             if (res.status === 200){
-                const {files, folders} = orderFiles(res.data.result)
-                ctx.commit('setFolders', folders)
-                ctx.commit('setFiles', files)
+                const folder = orderFiles(res.data.result)
+                ctx.commit('setRoot', folder)
             }
         },
         async updateFiles (ctx, {username, repo, files}) {
             const url = `api/v1/repos/files/${username}/${repo}`
             let res = await Axios.patch(url, files)
             if (res.status === 200) {
-                const {files, folders} = orderFiles(res.data.result)
-                ctx.commit('setFolders', folders)
-                ctx.commit('setFiles', files)
+                const folder = orderFiles(res.data.result)
+                ctx.commit('setRoot', folder)
             }
         },
         async fetchRepoInfo (ctx, {username, repo}) {

@@ -1,46 +1,26 @@
 <template lang="pug">
 .folder(
-  v-if="thisFolder.id === 0"
-  )
-  b(
-    @drop="onDrop($event)"
-    @dragover.prevent
-    @dragenter.prevent
-    ) {{ repo.name }}
-  span.link(@click="addFileToThisFolder") :+:
-  .folder-content(:class="{'close-folder': !open, 'open-folder': open}")
-    Folder(
-      v-for="folder in folders(thisFolder.id)"
-      :key="folder.id"
-      :thisFolder="folder")
-    File(
-      v-for="file in files(thisFolder.id)"
-      :key="file.id"
-      :file="file"
-    )
-
-.folder(
-  v-else
   style="margin-left: 10px"
+  v-if="folder"
   )
   span.folder-title(
     draggable='true'
-    @dragstart="startDrag($event, thisFolder, 'folder')"
+    @dragstart="startDrag($event, folder, 'folder')"
     @drop="onDrop($event)"
     @dragover.prevent
     @dragenter.prevent
     @click="toggle"
     )
     font-awesome-icon.secondary(icon="folder")
-    span  &nbsp;{{ thisFolder.name }}
+    span  &nbsp;{{ folder.name }}
   span.link(@click="addFileToThisFolder") +
   .folder-content(:class="{'close-folder': !open, 'open-folder': open}")
     Folder(
-      v-for="folder in folders(thisFolder.id)"
-      :key="folder.id"
-      :thisFolder="folder")
+      v-for="f in folder.folders"
+      :key="f.id"
+      :folder="f")
     File(
-      v-for="file in files(thisFolder.id)"
+      v-for="file in folder.files"
       :key="file.id"
       :file="file"
       )
@@ -49,7 +29,7 @@
 <script>
 import {mapActions, mapGetters, mapMutations} from "vuex";
 import File from "./File";
-import {uuidv4} from "../../../store/repo/functions";
+import {uuidv4} from "@/store/repo/functions";
 
 export default {
   name: "Folder",
@@ -60,15 +40,13 @@ export default {
     }
   },
   props: {
-    thisFolder: {
+    folder: {
       required: true,
       type: Object,
     }
   },
   computed: {
     ...mapGetters({
-      folders: 'repo/getFoldersByFolderId',
-      files: 'repo/getFilesByFolderId',
       repo: 'repos/getCurrent'
     }),
   },
@@ -93,7 +71,7 @@ export default {
       if (itemType === 'file') {
         this.moveFile({
           fileId: itemID,
-          toFolder: this.thisFolder,
+          toFolder: this.folder,
           username: this.repo.user_name,
           repo: this.repo.name,
         })
