@@ -20,6 +20,7 @@ export default {
 <style lang="stylus" scoped>
 .file-tree-cont
   width 1000px
+  font-size 14px
 .link
   cursor pointer
   :hover

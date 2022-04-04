@@ -12,5 +12,8 @@ export const AudioEditorEngine = {
                 id: text.slice(text.indexOf(" ")+1)
             }
         }
+    },
+    fromBlockToHtml(block) {
+        return block
     }
 }

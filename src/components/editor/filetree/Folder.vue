@@ -149,6 +149,7 @@ export default {
 .open-folder
   height auto
 .folder-title
+
   &:hover
     font-weight bolder
 .context-menu

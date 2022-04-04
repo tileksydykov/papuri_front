@@ -5,19 +5,21 @@
     h2.noto(v-if="readingRepo && readingRepo.repo") {{ readingRepo.repo.title }}
     .d-flex
       .w-25
-        .files(v-for="file in readingFiles" :key="file.id") {{ file.path }}
+        .files-folder
+          ReadingFolder(:folder="folder")
       .w-75
-        .file {{  }}
+        .file(v-html="html")
 
 </template>
 
 <script>
 import Header from "@/components/Header";
 import {mapActions, mapGetters} from "vuex";
+import ReadingFolder from "../components/repo/reading/ReadingFolder";
 
 export default {
   name: "CurrentBook",
-  components: {Header},
+  components: {ReadingFolder, Header},
   methods: {
     ...mapActions({
       fetchFiles: "repos/getReadingFiles",
@@ -27,7 +29,10 @@ export default {
   computed: {
     ...mapGetters({
       readingRepo: "repos/getReading",
-      readingFiles: "repos/listReadingFiles"
+      readingFiles: "repos/listReadingFiles",
+      folder: "repos/listReadingFolder",
+      file: "repos/getReadingFile",
+      html: "repos/getReadingFileHTML"
     })
   },
   mounted() {
@@ -48,6 +53,7 @@ export default {
 }
 </script>
 
-<style scoped lang="stylus">
-
+<style lang="stylus">
+.image
+  max-width 100%
 </style>

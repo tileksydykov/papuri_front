@@ -19,5 +19,8 @@ export const TestEditorEngine = {
                 options: testParts.slice(1).map(opt => opt.slice(2))
             }
         }
+    },
+    fromBlockToHtml(block) {
+        return block
     }
 }

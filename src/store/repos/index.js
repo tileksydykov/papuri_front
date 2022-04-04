@@ -1,4 +1,6 @@
 import {Axios} from "@/axios/axios";
+import {orderFiles} from "../repo/functions";
+import {Engine} from "../../engine";
 
 export default {
     namespaced: true,
@@ -9,13 +11,17 @@ export default {
         reading: {},
         readingFiles: {},
         readings: [],
+        readingFolder: {},
+        readingFile: {}
     },
     mutations: {
         setCurrent: (state, data) => state.current = data,
         setAll: (state, data) => state.all = data,
         setFiles: (state, data) => state.files = data,
+        setReadingFile: (state, data) => state.readingFile = data,
         setReadings: (state, data) => state.readings = data,
         setReadingFiles: (state, data) => state.readingFiles = data,
+        setReadingFolder: (state, data) => state.readingFolder = data,
         setReading: (state, data) => state.reading = data,
         makeCurrentReading: (state) => state.reading = Object.assign({}, state.current)
     },
@@ -25,6 +31,13 @@ export default {
         listFiles: state => state.files,
         readings: state => state.readings,
         listReadingFiles: state => state.readingFiles,
+        getReadingFile: state => state.readingFile,
+        getReadingFileHTML: state => {
+            if (state.readingFile.content) {
+                return Engine.fromBlockToHtml(Engine.fromTextToBlocks(state.readingFile.content))
+            }
+        },
+        listReadingFolder: state => state.readingFolder,
         getReading: state => state.reading,
     },
     actions: {
@@ -64,6 +77,7 @@ export default {
             let res = await Axios.get(url)
             if (res.status === 200){
                 ctx.commit('setReadingFiles', res.data.result)
+                ctx.commit('setReadingFolder', orderFiles(res.data.result)[0])
             }
         },
         async setReading (ctx, {username, repo}) {

@@ -8,9 +8,28 @@ export const Engine = {
     fromObjectToJson(obj) {
         return JSON.stringify(obj)
     },
-    fromObjToHtml(obj){
-        // TODO implement
-        return obj
+    fromBlockToHtml(blocks){
+        let text = ''
+        blocks.forEach(block => {
+            switch (block.container) {
+                case 'TextEditor':
+                    text += TextEditorEngine.fromBlockToHtml(block) + '\n\n'
+                    break
+                case 'ImageEditor':
+                    text += ImageEditorEngine.fromBlockToHtml(block) + '\n\n'
+                    break
+                case 'VideoEditor':
+                    text += VideoEditorEngine.fromBlockToHtml(block) + '\n\n'
+                    break
+                case 'AudioEditor':
+                    text += AudioEditorEngine.fromBlockToHtml(block) + '\n\n'
+                    break
+                case 'TestEditor':
+                    text += TestEditorEngine.fromBlockToHtml(block) + '\n\n'
+                    break
+            }
+        })
+        return text;
     },
     fromBlocksToText(blocks){
         let text = ''
