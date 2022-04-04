@@ -36,6 +36,7 @@ export default {
   },
   methods: {
     save(){
+      console.log("saved")
       this.$emit("save", this.block)
     },
     nameId(id, name){

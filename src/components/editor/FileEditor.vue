@@ -85,11 +85,13 @@ export default {
       })
     },
     saveBlock(){
-      this.saveContent(Engine.fromBlocksToText(this.blocks))
+      this.file.content = Engine.fromBlocksToText(this.blocks)
+      this.saveContent(this.file)
       this.save(this.file)
     },
     render(){
-      this.saveContent(Engine.fromBlocksToText(this.blocks))
+      this.file.content = Engine.fromBlocksToText(this.blocks)
+      this.saveContent(this.file)
       this.save(this.file)
     },
     addText(){

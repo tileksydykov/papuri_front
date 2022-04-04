@@ -1,6 +1,6 @@
 <template lang="pug">
 .file-tree-cont
-  Folder( :folder="folder[0]")
+  Folder(v-if="folder[0]" :folder="folder[0]")
 </template>
 
 <script>

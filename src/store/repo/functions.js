@@ -60,6 +60,63 @@ export const orderFiles = files => {
     return folders
 }
 
+export const saveContent = (root, file) => {
+    if (root){
+        if (root.files && root.id === file.folderId){
+            root.files.forEach(f => f.id === file.id ? f.content = file.content : null)
+            return true
+        }
+        for (let i = 0; i < root.folders; i++) {
+            if (saveContent(root.folders[i], file)) {
+                return true
+            }
+        }
+    }
+    return false
+}
+
+export const insertFileToFolder = (root, file) => {
+    if (root.id === file.folderId){
+        root.files.push(file)
+        return true
+    }
+    for (let i = 0; i < root.folders.length; i++) {
+        if (insertFileToFolder(root.folders[i], file)) {
+            return true
+        }
+    }
+    return false
+}
+
+export const saveFile = (root, file) => {
+    if (root.id === file.folderId){
+        root.files.map(f => f.id === file.id ? file: f)
+        return true
+    }
+    for (let i = 0; i < root.folders; i++) {
+        if (saveFile(root.folders[i], file)) {
+            return true
+        }
+    }
+    return false
+}
+
+export const findFile = (root, fileId) => {
+    if(root && fileId){
+        const file = root.files.find(f => f.id === fileId)
+        if (file){
+            return file
+        }
+        for (let i = 0; i < root.folders.length; i++) {
+            const file = findFile(root.folders[i], fileId)
+            if (file) {
+                return file
+            }
+        }
+    }
+    return false
+}
+
 export const uuidv4 =  () => {
     return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
         (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)

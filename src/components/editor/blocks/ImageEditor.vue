@@ -12,7 +12,8 @@
       | {{ nameId(m.id, m.name) }}
   br
   br
-  img.image.center(:src="link(block.data.imageId)")
+  .secondary.center(v-if="!block.data.imageId || block.data.imageId === '0'") Image not selected
+  img.image.center(v-else :src="link(block.data.imageId)")
 </template>
 
 <script>
@@ -37,7 +38,7 @@ export default {
       this.$emit("save", this.block)
     },
     nameId(id, name){
-      return id+"-"+name
+      return id + "-" + name
     },
     link(id){
       return Axios.generateMediaLink(id.slice(0, id.indexOf("-")))

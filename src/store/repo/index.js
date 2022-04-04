@@ -1,4 +1,4 @@
-import {orderFiles} from "./functions";
+import {findFile, insertFileToFolder, orderFiles, saveContent, saveFile} from "./functions";
 import {Axios} from "@/axios/axios";
 import {Engine} from "@/engine";
 
@@ -21,22 +21,18 @@ export default {
         setFiles: (state, data) => state.files = data,
         selectFile: (state, id) => {
             state.selectedFileId = id
-            state.blocks = Engine.fromTextToBlocks(state.files.find(f => f.id===state.selectedFileId).content)
+            const file = findFile(state.root[0], state.selectedFileId).content
+            console.log(file)
+            if (file) state.blocks = Engine.fromTextToBlocks(file)
         },
-        addFiles: (state, file) => state.files.push(file),
+        addFiles: (state, file) => {
+            insertFileToFolder(state.root[0], file)
+        },
         saveFile: (state, file) => {
-            state.files.map(f => f.id === file.id ? file: f)
-            const {files, folders} = orderFiles(state.files)
-            state.files = files
-            state.folders = folders
+            saveFile(state.root, file)
         },
-        saveContent: (state, content) => {
-            state.files = state.files.map(f => {
-                if (f.id === state.selectedFileId) {
-                    f.content = content
-                }
-                return f
-            })
+        saveContent: (state, file) => {
+            saveContent(state.root, file)
         }
     },
     getters: {
@@ -49,7 +45,7 @@ export default {
             return state.files.filter(f => f.folderId === id).sort((a,b) => a.order_num - b.order_num)
         },
         getFoldersByFolderId: state => id => state.folders.filter(f => f.parent === id),
-        getSelectedFile: state => state.files.find(f => f.id===state.selectedFileId),
+        getSelectedFile: state => findFile(state.root[0], state.selectedFileId),
     },
     actions: {
         moveFolder(ctx, {folderId, toFolder}){

@@ -3,6 +3,16 @@
   style="margin-left: 10px"
   v-if="folder"
   )
+  .context-menu(
+    @mouseleave="out"
+    :class="{close: !contextMenuOpen}"
+  )
+    .context-menu-content
+      ul
+        li
+          span.link(@click="addFileToThisFolder") Add new file +
+        li
+          span.link(@click="addFolderToThisFolder") Add new folder +
   span.folder-title(
     draggable='true'
     @dragstart="startDrag($event, folder, 'folder')"
@@ -10,20 +20,24 @@
     @dragover.prevent
     @dragenter.prevent
     @click="toggle"
+    @contextmenu.prevent="openContextMenu"
     )
     font-awesome-icon.secondary(icon="folder")
     span  &nbsp;{{ folder.name }}
-  span.link(@click="addFileToThisFolder") +
+
   .folder-content(:class="{'close-folder': !open, 'open-folder': open}")
     Folder(
       v-for="f in folder.folders"
       :key="f.id"
       :folder="f")
-    File(
+    template(
       v-for="file in folder.files"
       :key="file.id"
-      :file="file"
-      )
+    )
+      File(
+        v-if="file.name !== '.folder'"
+        :file="file"
+        )
 </template>
 
 <script>
@@ -37,6 +51,7 @@ export default {
   data() {
     return {
       open: true,
+      contextMenuOpen: false
     }
   },
   props: {
@@ -79,24 +94,44 @@ export default {
       else if (itemType === 'folder') {
         this.moveFolder({
           folderId: parseInt(itemID),
-          toFolder: this.thisFolder
+          toFolder: this.folder
         })
       }
     },
+    closeMenu(){
+      this.contextMenuOpen = false
+    },
     addFileToThisFolder () {
-      const lastFile = this.files(this.thisFolder.id).slice(-1)[0]
+      this.closeMenu()
+      const lastFile = this.folder.files.slice(-1)[0]
       this.addFiles({
         id: uuidv4(),
         name: '',
-        path: this.thisFolder.path,
+        path: this.folder.path,
         editing: true,
-        folderId: this.thisFolder.id,
+        folderId: this.folder.id,
         content: '',
         prev_file_id: lastFile ? lastFile.id : "0"
       })
     },
+    addFolderToThisFolder () {
+      this.closeMenu()
+      this.addFiles({
+        id: uuidv4(),
+        name: 'folder/.folder',
+        path: this.folder.path,
+        folderId: this.folder.id,
+        content: '',
+      })
+    },
     toggle(){
       this.open = !this.open
+    },
+    openContextMenu() {
+      this.contextMenuOpen = true
+    },
+    out(){
+      this.contextMenuOpen = false
     }
   },
 }
@@ -104,6 +139,7 @@ export default {
 
 <style scoped lang="stylus">
 .folder
+  position relative
   width 100%
   cursor pointer
 .close-folder
@@ -115,4 +151,27 @@ export default {
 .folder-title
   &:hover
     font-weight bolder
+.context-menu
+  position absolute
+  background $background_color
+  z-index 99999
+  border-radius 3px
+  box-shadow 2px 2px 10px $light_lines_color
+  border 1px solid $lines_color
+  .context-menu-content
+    padding 5px
+    ul
+      list-style none
+      padding 0
+      margin 0
+      li
+        padding 3px
+        border-radius 3px
+        &:hover
+          background $light_shadow_color
+  &.close
+    display none
+  &.open
+    display block
+
 </style>
