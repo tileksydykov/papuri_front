@@ -20,9 +20,9 @@ export default {
         addBlocks: (state, data) => state.blocks.push(data),
         setFiles: (state, data) => state.files = data,
         selectFile: (state, id) => {
+            state.blocks = []
             state.selectedFileId = id
             const file = findFile(state.root[0], state.selectedFileId).content
-            console.log(file)
             if (file) state.blocks = Engine.fromTextToBlocks(file)
         },
         addFiles: (state, file) => {

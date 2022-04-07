@@ -1,6 +1,7 @@
 <template lang="pug">
-.file-tree-cont
-  Folder(v-if="folder[0]" :folder="folder[0]")
+.file-tree-cont.scrollbar
+  .folder-cont
+    Folder.margin-0(v-if="folder[0]" :folder="folder[0]")
 </template>
 
 <script>
@@ -19,10 +20,15 @@ export default {
 
 <style lang="stylus" scoped>
 .file-tree-cont
-  width 1000px
   font-size 14px
+  min-height 200px
+  .folder-cont
+    display block
+    width max-content
 .link
   cursor pointer
   :hover
     font-weight bold
+.margin-0
+  margin 0
 </style>

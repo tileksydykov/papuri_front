@@ -8,6 +8,7 @@
         .files-folder
           ReadingFolder(:folder="folder")
       .w-75
+        h1 {{ file.name }}
         .file(v-html="html")
 
 </template>

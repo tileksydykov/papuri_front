@@ -1,5 +1,5 @@
 import {
-    faBars, faBook, faBookmark, faColumns, faCompactDisc, faEnvelopeOpenText,
+    faBars, faBook, faBookmark, faChevronDown, faChevronRight, faColumns, faCompactDisc, faEnvelopeOpenText,
     faEye,
     faFile,
     faFileAlt, faFileAudio,
@@ -37,6 +37,8 @@ library.add(
     faMemory,
     faMoon,
     faSun,
+    faChevronDown,
+    faChevronRight,
 )
 
 export default function (app) {

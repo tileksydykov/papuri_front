@@ -40,7 +40,10 @@ export default {
       this.$emit("save", this.block)
     },
     nameId(id, name){
-      return id+"-"+name
+      if (name.length > 30) {
+        name = name.slice(0,30) + '...'
+      }
+      return id + "-" + name
     },
     link(id){
       return Axios.generateMediaLink(id.slice(0, id.indexOf("-")))

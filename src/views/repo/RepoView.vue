@@ -19,8 +19,8 @@
           .desc(v-html="repo.desc")
       .repository-view-right
         .loading(v-if="!repo.name")
-          .self-center.w-33.loading-background
-          .self-center.w-50.d-flex
+          .w-33.loading-background
+          .w-50.d-flex
             .w-25.m-5.loading-background.d-flex
             .w-25.m-5.loading-background.d-flex
             .w-25.m-5.loading-background.d-flex

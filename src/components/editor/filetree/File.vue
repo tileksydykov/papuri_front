@@ -82,7 +82,7 @@ export default {
 .error-input
   border-color red
 .file
-  margin-left 10px
+  margin-left 35px
   display flex
   i
     padding 0 10px 0 2px

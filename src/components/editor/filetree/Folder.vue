@@ -1,6 +1,5 @@
 <template lang="pug">
 .folder(
-  style="margin-left: 10px"
   v-if="folder"
   )
   .context-menu(
@@ -22,6 +21,10 @@
     @click="toggle"
     @contextmenu.prevent="openContextMenu"
     )
+    font-awesome-icon.chevron(
+      :icon="open ? 'chevron-down': 'chevron-right'"
+      )
+    span &nbsp;
     font-awesome-icon.secondary(icon="folder")
     span  &nbsp;{{ folder.name }}
 
@@ -142,6 +145,7 @@ export default {
   position relative
   width 100%
   cursor pointer
+  margin-left: 15px
 .close-folder
   height 0
   &.folder-content
@@ -152,6 +156,8 @@ export default {
 
   &:hover
     font-weight bolder
+  .chevron
+    width 12px
 .context-menu
   position absolute
   background $background_color

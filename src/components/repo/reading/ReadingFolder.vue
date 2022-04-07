@@ -4,7 +4,7 @@
   template(v-for="f in folder.folders")
     ReadingFolder(:folder="f")
   template(v-for="file in folder.files")
-    .secondary.clickable(
+    .secondary.clickable.files(
       v-if="file.name !== '.folder'"
       @click="fileClick(file)"
       ) {{ file.name }}
@@ -32,4 +32,6 @@ export default {
 <style scoped lang="stylus">
 .reading-folder
   margin-left 10px
+  .files
+    margin-left 10px
 </style>

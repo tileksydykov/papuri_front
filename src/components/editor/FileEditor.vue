@@ -1,32 +1,49 @@
 <template lang="pug">
 p(v-if="!file") {{ $t("fileNotChosen") }}
 .editors-container(v-else)
-  p {{ file.name }}
-  .d-flex
-    .blocks
-      .block(
-        v-for="block in blocks"
-        :key="block.id")
-          div(
-            draggable="true"
-            @dragover.prevent
-            @dragenter.prevent
-            @dragstart="startDrag($event, block)"
-            @drop="onDrop($event, block)"
-          )
-            component(:is="block.container" :block="block" @save="saveBlock")
-      .block.d-flex
-        .add-button(@click="addText") +&nbsp;
-          font-awesome-icon(icon="envelope-open-text")
-        .add-button(@click="addImage") +&nbsp;
-          font-awesome-icon(icon="image")
-        .add-button(@click="addVideo") +&nbsp;
-          font-awesome-icon(icon="video")
-        .add-button(@click="addAudio") +&nbsp;
-          font-awesome-icon(icon="file-audio")
-        .add-button(@click="addTest") +&nbsp;
-          font-awesome-icon(icon="file-alt")
-    .preview( v-html="preview" )
+  h2 {{ file.name }}
+  template(v-if="blocks")
+    .d-flex(v-if="blocks.length > 0")
+      .blocks
+        .block(
+          v-for="block in blocks"
+          :key="block.id")
+            div(
+              draggable="true"
+              @dragover.prevent
+              @dragenter.prevent
+              @dragstart="startDrag($event, block)"
+              @drop="onDrop($event, block)"
+            )
+              component(:is="block.container" :block="block" @save="saveBlock")
+        .block.d-flex
+          .add-button(@click="addText") +&nbsp;
+            font-awesome-icon(icon="envelope-open-text")
+          .add-button(@click="addImage") +&nbsp;
+            font-awesome-icon(icon="image")
+          .add-button(@click="addVideo") +&nbsp;
+            font-awesome-icon(icon="video")
+          .add-button(@click="addAudio") +&nbsp;
+            font-awesome-icon(icon="file-audio")
+          .add-button(@click="addTest") +&nbsp;
+            font-awesome-icon(icon="file-alt")
+      .preview( v-html="preview" )
+    template(v-else)
+      .center
+        p Пока нет блоков в этом файле. Создайте новый
+        .d-flex.flex-center
+          .add-button(@click="addText") +&nbsp;
+            font-awesome-icon(icon="envelope-open-text")
+          .add-button(@click="addImage") +&nbsp;
+            font-awesome-icon(icon="image")
+          .add-button(@click="addVideo") +&nbsp;
+            font-awesome-icon(icon="video")
+          .add-button(@click="addAudio") +&nbsp;
+            font-awesome-icon(icon="file-audio")
+          .add-button(@click="addTest") +&nbsp;
+            font-awesome-icon(icon="file-alt")
+  template(v-else)
+    p loading ...
 </template>
 
 <script>

@@ -34,6 +34,8 @@ div
   font-weight 500
 .d-flex
   display flex !important
+.flex-center
+  justify-content center
 hr
   color $lines_color
 
@@ -64,6 +66,13 @@ hr
 .no-link
   color $text_color !important
   text-decoration none
+
+.scrollbar
+  &::-webkit-scrollbar
+    height 10px
+  &::-webkit-scrollbar-thumb
+    background-color $lines_color
+    border-radius 10px
 
 @media screen and (max-width: 620px) {
   .m-hidden {

@@ -39,7 +39,10 @@ export default {
     save(){
       this.$emit("save", this.block)
     },
-    nameId(id, name) {
+    nameId(id, name){
+      if (name.length > 30) {
+        name = name.slice(0,30) + '...'
+      }
       return id + "-" + name
     },
     link(id){
