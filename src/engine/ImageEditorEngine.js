@@ -15,7 +15,7 @@ export const ImageEditorEngine = {
         }
     },
     fromBlockToHtml(block) {
-        return `<img class="image" src="${
+        return `<img class="preview-image" src="${
             Axios.generateMediaLink(block.data.imageId.slice(0, block.data.imageId.indexOf("-")))
         }" alt="desc"/>`
     }

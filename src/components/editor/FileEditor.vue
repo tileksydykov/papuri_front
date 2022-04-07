@@ -61,7 +61,7 @@ export default {
       blocks: "repo/getBlocks"
     }),
     preview () {
-      return this.file.content.replaceAll('\n', '<br>')
+      return Engine.fromBlockToHtml(Engine.fromTextToBlocks(this.file.content))
     }
   },
   mounted() {
@@ -169,6 +169,7 @@ export default {
   width 50%
 .preview
   width 50%
+
 .block
   margin 10px
   box-shadow 1px 1px 5px grey
@@ -177,4 +178,6 @@ export default {
   background $background_color
   text-align center
   cursor pointer
+
+
 </style>
