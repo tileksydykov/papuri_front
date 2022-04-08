@@ -1,27 +1,30 @@
-# new_test
 
+# White whale / Белый кит
+
+## RUS
+
+Проект направленный на улучшение вида современных книг и учебников. 
+Представляет из себяплатформу для создания книг и учебников с 
+интерактивными элеменетами. 
+
+На платформе имеется возможность создавать и публиковать книги, 
+при создании книг пользоваться системой контроля версий, 
+предоствлять другим пользователям возможность передавать полномочия
+на редактирование.
+
+___
+# For developers
 ## Project setup
-```
+```bash
 yarn install
 ```
 
 ### Compiles and hot-reloads for development
-```
+```bash
 yarn serve
 ```
 
 ### Compiles and minifies for production
-```
+```bash
 yarn build
 ```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
-"# papuri_front" 
-
-Contributor kadyr
