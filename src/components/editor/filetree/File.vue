@@ -9,8 +9,10 @@
     font-awesome-icon.secondary(icon="file-alt")
     span  &nbsp;{{ file.name }} -> {{ file.order_num }}
   template(v-else)
+    font-awesome-icon.secondary(icon="file-alt")
+    span  &nbsp;
     input(
-      placeholder='name'
+      placeholder='Name of the file'
       v-model="file.name"
       v-on:keyup="inputError = false;"
       v-on:keyup.enter="save"
@@ -58,7 +60,7 @@ export default {
       }
       const file = this.file
       file.editing = false
-      file.path += '/' + file.name
+      file.path += file.name
       this.saveFile({
         file,
         username: this.repo.user_name,
@@ -82,14 +84,14 @@ export default {
 .error-input
   border-color red
 .file
-  margin-left 35px
+  margin-left 30px
   display flex
   i
     padding 0 10px 0 2px
   input
     padding 2px !important
     border-radius 0 !important
-    width 70%
+    width 50%
     outline 0
     :focus
       border-radius 0 !important

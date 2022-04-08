@@ -1,12 +1,32 @@
 import {
-    faBars, faBook, faBookmark, faChevronDown, faChevronRight, faColumns, faCompactDisc, faEnvelopeOpenText,
+    faBars,
+    faBook,
+    faBookmark,
+    faChevronDown,
+    faChevronRight,
+    faColumns,
+    faCompactDisc,
+    faEnvelopeOpenText,
     faEye,
     faFile,
-    faFileAlt, faFileAudio,
+    faFileAlt,
+    faFileAudio,
     faFileCode,
-    faFolder, faHome, faImage, faImages, faLightbulb, faMemory, faMoon, faPlus, faSearch, faSun, faTextHeight,
+    faFolder,
+    faHome,
+    faImage,
+    faImages,
+    faLightbulb,
+    faMemory, faMinus,
+    faMoon,
+    faPencilAlt,
+    faPlus,
+    faSearch,
+    faSun,
+    faTextHeight,
     faTimes,
-    faUserSecret, faVideo
+    faUserSecret,
+    faVideo
 } from "@fortawesome/free-solid-svg-icons";
 import {library} from "@fortawesome/fontawesome-svg-core";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
@@ -39,6 +59,8 @@ library.add(
     faSun,
     faChevronDown,
     faChevronRight,
+    faPencilAlt,
+    faMinus
 )
 
 export default function (app) {

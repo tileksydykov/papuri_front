@@ -1,5 +1,5 @@
 <template lang="pug">
-p(v-if="!file") {{ $t("fileNotChosen") }}
+p(v-if="!file").center {{ $t("fileNotChosen") }}
 .editors-container(v-else)
   h2 {{ file.name }}
   template(v-if="blocks")
@@ -195,6 +195,7 @@ export default {
   background $background_color
   text-align center
   cursor pointer
-
+.editors-container
+  padding 0 10px
 
 </style>

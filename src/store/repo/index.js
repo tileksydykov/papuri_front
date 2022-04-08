@@ -1,4 +1,4 @@
-import {findFile, insertFileToFolder, orderFiles, saveContent, saveFile} from "./functions";
+import {findFile, orderFiles, saveContent, saveFile, setFolderEditing} from "./functions";
 import {Axios} from "@/axios/axios";
 import {Engine} from "@/engine";
 
@@ -20,19 +20,23 @@ export default {
         addBlocks: (state, data) => state.blocks.push(data),
         setFiles: (state, data) => state.files = data,
         selectFile: (state, id) => {
-            state.blocks = []
             state.selectedFileId = id
             const file = findFile(state.root[0], state.selectedFileId).content
             if (file) state.blocks = Engine.fromTextToBlocks(file)
+            else state.blocks = []
         },
         addFiles: (state, file) => {
-            insertFileToFolder(state.root[0], file)
+            state.files.push(file)
+            state.root = orderFiles(JSON.parse(JSON.stringify(state.files)))
         },
         saveFile: (state, file) => {
             saveFile(state.root, file)
         },
         saveContent: (state, file) => {
             saveContent(state.root, file)
+        },
+        saveFolder: (state, folder) => {
+            setFolderEditing(state.root, folder)
         }
     },
     getters: {
@@ -78,11 +82,12 @@ export default {
             })
             ctx.commit('setFiles', files)
         },
-        async createFile(ctx, {username, repo, file}){
+        async createFile(ctx, {username, repo, file}) {
             ctx.commit('saveFile', file)
             const url = `api/v1/repos/files/${username}/${repo}`
             let res = await Axios.post(url, file)
             if ( res.status === 200 ) {
+                ctx.dispatch('fetchFiles', {username, repo})
                 ctx.commit('saveFile', file)
             }
         },
@@ -92,6 +97,7 @@ export default {
             if (res.status === 200){
                 const folder = orderFiles(res.data.result)
                 ctx.commit('setRoot', folder)
+                ctx.commit('setFiles', res.data.result)
             }
         },
         async updateFiles (ctx, {username, repo, files}) {
@@ -100,6 +106,7 @@ export default {
             if (res.status === 200) {
                 const folder = orderFiles(res.data.result)
                 ctx.commit('setRoot', folder)
+                ctx.commit('setFiles', res.data.result)
             }
         },
         async fetchRepoInfo (ctx, {username, repo}) {
@@ -108,6 +115,6 @@ export default {
             if (res.status === 200) {
                 ctx.commit('setInfo', res.data.result)
             }
-        }
+        },
     }
 }

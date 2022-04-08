@@ -1,5 +1,5 @@
 <template lang="pug">
-ul.repo-list
+ul.repo-list.scrollbar
   li.repo-card(v-for="repo in repos")
     RepoCover(:repo="repo" :size="120").self-center
     // .date.secondary {{ date(repo) }}

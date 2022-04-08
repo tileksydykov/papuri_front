@@ -37,9 +37,11 @@ export default {
     font-size 35px
     font-weight bold
     padding 0 5px
+    min-width max-content
   .date-right
     color $text_secondary
     padding-top 9px
     line-height 16px
     font-size 12px
+    min-width max-content
 </style>

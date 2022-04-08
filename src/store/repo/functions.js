@@ -1,13 +1,13 @@
-
 export const orderFiles = files => {
     const folders = [{
         name: "root",
         id: 0,
-        path: "/",
+        path: "",
     }]
     let counter = 1
     // create folders from file path
     files.forEach((file) => {
+        if (!file.editing) file.path = file.path.split('/').filter(n => n).join('/')
         const filefolders = file.path.split('/').slice(0,-1)
         if (filefolders.length !== 0) {
             filefolders.forEach((filefolder, index) => {
@@ -17,9 +17,13 @@ export const orderFiles = files => {
                     &&
                     folderName !== ''
                 ) {
+                    let name = folderName.split('/').slice(-1).join()
+                    let editing = name === '.'
+                    if (editing) name = ''
                     folders.push({
                         id: counter,
-                        name: folderName.split('/').slice(-1).join(),
+                        editing,
+                        name,
                         path: folderName
                     })
                     counter++
@@ -89,13 +93,32 @@ export const insertFileToFolder = (root, file) => {
 }
 
 export const saveFile = (root, file) => {
-    if (root.id === file.folderId){
+    if (root.id === file.folderId && root.files) {
         root.files.map(f => f.id === file.id ? file: f)
         return true
     }
-    for (let i = 0; i < root.folders; i++) {
-        if (saveFile(root.folders[i], file)) {
+    if(root.folders){
+        for (let i = 0; i < root.folders.length; i++) {
+            if (saveFile(root.folders[i], file)) {
+                return true
+            }
+        }
+    }
+    return false
+}
+
+export const setFolderEditing = (root, folder) => {
+    if(root){
+        if (root.id === folder.id && root.folders) {
+            root.folders.map(f => f.id === folder.id ? folder: f)
             return true
+        }
+        if(root.folders){
+            for (let i = 0; i < root.folders.length; i++) {
+                if (saveFile(root.folders[i], folder)) {
+                    return true
+                }
+            }
         }
     }
     return false

@@ -9,9 +9,16 @@
     .context-menu-content
       ul
         li
-          span.link(@click="addFileToThisFolder") Add new file +
+          font-awesome-icon(icon="file")
+          span.link(@click="addFileToThisFolder") &nbsp; Add new file +
         li
-          span.link(@click="addFolderToThisFolder") Add new folder +
+          font-awesome-icon(icon="folder")
+          span.link(@click="addFolderToThisFolder") &nbsp; Add new folder +
+        template(v-if="folder.id !== 0")
+          hr
+          li
+            font-awesome-icon(icon="pencil-alt")
+            span.link(@click="addFolderToThisFolder") &nbsp; Rename folder +
   span.folder-title(
     draggable='true'
     @dragstart="startDrag($event, folder, 'folder')"
@@ -20,14 +27,33 @@
     @dragenter.prevent
     @click="toggle"
     @contextmenu.prevent="openContextMenu"
+    v-if="!folder.editing"
     )
-    font-awesome-icon.chevron(
-      :icon="open ? 'chevron-down': 'chevron-right'"
-      )
+    span.chevron
+      font-awesome-icon(
+        :icon="chevron"
+        )
     span &nbsp;
     font-awesome-icon.secondary(icon="folder")
     span  &nbsp;{{ folder.name }}
-
+  span(v-else).d-flex
+    span.chevron
+      font-awesome-icon(
+        :icon="chevron"
+      )
+    span  &nbsp;
+    font-awesome-icon.secondary(icon="folder")
+    span  &nbsp;
+    input(
+      placeholder='Name of the folder'
+      v-model="folder.name"
+      v-on:keyup="inputError = false;"
+      v-on:keyup.enter="save"
+      :class="{'error-input': inputError}"
+    )
+    .save(
+      @click="save"
+    ) >
   .folder-content(:class="{'close-folder': !open, 'open-folder': open}")
     Folder(
       v-for="f in folder.folders"
@@ -54,7 +80,8 @@ export default {
   data() {
     return {
       open: true,
-      contextMenuOpen: false
+      contextMenuOpen: false,
+      inputError: false,
     }
   },
   props: {
@@ -67,15 +94,24 @@ export default {
     ...mapGetters({
       repo: 'repos/getCurrent'
     }),
+    chevron(){
+      const length = this.folder.files.filter(f => f.name !== ".folder").length
+      if (this.folder.folders.length + length < 1) {
+        return 'minus'
+      }
+      return this.open ? 'chevron-down': 'chevron-right'
+    }
   },
   methods: {
     ...mapActions({
       moveFile: 'repo/moveFile',
       moveFolder: 'repo/moveFolder',
+      saveFile: 'repo/createFile'
     }),
     ...mapMutations({
       select: 'repo/selectFile',
-      addFiles: 'repo/addFiles'
+      addFiles: 'repo/addFiles',
+      saveFolder: 'repo/saveFolder'
     }),
     startDrag (evt, item, type) {
       evt.dataTransfer.dropEffect = 'move'
@@ -110,24 +146,24 @@ export default {
       this.addFiles({
         id: uuidv4(),
         name: '',
-        path: this.folder.path,
+        path: this.folder.path + '/',
         editing: true,
-        folderId: this.folder.id,
         content: '',
         prev_file_id: lastFile ? lastFile.id : "0"
       })
     },
     addFolderToThisFolder () {
       this.closeMenu()
-      this.addFiles({
+      const name = './.folder'
+      let folderFile = {
         id: uuidv4(),
-        name: 'folder/.folder',
-        path: this.folder.path,
-        folderId: this.folder.id,
+        name,
+        path: this.folder.path + '/' + name,
         content: '',
-      })
+      }
+      this.addFiles(folderFile)
     },
-    toggle(){
+    toggle() {
       this.open = !this.open
     },
     openContextMenu() {
@@ -135,6 +171,26 @@ export default {
     },
     out(){
       this.contextMenuOpen = false
+    },
+    save(){
+      if (this.folder.name.split('/').slice(-1).join() === ''){
+        this.inputError = true;
+        return
+      }
+      this.saveFolder({
+        ...this.folder,
+        editing: false
+      })
+      const path = this.folder.path.slice(0, -1)
+      const file = {
+        id: uuidv4(),
+        path: path + this.folder.name + '/.folder'
+      }
+      this.saveFile({
+        file,
+        username: this.repo.user_name,
+        repo: this.repo.name
+      })
     }
   },
 }
@@ -146,6 +202,16 @@ export default {
   width 100%
   cursor pointer
   margin-left: 15px
+  input
+    padding 2px !important
+    border-radius 0 !important
+    width 70%
+    outline 0
+    :focus
+      border-radius 0 !important
+  .save
+    padding 0 3px
+    border 1px solid $lines_color
 .close-folder
   height 0
   &.folder-content
@@ -153,7 +219,6 @@ export default {
 .open-folder
   height auto
 .folder-title
-
   &:hover
     font-weight bolder
   .chevron
@@ -180,5 +245,7 @@ export default {
     display none
   &.open
     display block
+.error-input
+  border-color red
 
 </style>
