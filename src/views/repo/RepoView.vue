@@ -68,6 +68,9 @@ export default {
           name: "Volumes",
           private: false
         }, {
+          name: "RepoSettings",
+          private: true
+        }, {
           parent: "Editor",
           name: "RepoEditor",
           private: true

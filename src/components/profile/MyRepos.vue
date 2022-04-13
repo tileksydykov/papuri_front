@@ -1,19 +1,28 @@
 <template lang="pug">
 router-link.clickable(:to="{name: 'CreateRepo'}") Создать новую книгу
-BookList
+RepoList(:repos="repos")
 </template>
 
 <script>
-import BookList from "../repo/RepoList";
+import RepoList from "../repo/RepoList";
+import {mapActions, mapGetters} from "vuex";
 
 export default {
   name: "MyRepos",
-  components: {BookList},
+  components: {RepoList},
   computed: {
+    ...mapGetters({
+      repos: "repos/listMyRepos"
+    })
   },
   methods: {
+    ...mapActions({
+      loadMyRepos: "repos/getMyRepos"
+    })
   },
-  mounted() {}
+  mounted() {
+    this.loadMyRepos()
+  }
 }
 </script>
 

@@ -7,6 +7,7 @@ export default {
     state: {
         current: {},
         all: [],
+        myRepos: [],
         files: [],
         reading: {},
         readingFiles: {},
@@ -17,6 +18,7 @@ export default {
     mutations: {
         setCurrent: (state, data) => state.current = data,
         setAll: (state, data) => state.all = data,
+        setMyRepos: (state, data) => state.myRepos = data,
         setFiles: (state, data) => state.files = data,
         setReadingFile: (state, data) => state.readingFile = data,
         setReadings: (state, data) => state.readings = data,
@@ -28,6 +30,7 @@ export default {
     getters: {
         getCurrent: state => state.current,
         listAll: state => state.all,
+        listMyRepos: state => state.myRepos,
         listFiles: state => state.files,
         readings: state => state.readings,
         listReadingFiles: state => state.readingFiles,
@@ -56,6 +59,10 @@ export default {
         getAll: async (ctx) => {
             let r = await Axios.get("/api/v1/repos")
             ctx.commit('setAll', r.data.result)
+        },
+        getMyRepos: async (ctx) => {
+            let r = await Axios.get("/api/v1/repos/my")
+            ctx.commit('setMyRepos', r.data.result)
         },
         beginWs: async (ctx, {id}) => {
             await Axios.wsOpen(`/api/v1/repos/w/${id}/`)

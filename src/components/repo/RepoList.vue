@@ -1,4 +1,6 @@
 <template lang="pug">
+Loader.self-center(v-if="!repos")
+div(v-else-if="repos.length === 0").secondary.center There is no repositories to show
 ul.repo-list.scrollbar
   li.repo-card(v-for="repo in repos")
     RepoCover(:repo="repo" :size="120").self-center
@@ -14,17 +16,21 @@ ul.repo-list.scrollbar
 </template>
 
 <script>
-import {mapActions, mapGetters} from "vuex";
 import * as dayjs from 'dayjs'
 import RepoCover from "./RepoCover";
+import Loader from "../util/Loader";
 
 export default {
   name: "RepoList",
-  components: {RepoCover},
+  components: {Loader, RepoCover},
+  props: {
+    repos: {
+      type: Array,
+      required: true,
+    }
+  },
   methods: {
-    ...mapActions({
-      getAll: "repos/getAll"
-    }),
+
     link(repo) {
       return {name: 'RepoOverview', params: {username: repo.user_name, repo: repo.name}}
     },
@@ -32,13 +38,8 @@ export default {
       return dayjs(repo.created_at).format('DD.MM.YYYY HH:mm')
     }
   },
-  computed: {
-    ...mapGetters({
-      repos: 'repos/listAll'
-    })
-  },
+
   mounted() {
-    this.getAll()
   }
 }
 </script>

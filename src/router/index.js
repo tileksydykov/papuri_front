@@ -61,7 +61,7 @@ const routes = [
             },
             {
                 path: 'settings',
-                name: 'BookSettings',
+                name: 'RepoSettings',
                 component: () => import('../components/repo/settings/Index'),
                 children: [
                     {
