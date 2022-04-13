@@ -2,8 +2,8 @@
 .date.noto
   .day {{ day }}
   .date-right
-    .week-day {{ weekDay }}
-    .month-year {{ monthYear }}
+    .week-day.f-cyan {{ weekDay }}
+    .month-year.f-yellow {{ monthYear }}
 </template>
 
 <script>

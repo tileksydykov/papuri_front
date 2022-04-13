@@ -9,6 +9,7 @@
 import Folder from "./Folder";
 import {mapGetters} from "vuex";
 import Loader from "../../util/Loader";
+
 export default {
   name: "FileTree",
   components: {Loader, Folder},
@@ -24,12 +25,13 @@ export default {
 .file-tree-cont
   font-size 14px
   min-height 200px
-  border-right 1px solid $lines_color
-  border-left 1px solid $lines_color
+  border-right 1px solid $red
+  border-left 1px solid $red
   border-radius 10px
   .folder-cont
     display block
     width max-content
+    min-width 95%
 .link
   cursor pointer
   :hover

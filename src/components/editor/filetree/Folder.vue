@@ -19,6 +19,10 @@
           li
             font-awesome-icon(icon="pencil-alt")
             span.link(@click="addFolderToThisFolder") &nbsp; Rename folder +
+          hr
+          li()
+            font-awesome-icon(icon="trash")
+            span.link(@click="addFolderToThisFolder") &nbsp; Delete
   span.folder-title(
     draggable='true'
     @dragstart="startDrag($event, folder, 'folder')"
@@ -34,7 +38,7 @@
         :icon="chevron"
         )
     span &nbsp;
-    font-awesome-icon.secondary(icon="folder")
+    font-awesome-icon.secondary(icon="folder").f-yellow
     span  &nbsp;{{ folder.name }}
   span(v-else).d-flex
     span.chevron
@@ -139,6 +143,7 @@ export default {
     },
     closeMenu(){
       this.contextMenuOpen = false
+      this.open = true
     },
     addFileToThisFolder () {
       this.closeMenu()
@@ -237,6 +242,7 @@ export default {
       padding 0
       margin 0
       li
+        width max-content
         padding 3px
         border-radius 3px
         &:hover

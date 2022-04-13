@@ -24,7 +24,7 @@ import {
     faSearch,
     faSun,
     faTextHeight,
-    faTimes,
+    faTimes, faTrash,
     faUserSecret,
     faVideo
 } from "@fortawesome/free-solid-svg-icons";
@@ -60,7 +60,8 @@ library.add(
     faChevronDown,
     faChevronRight,
     faPencilAlt,
-    faMinus
+    faMinus,
+    faTrash
 )
 
 export default function (app) {

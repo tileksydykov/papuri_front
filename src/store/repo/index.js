@@ -76,8 +76,8 @@ export default {
                 if (f.id === fileId){
                     f.folderId = toFolder.id
                     f.path = toFolder.path + '/' + f.name
+                    ctx.dispatch('updateFiles', {username, repo, files: [{id: f.id, path: f.path}]})
                 }
-                ctx.dispatch('updateFiles', {username, repo, files: [f]})
                 return f
             })
             ctx.commit('setFiles', files)

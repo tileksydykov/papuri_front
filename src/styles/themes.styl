@@ -16,6 +16,12 @@
   --color_btn_primary #3400ba
   --color_btn_danger #ba0000
   --color_btn_cyan #00cbc1
+  --color_cyan #959595
+  --color_blue #959595
+  --color_light_blue #959595
+  --color_green #959595
+  --color_yellow #959595
+  --color_red #959595
   @media screen
     &[data-theme="dark"]
       --color__bg #1f1f1f
@@ -30,6 +36,12 @@
       --color_input_background #242424
       --color_input_font #f5f5f5
       --color__selected_bg #555555
+      --color_cyan hsl(171, 100%, 41%)
+      --color_blue hsl(217, 71%, 53%)
+      --color_light_blue hsl(204, 86%, 53%)
+      --color_green hsl(141, 53%, 53%)
+      --color_yellow hsl(48, 100%, 67%)
+      --color_red hsl(348, 100%, 61%)
 
 $background_color = var(--color__bg)
 $background_selected_color = var(--color__selected_bg)
@@ -47,3 +59,10 @@ $input_front_color = var(--color_input_font)
 $tbn_primary_color = var(--color_btn_primary)
 $tbn_danger_color = var(--color_btn_danger)
 $tbn_cyan_color = var(--color_btn_cyan)
+
+$cyan = var(--color_cyan)
+$blue = var(--color_blue)
+$light_blue = var(--color_light_blue)
+$green = var(--color_green)
+$yellow = var(--color_yellow)
+$red = var(--color_red)

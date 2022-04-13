@@ -6,38 +6,38 @@
        router-link(
          :to="{name: 'Index'}"
          :class="{active: activeIcon === 'Index'}"
-         )
+         ).f-cyan
         font-awesome-icon(icon="home").menu-icon
        router-link(
          :to="{name: 'Search'}"
          :class="{active: activeIcon === 'Search'}"
-         )
+         ).f-blue
         font-awesome-icon(icon="search").menu-icon
        router-link(
          :to="{name: 'CurrentBook'}"
          :class="{active: activeIcon === 'CurrentBook'}"
-         )
+         ).f-red
         font-awesome-icon(icon="book").menu-icon
        router-link(
          :to="{name: 'Bookmarks'}"
          :class="{active: activeIcon === 'Bookmarks'}"
-         )
+         ).f-green
         font-awesome-icon(icon="bookmark").menu-icon
        router-link(
          :to="{name: 'Media'}"
          :class="{active: activeIcon === 'Media'}"
-         )
+         ).f-yellow
         font-awesome-icon(icon="images").menu-icon
        router-link(
          :to="{name: 'CreateRepo'}"
          :class="{active: activeIcon === 'CreateRepo'}"
-         )
+         ).f-light-blue
         font-awesome-icon(icon="plus").menu-icon
     router-link(
       :to="{name: 'Activity', params: { username: user_name }}"
     ).user-info
       .title.noto {{ user.first_name }} {{ user.last_name }}
-      .username.right @{{ user.user_name }}
+      .username.right.f-light-blue @{{ user.user_name }}
     AvatarIcon(
       :user="user"
       :size="30"
@@ -115,9 +115,6 @@ export default {
     transition 0.4s
     padding 3px 11px
     margin 5px
-  .menu-icon
-    color $lines_color
-
   .active
     background $background_selected_color
     border-radius 5px
