@@ -9,7 +9,14 @@ import notification from "./notification"
 
 const store = createStore({
     state: {
-        title: 'App Title'
+        title: 'App Title',
+        modal: {
+            open: false,
+            width: 400,
+            height: 200,
+            title: "Title",
+            container: ""
+        }
     },
     modules: {
         auth,
@@ -29,10 +36,18 @@ const store = createStore({
         }
     },
     getters: {
-        title: state => state.title
+        title: state => state.title,
+        getModal: state => state.modal
     },
     mutations: {
-        setTitle: (state, t) => state.title = t
+        setTitle: (state, t) => state.title = t,
+        setModal: (state, m) => state.modal = m,
+        setModalState: (state, bool) => state.modal.open = bool,
+        setModalDimens: (state, height, width) => {
+            state.modal.height = height
+            state.modal.width  = width
+        },
+        setModalContainer: (state, c) => state.modal.container = c
     }
 })
 

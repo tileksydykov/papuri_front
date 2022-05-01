@@ -1,7 +1,7 @@
 <template lang="pug">
 .p-5
   span Video <br>
-  small.secondary upload all needed media in "Media" and select there
+  small.secondary upload all needed media in "Media" and Object.assignthere
   br
   select( v-model="block.data.id" @change="save")
     option(

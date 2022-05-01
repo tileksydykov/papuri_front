@@ -15,7 +15,7 @@ export const VideoEditorEngine = {
         }
     },
     fromBlockToHtml(block) {
-        return `<video> <source src="${
+        return `<video controls> <source src="${
             Axios.generateMediaLink(block.data.id.slice(0, block.data.id.indexOf("-")))
         }"> </video>`
     }

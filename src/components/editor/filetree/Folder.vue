@@ -148,6 +148,9 @@ export default {
     addFileToThisFolder () {
       this.closeMenu()
       const lastFile = this.folder.files.slice(-1)[0]
+      if (lastFile.name === ''){
+        return
+      }
       this.addFiles({
         id: uuidv4(),
         name: '',

@@ -40,7 +40,7 @@ export default {
 
 <style scoped lang="stylus">
 textarea
-  width 100%
+  width 100% !important
   border-radius 0
   border none
   outline none

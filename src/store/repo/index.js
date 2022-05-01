@@ -3,7 +3,9 @@ import {Axios} from "@/axios/axios";
 import {Engine} from "@/engine";
 
 export default {
+
     namespaced: true,
+
     state: {
         files: [],
         folders: [],
@@ -11,10 +13,17 @@ export default {
         selectedFileId: '',
         blocks: [],
         info: {},
+        branches: [],
+        commits: [],
+        selectedBranch: ""
     },
+
     mutations: {
         setFolders: (state, data) => state.folders = data,
         setRoot: (state, data) => state.root = data,
+        setBranches: (state, data) => state.branches = data,
+        setSelectedBranch: (state, data) => state.selectedBranch = data,
+        setCommits: (state, data) => state.commits = data,
         setBlocks: (state, data) => state.blocks = data,
         setInfo: (state, data) => state.info = data,
         addBlocks: (state, data) => state.blocks.push(data),
@@ -43,6 +52,9 @@ export default {
         getBlocks: state => state.blocks,
         getFolders: state => state.folders,
         getRoot: state => state.root,
+        getBranches: state => state.branches,
+        getCommits: state => state.commits,
+        getSelectedBranch: state => state.selectedBranch,
         getFiles: state => state.files,
         getInfo: state => state.info,
         getFilesByFolderId: state => id => {
@@ -51,6 +63,7 @@ export default {
         getFoldersByFolderId: state => id => state.folders.filter(f => f.parent === id),
         getSelectedFile: state => findFile(state.root[0], state.selectedFileId),
     },
+
     actions: {
         moveFolder(ctx, {folderId, toFolder}){
             if (folderId === toFolder.id) return;
@@ -100,6 +113,32 @@ export default {
                 ctx.commit('setFiles', res.data.result)
             }
         },
+        async fetchBranches(ctx, {username, repo}){
+            const url = `api/v1/repos/branches/${username}/${repo}`
+            let res = await Axios.get(url)
+            if (res.status === 200) {
+                ctx.commit('setBranches', res.data.result)
+                ctx.commit('setSelectedBranch', res.data.result[0])
+            }
+        },
+        async fetchCommits(ctx, {username, repo}){
+            const url = `api/v1/repos/commits/${username}/${repo}`
+            let res = await Axios.get(url)
+            if (res.status === 200){
+                ctx.commit('setCommits', res.data.result)
+            }
+        },
+        async finishCommit(ctx, {username, repo, message, branch}){
+            const url = `api/v1/repos/commits/${username}/${repo}`
+            let res = await Axios.post(url, {
+                message
+            }, {
+                params: {
+                    branch
+                }
+            })
+            return res.status === 200;
+        },
         async updateFiles (ctx, {username, repo, files}) {
             const url = `api/v1/repos/files/${username}/${repo}`
             let res = await Axios.patch(url, files)
@@ -118,3 +157,4 @@ export default {
         },
     }
 }
+

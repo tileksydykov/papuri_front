@@ -36,6 +36,8 @@ export default {
       openWs: "repos/beginWs",
       get: "repos/fetchCurrent",
       getFiles: "repo/fetchFiles",
+      getBranches: "repo/fetchBranches",
+      getCommits: "repo/fetchCommits",
       getInfo: "repo/fetchRepoInfo",
     }),
     ...mapMutations({
@@ -61,6 +63,8 @@ export default {
     // this.openWs({id: this.$route.params.id})
     this.setRepo({})
     this.getFiles(this.$route.params)
+    this.getBranches(this.$route.params)
+    this.getCommits(this.$route.params)
     this.getInfo(this.$route.params)
     this.get(this.$route.params)
   }

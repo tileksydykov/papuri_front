@@ -15,7 +15,11 @@ p(v-if="!file").center {{ $t("fileNotChosen") }}
               @dragstart="startDrag($event, block)"
               @drop="onDrop($event, block)"
             )
-              component(:is="block.container" :block="block" @save="saveBlock")
+              component(
+                :is="block.container"
+                :block="block"
+                @save="saveBlock"
+                )
         .block.d-flex
           .add-button(@click="addText") +&nbsp;
             font-awesome-icon(icon="envelope-open-text")
