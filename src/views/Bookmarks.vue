@@ -7,10 +7,13 @@
     ul.readings-list
       li(v-for="reading in readings" :key="reading.id")
         .item
-          .d-flex
+          .d-flex.clickable(
+            @click="$router.push({name: 'RepoOverview', params: {username: reading.repo.user_name, repo: reading.repo.name}})"
+          )
             RepoCover(:repo="reading.repo" :size="100")
             .item-info
               .title {{ reading.repo.title }}
+              span {{ reading.repo.name }}
               .date Last opened at:&nbsp;
                 b {{ date(reading.updated_at) }}
 </template>

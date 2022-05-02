@@ -7,14 +7,17 @@
     .secondary.clickable.files(
       v-if="file.name !== '.folder'"
       @click="fileClick(file)"
-      ) {{ file.name }}
+      )
+        ReadingFile(:file="file")
 </template>
 
 <script>
-import {mapMutations} from "vuex";
+import {mapActions, mapGetters} from "vuex";
+import ReadingFile from "./File";
 
 export default {
   name: "ReadingFolder",
+  components: {ReadingFile, File},
   props: {
     folder: {
       type: Object,
@@ -22,8 +25,25 @@ export default {
     }
   },
   methods: {
-    ...mapMutations({
-      fileClick: "repos/setReadingFile"
+    ...mapActions({
+      updateReadingFile: "repos/updateReading"
+    }),
+    fileClick(file){
+      this.updateReadingFile({
+        file,
+        repository: this.reading.repo
+      })
+    },
+    style(fileId){
+      if (fileId === this.readingFile.id) {
+        return {"font-weight": "bold"}
+      }
+      return { }
+    }
+  },
+  computed: {
+    ...mapGetters({
+      reading: "repos/getReading",
     })
   }
 }
@@ -34,4 +54,5 @@ export default {
   margin-left 10px
   .files
     margin-left 10px
+
 </style>

@@ -21,6 +21,8 @@ export const TestEditorEngine = {
         }
     },
     fromBlockToHtml(block) {
-        return block
+        return `<p><h3>${block.data.title}</h3> <ul>${
+            block.data.options.map(option => `<li>${option}</li>`).join("")
+        }</ul></p>`
     }
 }

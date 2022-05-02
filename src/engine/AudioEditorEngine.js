@@ -15,8 +15,8 @@ export const AudioEditorEngine = {
         }
     },
     fromBlockToHtml(block) {
-        return `<audio controls> <source src="${
+        return `<p><audio controls> <source src="${
             Axios.generateMediaLink(block.data.id.slice(0, block.data.id.indexOf("-")))
-        }"> </audio>`
+        }"> </audio></p>`
     }
 }

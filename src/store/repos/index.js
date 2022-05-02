@@ -112,6 +112,12 @@ export default {
             }
             return res.status === 200
         },
+        async updateReading (ctx, {repository, file}) {
+            ctx.commit('setReadingFile', file)
+            const url = `api/v1/repos/reading/${repository.user_name}/${repository.name}`
+            let res = await Axios.post(url, file ? {file: file.id} : {})
+            return res.status === 200
+        },
         search: async (ctx, query) => {
             const url = `api/v1/repos`
             let res = await Axios.get(url, query ? {params: {q: query}}: {})

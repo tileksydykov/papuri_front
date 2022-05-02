@@ -3,8 +3,10 @@
   .container
     Header
     br
-    .noto.bold.bigger {{ $t("recentlyAdded") }}
-    RepoList(:repos="repos")
+    template(v-if="loggedIn")
+      .noto.bold.bigger {{ $t("recentlyAdded") }}
+      RepoList( :repos="repos")
+    Welcome(v-else)
 </template>
 
 <script>
@@ -13,9 +15,10 @@ import LoginButtons from "../../components/util/LoginButtons";
 import {mapActions, mapGetters} from "vuex";
 import Header from "../../components/Header";
 import RepoList from "../../components/repo/RepoList";
+import Welcome from "../../components/Welcome";
 
 export default {
-  components: {Header, LoginButtons, Date, RepoList},
+  components: {Welcome, Header, LoginButtons, Date, RepoList},
   computed: {
     ...mapGetters({
       theme: "getTheme",
