@@ -1,5 +1,5 @@
 <template lang="pug">
-h4 Commits
+b Commits
 ul
   li(v-for="commit in commits" :key="commit")
     .card-commit
@@ -30,6 +30,7 @@ export default {
 ul
   list-style none
   padding 0
+  margin 0
 li
   .card-commit
     margin 3px

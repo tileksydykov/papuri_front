@@ -20,7 +20,7 @@ p(v-if="!file").center {{ $t("fileNotChosen") }}
                 :block="block"
                 @save="saveBlock"
                 )
-        .block.d-flex
+        .block.d-flex.flex-center
           .add-button(@click="addText") +&nbsp;
             font-awesome-icon(icon="envelope-open-text")
           .add-button(@click="addImage") +&nbsp;

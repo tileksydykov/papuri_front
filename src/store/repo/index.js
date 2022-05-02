@@ -154,7 +154,7 @@ export default {
             if (res.status === 200) {
                 ctx.commit('setInfo', res.data.result)
             }
-        },
+        }
     }
 }
 

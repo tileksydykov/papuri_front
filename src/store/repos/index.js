@@ -100,6 +100,14 @@ export default {
             if (res.status === 200) {
                 ctx.commit('setReadings', res.data.result)
             }
-        }
+        },
+        async updateRepo (ctx, repository) {
+            const url = `api/v1/repos/u/${repository.user_name}/${repository.name}`
+            let res = await Axios.patch(url, repository)
+            if (res.status === 200) {
+                ctx.commit('setCurrent', res.data.result)
+            }
+            return res.status === 200
+        },
     }
 }

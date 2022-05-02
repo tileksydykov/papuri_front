@@ -35,8 +35,8 @@ export default {
 .file-tree-cont
   font-size 14px
   min-height 200px
-  border-right 1px solid $red
-  border-left 1px solid $red
+  border-right 4px solid $red
+  border-left 4px solid $red
   border-radius 10px
   .folder-cont
     display block

@@ -1,16 +1,16 @@
 <template lang="pug">
-.p-5
+.test-cont
   span Test
   br
-  input(v-model="block.data.title" @change="save" placeholder="title")
-  hr
-  span.clickable(@click="addOption") + Add Option
+  input(v-model="block.data.title" @change="save" placeholder="title").title-input
+
   hr
   template(v-for="(opt, index) in block.data.options")
-    span -&nbsp;
-    input(:value="opt" @change="changeOpt($event, index)" placeholder="option")
-    br
-
+    .d-flex
+      input(type="checkbox" ).checkbox
+      input(:value="opt" @change="changeOpt($event, index)" placeholder="option").option-input
+      font-awesome-icon(icon="times" @click="deleteOption(index)").times
+  .clickable.btn(@click="addOption") + Add Option
 </template>
 
 <script>
@@ -38,12 +38,35 @@ export default {
     addOption(){
       let block = this.block
       block.data.options.push('')
+    },
+    deleteOption(index) {
+      let block = this.block
+      block.data.options.splice(index, 1)
+      this.save()
     }
   },
 }
 </script>
 
 <style scoped lang="stylus">
+.test-cont
+  padding 10px
+  .btn
+    font-size 13px
+  .times
+    margin-top 7px
+    margin-left 5px
+  .checkbox
+    margin-top 8px
+    margin-right 5px
+
 input
-  padding 2px
+  padding 4px
+  margin 2px
+.title-input
+  width 100%
+.option-input
+  width 100%
+
+
 </style>

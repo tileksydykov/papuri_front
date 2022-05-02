@@ -1,4 +1,5 @@
 import {uuidv4} from "@/store/repo/functions";
+import {Axios} from "../axios/axios";
 
 export const AudioEditorEngine = {
     fromBlock(block) {
@@ -14,6 +15,8 @@ export const AudioEditorEngine = {
         }
     },
     fromBlockToHtml(block) {
-        return block
+        return `<audio controls> <source src="${
+            Axios.generateMediaLink(block.data.id.slice(0, block.data.id.indexOf("-")))
+        }"> </audio>`
     }
 }
