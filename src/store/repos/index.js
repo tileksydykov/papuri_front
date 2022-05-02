@@ -13,13 +13,15 @@ export default {
         readingFiles: {},
         readings: [],
         readingFolder: {},
-        readingFile: {}
+        readingFile: {},
+        searchResults: [],
     },
     mutations: {
         setCurrent: (state, data) => state.current = data,
         setAll: (state, data) => state.all = data,
         setMyRepos: (state, data) => state.myRepos = data,
         setFiles: (state, data) => state.files = data,
+        setSearchResults: (state, data) => state.searchResults = data,
         setReadingFile: (state, data) => state.readingFile = data,
         setReadings: (state, data) => state.readings = data,
         setReadingFiles: (state, data) => state.readingFiles = data,
@@ -32,6 +34,7 @@ export default {
         listAll: state => state.all,
         listMyRepos: state => state.myRepos,
         listFiles: state => state.files,
+        listSearchResults: state => state.searchResults,
         readings: state => state.readings,
         listReadingFiles: state => state.readingFiles,
         getReadingFile: state => state.readingFile,
@@ -108,6 +111,13 @@ export default {
                 ctx.commit('setCurrent', res.data.result)
             }
             return res.status === 200
+        },
+        search: async (ctx, query) => {
+            const url = `api/v1/repos`
+            let res = await Axios.get(url, query ? {params: {q: query}}: {})
+            if (res.status === 200) {
+                ctx.commit('setSearchResults', res.data.result)
+            }
         },
     }
 }
