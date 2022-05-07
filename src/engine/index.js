@@ -54,8 +54,11 @@ export const Engine = {
         })
         return text;
     },
-    fromTextToBlocks(text){
+    fromTextToBlocks(text, type = "Editor"){
         let blocks = []
+        if (!text) {
+            return
+        }
         if (text.slice(-2) === "\n\n"){
             text = text.slice(0, -2)
         }
@@ -78,6 +81,9 @@ export const Engine = {
                 }
             }
         })
-        return blocks
+        return blocks.map(block => {
+            block.container += type
+            return block
+        })
     }
 }

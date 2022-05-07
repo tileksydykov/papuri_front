@@ -13,7 +13,7 @@ export const TestEditorEngine = {
         const title = testParts.length > 0 ? testParts[0].replace(":test ", ''): ''
         return {
             id: uuidv4(),
-            container: "TestEditor",
+            container: "Test",
             data: {
                 title,
                 options: testParts.slice(1).map(opt => opt.slice(2))

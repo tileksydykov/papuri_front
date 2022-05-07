@@ -18,7 +18,7 @@
 
 <script>
 import Header from "@/components/Header";
-import {mapActions, mapGetters} from "vuex";
+import {mapActions, mapGetters, mapMutations} from "vuex";
 import {debounce} from "@/components/editor/blocks/functions";
 export default {
   name: "Search",
@@ -30,10 +30,14 @@ export default {
   },
   mounted() {
     this.setTitle("Search")
+    this.query = this.searchString
   },
   methods: {
     ...mapActions({
       search: "repos/search"
+    }),
+    ...mapMutations({
+      setQuery: "setSearchString"
     }),
     date(date){
       return this.dayjs(date).format("MM/DD HH:mm")
@@ -41,7 +45,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      results: "repos/listSearchResults"
+      results: "repos/listSearchResults",
+      searchString: "getSearchString"
     })
   },
   watch: {
@@ -49,6 +54,7 @@ export default {
       debounce( () => {
         this.search(val)
       }, 400)()
+      this.setQuery(val)
     }
   }
 }

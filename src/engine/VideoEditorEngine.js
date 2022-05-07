@@ -8,7 +8,7 @@ export const VideoEditorEngine = {
     toBlock(text) {
         return {
             id: uuidv4(),
-            container: "VideoEditor",
+            container: "Video",
             data: {
                 id: text.slice(text.indexOf(" ")+1)
             }

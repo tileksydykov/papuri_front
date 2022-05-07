@@ -141,7 +141,6 @@ export default {
             })
           }
         }
-        console.log(file, thisFile)
       }
     },
     save() {

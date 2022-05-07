@@ -38,7 +38,6 @@ export default {
         name: this.name,
         password: this.password
       })
-      console.log(isRegistered)
       isRegistered && await this.$router.push({name: "Index"})
     }
   }

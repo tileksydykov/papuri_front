@@ -32,7 +32,6 @@ export default {
     save(){
       debounce( () => {
         this.$emit("save", this.block)
-
       }, 1000)()
     }
   }

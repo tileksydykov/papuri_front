@@ -31,7 +31,8 @@ p(v-if="!file").center {{ $t("fileNotChosen") }}
             font-awesome-icon(icon="file-audio")
           .add-button(@click="addTest") +&nbsp;
             font-awesome-icon(icon="file-alt")
-      .preview( v-html="preview" )
+      .preview()
+        Reader(:content="file.content")
     template(v-else)
       .center
         p Пока нет блоков в этом файле. Создайте новый
@@ -59,10 +60,12 @@ import TestEditor from "./blocks/TestEditor";
 import AudioEditor from "./blocks/AudioEditor";
 import {Engine} from "@/engine";
 import {uuidv4} from "@/store/repo/functions";
+import Reader from "../reader/Reader";
 
 export default {
   name: "FileEditor",
   components: {
+    Reader,
     TextEditor,
     VideoEditor,
     ImageEditor,
@@ -81,9 +84,6 @@ export default {
       repo: "repos/getCurrent",
       blocks: "repo/getBlocks"
     }),
-    preview () {
-      return Engine.fromBlockToHtml(Engine.fromTextToBlocks(this.file.content))
-    }
   },
   mounted() {
     this.fetchMedia()

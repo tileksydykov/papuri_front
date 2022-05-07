@@ -22,7 +22,6 @@ export default {
       upload: 'media/upload',
     }),
     fileSelected(){
-      console.log(this.$refs.fileUploader.files)
       this.$refs.fileUploader.files[0] && this.upload(this.$refs.fileUploader.files[0])
     },
     size(bytes){

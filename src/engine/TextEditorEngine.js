@@ -7,7 +7,7 @@ export const TextEditorEngine = {
     toBlock(text) {
         return {
             id: uuidv4(),
-            container: "TextEditor",
+            container: "Text",
             data: {
                 text
             }

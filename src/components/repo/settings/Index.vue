@@ -2,7 +2,7 @@
 div
   div
     label.label Title
-  input(v-model="current.title")
+  input(v-model="current.title" type="text")
 div
   div
     label.label Description
@@ -43,5 +43,8 @@ export default {
 </script>
 
 <style scoped lang="stylus">
-
+input[type="text"]
+  width 100%
+textarea
+  width 100%
 </style>

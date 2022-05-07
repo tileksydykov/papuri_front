@@ -8,7 +8,7 @@ export const AudioEditorEngine = {
     toBlock(text) {
         return {
             id: uuidv4(),
-            container: "AudioEditor",
+            container: "Audio",
             data: {
                 id: text.slice(text.indexOf(" ")+1)
             }

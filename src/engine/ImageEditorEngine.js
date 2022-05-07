@@ -8,7 +8,7 @@ export const ImageEditorEngine = {
     toBlock(text) {
         return {
             id: uuidv4(),
-            container: "ImageEditor",
+            container: "Image",
             data: {
                 imageId: text.slice(text.indexOf(" ")+1)
             }

@@ -68,5 +68,4 @@ input
 .option-input
   width 100%
 
-
 </style>

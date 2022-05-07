@@ -1,17 +1,5 @@
 <template lang="pug">
 .p-5
-  span Video <br>
-  small.secondary upload all needed media in "Media" and Object.assignthere
-  br
-  select( v-model="block.data.id" @change="save")
-    option(
-      v-for="m in media"
-      :key="m.id"
-      :value="nameId(m.id, m.name)"
-      :selected="nameId(m.id, m.name) === block.data.id")
-      | {{ nameId(m.id, m.name) }}
-  br
-  br
   video.video(v-if="block.data.id && block.data.id !== 'undefined'" controls="true") Your browser does not support the video element.
     source(:src="link(block.data.id)")
   p.secondary.center(v-else) Video not selected
@@ -22,7 +10,7 @@ import {mapGetters} from "vuex";
 import {Axios} from "@/axios/axios";
 
 export default {
-  name: "VideoEditor",
+  name: "VideoReader",
   props: {
     block: {
       type: Object,
@@ -35,9 +23,7 @@ export default {
     })
   },
   methods: {
-    save(){
-      this.$emit("save", this.block)
-    },
+
     nameId(id, name){
       if (name.length > 30) {
         name = name.slice(0,30) + '...'
@@ -52,9 +38,7 @@ export default {
 </script>
 
 <style scoped lang="stylus">
-select
-  padding 0
-  border-radius 0
+
 .video
   width 100%
 </style>

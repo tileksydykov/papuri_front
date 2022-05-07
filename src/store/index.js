@@ -16,7 +16,8 @@ const store = createStore({
             height: 200,
             title: "Title",
             container: ""
-        }
+        },
+        searchString: ''
     },
     modules: {
         auth,
@@ -37,10 +38,12 @@ const store = createStore({
     },
     getters: {
         title: state => state.title,
-        getModal: state => state.modal
+        getModal: state => state.modal,
+        getSearchString: state => state.searchString
     },
     mutations: {
         setTitle: (state, t) => state.title = t,
+        setSearchString: (state, t) => state.searchString = t,
         setModal: (state, m) => state.modal = m,
         setModalState: (state, bool) => state.modal.open = bool,
         setModalDimens: (state, height, width) => {
