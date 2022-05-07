@@ -58,8 +58,9 @@ export default {
         getFiles: state => state.files,
         getInfo: state => state.info,
         getFilesByFolderId: state => id => {
-            return state.files.filter(f => f.folderId === id).sort((a,b) => a.order_num - b.order_num)
+            return state.files.filter(f => f.folderId === id)
         },
+
         getFoldersByFolderId: state => id => state.folders.filter(f => f.parent === id),
         getSelectedFile: state => findFile(state.root[0], state.selectedFileId),
     },
@@ -154,7 +155,13 @@ export default {
             if (res.status === 200) {
                 ctx.commit('setInfo', res.data.result)
             }
-        }
+        },
+        getFileById: (ctx, id)=> {
+            return  ctx.state.files.find(f => f.id === id)
+        },
+        getFileByPrevId: (ctx, id)=> {
+            return  ctx.state.files.find(f => f.prev_file_id === id)
+        },
     }
 }
 

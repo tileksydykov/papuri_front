@@ -40,9 +40,16 @@ export default {
     if (!this.$route.params.internal) {
       this.fetchReading()
     }
+
+    if(this.readingRepo && this.readingRepo.repo){
+      this.fetchFiles({
+        username: this.readingRepo.repo.user_name,
+        repo: this.readingRepo.repo.name
+      })
+    }
   },
   watch: {
-    readingRepo(reading){
+    readingRepo(reading) {
       if(reading && reading.repo){
         this.fetchFiles({
           username: reading.repo.user_name,

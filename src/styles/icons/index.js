@@ -11,7 +11,7 @@ import {
     faFile,
     faFileAlt,
     faFileAudio,
-    faFileCode,
+    faFileCode, faFilter,
     faFolder,
     faHome,
     faImage,
@@ -61,7 +61,8 @@ library.add(
     faChevronRight,
     faPencilAlt,
     faMinus,
-    faTrash
+    faTrash,
+    faFilter
 )
 
 export default function (app) {

@@ -10,19 +10,22 @@
       ul
         li
           font-awesome-icon(icon="file")
-          span.link(@click="addFileToThisFolder") &nbsp; Add new file +
+          span.link(@click="addFileToThisFolder") &nbsp; Add new file
         li
           font-awesome-icon(icon="folder")
-          span.link(@click="addFolderToThisFolder") &nbsp; Add new folder +
+          span.link(@click="addFolderToThisFolder") &nbsp; Add new folder
+        li
+          font-awesome-icon(icon="filter")
+          span.link(@click="orderFilesInFolder") &nbsp; Order files
         template(v-if="folder.id !== 0")
           hr
           li
             font-awesome-icon(icon="pencil-alt")
-            span.link(@click="addFolderToThisFolder") &nbsp; Rename folder +
+            span.link(@click="addFolderToThisFolder") &nbsp; Rename folder
           hr
-          li()
+          li
             font-awesome-icon(icon="trash")
-            span.link(@click="addFolderToThisFolder") &nbsp; Delete
+            span.link(@click="deleteFolder") &nbsp; Delete
   span.folder-title(
     draggable='true'
     @dragstart="startDrag($event, folder, 'folder')"
@@ -110,7 +113,8 @@ export default {
     ...mapActions({
       moveFile: 'repo/moveFile',
       moveFolder: 'repo/moveFolder',
-      saveFile: 'repo/createFile'
+      saveFile: 'repo/createFile',
+      updateFiles: 'repo/updateFiles'
     }),
     ...mapMutations({
       select: 'repo/selectFile',
@@ -148,7 +152,7 @@ export default {
     addFileToThisFolder () {
       this.closeMenu()
       const lastFile = this.folder.files.slice(-1)[0]
-      if (lastFile.name === ''){
+      if (lastFile && lastFile.name === ''){
         return
       }
       this.addFiles({
@@ -198,6 +202,40 @@ export default {
         file,
         username: this.repo.user_name,
         repo: this.repo.name
+      })
+    },
+    orderFilesInFolder() {
+      this.closeMenu();
+      const files = this.folder.files.filter(f => f.name !== '.folder');
+      if (files.length < 1) {
+        return
+      }
+      files[0].prev_file_id = '0'
+      for (let i = 1; i < files.length; i++) {
+        files[i].prev_file_id = files[i-1].id;
+      }
+      this.updateFiles({
+        username: this.repo.user_name,
+        repo: this.repo.name,
+        files: files.map(f => {
+          return {
+            id: f.id,
+            prev_file_id: f.prev_file_id
+          }
+        })
+      })
+    },
+    deleteFolder(){
+      this.closeMenu()
+      this.updateFiles({
+        username: this.repo.user_name,
+        repo: this.repo.name,
+        files: this.folder.files.map(f => {
+          return {
+            id: f.id,
+            trash: true
+          }
+        })
       })
     }
   },

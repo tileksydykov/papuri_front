@@ -38,16 +38,8 @@ export const orderFiles = files => {
         file.folderId = folder ? folder.id: 0
         file.name = file.path.split('/').slice(-1).join()
     })
-    // find file order
-    let orderCounter = 1
-    let file = files.find(f => f.prev_file_id === '0')
 
-    while (file) {
-        file.order_num = orderCounter++
-        files = files.map(f => f.id === file.id ? file : f)
-        file = files.find(f => f.prev_file_id === file.id)
-    }
-    files.sort((a,b) => a.order_num - b.order_num)
+
     // relate folders to their parents
     folders.forEach(folder => {
         if(folder.id !== 0){
@@ -59,6 +51,18 @@ export const orderFiles = files => {
     })
     folders.forEach(folder => {
         folder.folders = folders.filter(f => folder.id === f.parent)
+    })
+
+    // find file order
+    folders.forEach(folder => {
+        let file = folder.files.filter(f => f.name !== '.folder').find(f => f.prev_file_id === '0')
+        for (let i = 0; i < folder.files.length; i++) {
+            if(file) {
+                file.order_num = i+1;
+                file = files.filter(f => f.name !== '.folder').find(f => f.prev_file_id === file.id)
+            }
+        }
+        folder.files.sort((a,b) => a.order_num - b.order_num)
     })
 
     return folders
