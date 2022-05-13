@@ -15,11 +15,11 @@ select(v-model="commitId")
 hr
 div.d-flex.flex-center
   .btn(@click="close") Close
-  .btn.btn-cyan(@click="") Create
+  .btn.btn-cyan(@click="create") Create
 </template>
 
 <script>
-import {mapGetters, mapMutations} from "vuex";
+import {mapActions, mapGetters, mapMutations} from "vuex";
 
 export default {
   name: "AddBranchModal",
@@ -33,13 +33,31 @@ export default {
     ...mapMutations({
       setModalOpen: "setModalState"
     }),
+    ...mapActions({
+      createBranch: "repo/createBranch"
+    }),
     close(){
       this.setModalOpen(false)
+    },
+    async create() {
+      if (this.name === "" || this.commitId === "") {
+        return
+      }
+      const res = await this.createBranch({
+        username: this.repo.user_name,
+        repo: this.repo.name,
+        name: this.name,
+        from: this.commitId
+      })
+      if (res) {
+        this.close()
+      }
     }
   },
   computed: {
     ...mapGetters({
-      commits: "repo/getCommits"
+      commits: "repo/getCommits",
+      repo: "repos/getCurrent"
     })
   }
 }

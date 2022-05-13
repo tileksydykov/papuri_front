@@ -39,6 +39,7 @@ export default {
       getBranches: "repo/fetchBranches",
       getCommits: "repo/fetchCommits",
       getInfo: "repo/fetchRepoInfo",
+      selectBranch: "repo/selectBranch"
     }),
     ...mapMutations({
       setRepo: "repos/setCurrent"
@@ -59,14 +60,19 @@ export default {
       return htmlText.trim()
     }
   },
-  mounted () {
+  async mounted () {
     // this.openWs({id: this.$route.params.id})
     this.setRepo({})
-    this.getFiles(this.$route.params)
-    this.getBranches(this.$route.params)
-    this.getCommits(this.$route.params)
     this.getInfo(this.$route.params)
     this.get(this.$route.params)
+    // this.getFiles(this.$route.params)
+
+    const branches = await this.getBranches(this.$route.params)
+    // this.getCommits(this.$route.params)
+    await this.selectBranch({
+      ...this.$route.params,
+      branch: branches[0]
+    })
   }
 }
 </script>

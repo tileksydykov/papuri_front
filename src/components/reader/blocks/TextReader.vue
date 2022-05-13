@@ -1,5 +1,5 @@
 <template lang="pug">
-textarea(v-model="block.data.text" @keyup="save")
+span {{ block.data.text }}
 </template>
 
 <script>

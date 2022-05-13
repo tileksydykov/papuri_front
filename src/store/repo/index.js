@@ -27,7 +27,14 @@ export default {
         setBlocks: (state, data) => state.blocks = data,
         setInfo: (state, data) => state.info = data,
         addBlocks: (state, data) => state.blocks.push(data),
-        setFiles: (state, data) => state.files = data,
+        setFiles: (state, data) => {
+            state.files = data
+            let file = data.find(f => f.id === state.selectedFileId)
+            if (!file) {
+                file = data.find(f => f.fork_from === state.selectedFileId)
+                state.selectedFileId = file ? file.id: ''
+            }
+        },
         selectFile: (state, id) => {
             state.selectedFileId = id
             const file = findFile(state.root[0], state.selectedFileId).content
@@ -60,7 +67,6 @@ export default {
         getFilesByFolderId: state => id => {
             return state.files.filter(f => f.folderId === id)
         },
-
         getFoldersByFolderId: state => id => state.folders.filter(f => f.parent === id),
         getSelectedFile: state => findFile(state.root[0], state.selectedFileId),
     },
@@ -107,7 +113,11 @@ export default {
         },
         async fetchFiles(ctx, {username, repo}){
             const url = `api/v1/repos/files/${username}/${repo}`
-            let res = await Axios.get(url)
+            const branch = ctx.state.selectedBranch
+            if (!branch) {
+                return
+            }
+            let res = await Axios.get(url, {params: {branch}})
             if (res.status === 200){
                 const folder = orderFiles(res.data.result)
                 ctx.commit('setRoot', folder)
@@ -120,11 +130,27 @@ export default {
             if (res.status === 200) {
                 ctx.commit('setBranches', res.data.result)
                 ctx.commit('setSelectedBranch', res.data.result[0])
+                return res.data.result
             }
+            return []
         },
-        async fetchCommits(ctx, {username, repo}){
+        async createBranch(ctx, {username, repo, name, from}){
+            const url = `api/v1/repos/branches/${username}/${repo}`
+            let res = await Axios.post(url, {name, from})
+            if (res.status === 200) {
+                ctx.dispatch("fetchCommits")
+                ctx.dispatch("fetchFiles")
+                return true
+            }
+            return false
+        },
+        async fetchCommits(ctx, {username, repo}) {
             const url = `api/v1/repos/commits/${username}/${repo}`
-            let res = await Axios.get(url)
+            const branch = ctx.state.selectedBranch
+            if (!branch) {
+                return
+            }
+            let res = await Axios.get(url, {params: {branch}})
             if (res.status === 200){
                 ctx.commit('setCommits', res.data.result)
             }
@@ -162,6 +188,11 @@ export default {
         getFileByPrevId: (ctx, id)=> {
             return  ctx.state.files.find(f => f.prev_file_id === id)
         },
+        async selectBranch(ctx, {branch, username, repo}) {
+            ctx.commit("setSelectedBranch", branch)
+            ctx.dispatch("fetchFiles", {username, repo})
+            ctx.dispatch("fetchCommits", {username, repo})
+        }
     }
 }
 

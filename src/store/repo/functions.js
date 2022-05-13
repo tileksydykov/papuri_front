@@ -39,7 +39,6 @@ export const orderFiles = files => {
         file.name = file.path.split('/').slice(-1).join()
     })
 
-
     // relate folders to their parents
     folders.forEach(folder => {
         if(folder.id !== 0){

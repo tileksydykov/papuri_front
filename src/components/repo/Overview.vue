@@ -1,4 +1,5 @@
 <template lang="pug">
+p {{ repo.description }}
 a( @click="fetchReadClick")
   button.btn.black-btn() Читать
 .stats Count: {{ info.files_count }} Size: {{ size(info.files_size) }}

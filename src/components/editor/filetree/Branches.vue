@@ -5,15 +5,20 @@ font-awesome-icon(
   icon="plus"
   @click="openAddBranches"
   ).right.add-branch
-select
+select(v-model="b")
   option(v-for="branch in branches" :key="branch" :selected="selected === branch") {{ branch }}
 </template>
 
 <script>
-import {mapGetters, mapMutations} from "vuex";
+import {mapActions, mapGetters, mapMutations} from "vuex";
 
 export default {
   name: "Branches",
+  data() {
+    return {
+      b: ""
+    }
+  },
   computed: {
     ...mapGetters({
       selected: "repo/getSelectedBranch"
@@ -25,6 +30,9 @@ export default {
       setModal: "setModalContainer",
       openModal: "setModalState"
     }),
+    ...mapActions({
+      selectBranch: "repo/selectBranch"
+    }),
     openAddBranches(){
       this.setModal("AddBranchModal")
       this.openModal(true)
@@ -34,6 +42,14 @@ export default {
     branches: {
       type: Array,
       required: true,
+    }
+  },
+  watch: {
+    b(val){
+      this.selectBranch({
+        ...this.$route.params,
+        branch: val
+      })
     }
   }
 }
