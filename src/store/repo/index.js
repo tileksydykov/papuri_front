@@ -91,7 +91,7 @@ export default {
             folders = folders.map(f => f.id === folderId ? {...f, parent: toFolder.id}: f)
             ctx.commit('setFolders', folders)
         },
-        moveFile(ctx, {fileId, toFolder, username, repo}){
+        moveFile(ctx, {fileId, toFolder, username, repo}) {
             const files = ctx.getters.getFiles.map(f => {
                 if (f.id === fileId){
                     f.folderId = toFolder.id
@@ -105,13 +105,17 @@ export default {
         async createFile(ctx, {username, repo, file}) {
             ctx.commit('saveFile', file)
             const url = `api/v1/repos/files/${username}/${repo}`
-            let res = await Axios.post(url, file)
+            let res = await Axios.post(url, file, {
+                params: {
+                    branch: ctx.state.selectedBranch
+                }
+            })
             if ( res.status === 200 ) {
                 ctx.dispatch('fetchFiles', {username, repo})
                 ctx.commit('saveFile', file)
             }
         },
-        async fetchFiles(ctx, {username, repo}){
+        async fetchFiles(ctx, {username, repo}) {
             const url = `api/v1/repos/files/${username}/${repo}`
             const branch = ctx.state.selectedBranch
             if (!branch) {
@@ -168,7 +172,7 @@ export default {
         },
         async updateFiles (ctx, {username, repo, files}) {
             const url = `api/v1/repos/files/${username}/${repo}`
-            let res = await Axios.patch(url, files)
+            let res = await Axios.patch(url, files, {params: {branch: ctx.state.selectedBranch}})
             if (res.status === 200) {
                 const folder = orderFiles(res.data.result)
                 ctx.commit('setRoot', folder)
@@ -195,4 +199,3 @@ export default {
         }
     }
 }
-

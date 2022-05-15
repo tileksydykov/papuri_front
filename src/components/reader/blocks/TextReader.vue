@@ -1,5 +1,5 @@
 <template lang="pug">
-span {{ block.data.text }}
+div(v-html="block.data.text")
 </template>
 
 <script>
