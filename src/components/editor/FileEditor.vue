@@ -31,8 +31,8 @@ p(v-if="!file").center {{ $t("fileNotChosen") }}
             font-awesome-icon(icon="file-audio")
           .add-button(@click="addTest") +&nbsp;
             font-awesome-icon(icon="file-alt")
-      .preview()
-        Reader(:content="file.content")
+      //.preview()
+      //  Reader(:content="file.content")
     template(v-else)
       .center
         p Пока нет блоков в этом файле. Создайте новый
@@ -187,7 +187,7 @@ export default {
 
 <style scoped lang="stylus">
 .blocks
-  width 50%
+  width 100%
 .preview
   width 50%
 

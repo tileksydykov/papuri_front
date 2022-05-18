@@ -50,6 +50,7 @@ div
       span.heading(
         :class="{close: !headingOpen}"
         @mouseleave="close"
+        :style="headingStyle"
         )
         div.heading-item(
           @click='editor.chain().focus().toggleHeading({ level: 1 }).run()'
@@ -108,7 +109,7 @@ div
     span.icon
       font-awesome-icon(
         @click='editor.chain().focus().setHardBreak().run()'
-        icon="line")
+        icon="arrow-right")
     span.icon
       font-awesome-icon(@click='editor.chain().focus().undo().run()' icon="undo")
     span.icon
@@ -144,7 +145,8 @@ export default {
     return {
       text: '',
       editor: null,
-      headingOpen: false
+      headingOpen: false,
+      headingStyle: {}
     }
   },
   mounted() {
@@ -171,10 +173,13 @@ export default {
       const block = this.block.data
       block.text = this.editor.getHTML()
       console.log(block)
-          // this.editor.getHTML()
       this.$emit("save", this.block)
     },
-    toggleHeading(){
+    toggleHeading(evt){
+      this.headingStyle = {
+        top: evt.clientY - 20 + "px",
+        left: evt.clientX - 20 + "px"
+      }
       this.headingOpen = !this.headingOpen
     },
     close(){

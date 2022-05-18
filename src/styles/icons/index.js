@@ -1,4 +1,5 @@
 import {
+    faArrowLeft, faArrowRight,
     faBars, faBold,
     faBook,
     faBookmark, faBroom,
@@ -77,7 +78,9 @@ library.add(
     faQuoteLeft,
     faRulerHorizontal,
     faParagraph,
-    faBroom
+    faBroom,
+    faArrowLeft,
+    faArrowRight,
 )
 
 export default function (app) {

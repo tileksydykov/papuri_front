@@ -7,7 +7,7 @@
   hr
   template(v-for="(opt, index) in block.data.options")
     .d-flex
-      input(type="checkbox" ).checkbox
+      input(type="checkbox" @click="checkChange($event, index)").checkbox
       input(:value="opt" @change="changeOpt($event, index)" placeholder="option").option-input
       font-awesome-icon(icon="times" @click="deleteOption(index)").times
   .clickable.btn(@click="addOption") + Add Option
@@ -25,6 +25,9 @@ export default {
     }
   },
   methods: {
+    checkChange(evt, index){
+      console.log(evt, index)
+    },
     changeOpt(evt, index){
       let block = this.block
       block.data.options[index] = evt.target.value
