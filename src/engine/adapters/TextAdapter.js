@@ -1,6 +1,6 @@
 import {uuidv4} from "@/store/repo/functions";
 
-export const TextEditorEngine = {
+export const TextAdapter = {
     fromBlock(block) {
         return block.data.text
     },

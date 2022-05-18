@@ -1,6 +1,6 @@
 import {uuidv4} from "@/store/repo/functions";
 
-export const TestEditorEngine = {
+export const TestAdapter = {
     fromBlock(block) {
         let options = ''
         block.data.options.forEach(opt => {

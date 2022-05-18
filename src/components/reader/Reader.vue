@@ -1,7 +1,7 @@
 <template lang="pug">
 template(v-if="blocks")
   template(v-for="block in blocks")
-    component(:is="block.container" :block="block")
+    component(:is="block.container + 'Reader'" :block="block")
 template(v-else)
   .secondary.center No content
 </template>
@@ -13,6 +13,7 @@ import ImageReader from "./blocks/ImageReader";
 import TestReader from "./blocks/TestReader";
 import TextReader from "./blocks/TextReader";
 import VideoReader from "./blocks/VideoReader";
+import KatexReader from "./blocks/KatexReader";
 
 export default {
   name: "Reader",
@@ -21,7 +22,8 @@ export default {
     ImageReader,
     TestReader,
     TextReader,
-    VideoReader
+    VideoReader,
+    KatexReader
   },
   props: {
     content: {
@@ -31,7 +33,7 @@ export default {
   },
   computed: {
     blocks() {
-      return Engine.fromTextToBlocks(this.content,"Reader")
+      return Engine.fromTextToBlocks(this.content)
     }
   }
 }

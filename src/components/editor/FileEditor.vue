@@ -16,37 +16,17 @@ p(v-if="!file").center {{ $t("fileNotChosen") }}
               @drop="onDrop($event, block)"
             )
               component(
-                :is="block.container"
+                :is="block.container + 'Editor'"
                 :block="block"
                 @save="saveBlock"
                 )
-        .block.d-flex.flex-center
-          .add-button(@click="addText") +&nbsp;
-            font-awesome-icon(icon="envelope-open-text")
-          .add-button(@click="addImage") +&nbsp;
-            font-awesome-icon(icon="image")
-          .add-button(@click="addVideo") +&nbsp;
-            font-awesome-icon(icon="video")
-          .add-button(@click="addAudio") +&nbsp;
-            font-awesome-icon(icon="file-audio")
-          .add-button(@click="addTest") +&nbsp;
-            font-awesome-icon(icon="file-alt")
+        BlockAdder(@add="add")
       //.preview()
       //  Reader(:content="file.content")
     template(v-else)
       .center
         p Пока нет блоков в этом файле. Создайте новый
-        .d-flex.flex-center
-          .add-button(@click="addText") +&nbsp;
-            font-awesome-icon(icon="envelope-open-text")
-          .add-button(@click="addImage") +&nbsp;
-            font-awesome-icon(icon="image")
-          .add-button(@click="addVideo") +&nbsp;
-            font-awesome-icon(icon="video")
-          .add-button(@click="addAudio") +&nbsp;
-            font-awesome-icon(icon="file-audio")
-          .add-button(@click="addTest") +&nbsp;
-            font-awesome-icon(icon="file-alt")
+        BlockAdder(@add="add")
   template(v-else)
     p loading ...
 </template>
@@ -61,16 +41,21 @@ import AudioEditor from "./blocks/AudioEditor";
 import {Engine} from "@/engine";
 import {uuidv4} from "@/store/repo/functions";
 import Reader from "../reader/Reader";
+import blockinfo from "../../engine/blockinfo";
+import BlockAdder from "./blocks/util/BlockAdder";
+import KatexEditor from "./blocks/KatexEditor";
 
 export default {
   name: "FileEditor",
   components: {
+    BlockAdder,
     Reader,
     TextEditor,
     VideoEditor,
     ImageEditor,
     TestEditor,
     AudioEditor,
+    KatexEditor
   },
   data(){
     return {
@@ -115,46 +100,9 @@ export default {
       this.saveContent(this.file)
       this.save(this.file)
     },
-    addText(){
-      this.addBlock({
-        container: 'TextEditor',
-        data: {
-          text: ''
-        },
-      })
-    },
-    addVideo(){
-      this.addBlock({
-        container: 'VideoEditor',
-        data: {
-          videoId: ''
-        },
-      })
-    },
-    addImage(){
-      this.addBlock({
-        container: 'ImageEditor',
-        data: {
-          imageId: '0'
-        },
-      })
-    },
-    addTest(){
-      this.addBlock({
-        container: 'TestEditor',
-        data: {
-          title: '',
-          options: [''],
-        },
-      })
-    },
-    addAudio(){
-      this.addBlock({
-        container: 'AudioEditor',
-        data: {
-          audioId: ''
-        },
-      })
+    add(blockName) {
+      let block = blockinfo[blockName]
+      this.addBlock(block)
     },
     addBlock({container, data}) {
       this.addBlocks({
@@ -194,11 +142,7 @@ export default {
 .block
   margin 10px
   box-shadow 1px 1px 5px grey
-.add-button
-  margin 10px
-  background $background_color
-  text-align center
-  cursor pointer
+
 .editors-container
   padding 0 10px
 

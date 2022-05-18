@@ -11,6 +11,7 @@ h3.clickable(@click="$router.go(-1)")
 import FileTree from "./filetree/FileTree";
 import FileEditor from "./FileEditor";
 import {mapGetters} from "vuex";
+
 export default {
   name: "Editor",
   components: {FileEditor, FileTree},

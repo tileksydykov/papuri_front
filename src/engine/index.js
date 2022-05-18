@@ -1,60 +1,25 @@
-import {TextEditorEngine} from "./TextEditorEngine";
-import {ImageEditorEngine} from "./ImageEditorEngine";
-import {TestEditorEngine} from "@/engine/TestEditorEngine";
-import {VideoEditorEngine} from "@/engine/VideoEditorEngine";
-import {AudioEditorEngine} from "@/engine/AudioEditorEngine";
+import adapters from './adapters'
+import blockinfo from "./blockinfo";
 
 export const Engine = {
     fromObjectToJson(obj) {
         return JSON.stringify(obj)
     },
-    fromBlockToHtml(blocks){
+    fromBlockToHtml(blocks) {
         let text = ''
         blocks.forEach(block => {
-            switch (block.container) {
-                case 'TextEditor':
-                    text += TextEditorEngine.fromBlockToHtml(block) + '\n\n'
-                    break
-                case 'ImageEditor':
-                    text += ImageEditorEngine.fromBlockToHtml(block) + '\n\n'
-                    break
-                case 'VideoEditor':
-                    text += VideoEditorEngine.fromBlockToHtml(block) + '\n\n'
-                    break
-                case 'AudioEditor':
-                    text += AudioEditorEngine.fromBlockToHtml(block) + '\n\n'
-                    break
-                case 'TestEditor':
-                    text += TestEditorEngine.fromBlockToHtml(block) + '\n\n'
-                    break
-            }
+            text += adapters[block.container + 'Adapter'].fromBlockToHtml(block) + '\n\n'
         })
         return text;
     },
     fromBlocksToText(blocks){
         let text = ''
         blocks.forEach(block => {
-            switch (block.container) {
-                case 'TextEditor':
-                    text += TextEditorEngine.fromBlock(block) + '\n\n'
-                    break
-                case 'ImageEditor':
-                    text += ImageEditorEngine.fromBlock(block) + '\n\n'
-                    break
-                case 'VideoEditor':
-                    text += VideoEditorEngine.fromBlock(block) + '\n\n'
-                    break
-                case 'AudioEditor':
-                    text += AudioEditorEngine.fromBlock(block) + '\n\n'
-                    break
-                case 'TestEditor':
-                    text += TestEditorEngine.fromBlock(block) + '\n\n'
-                    break
-            }
+            text += adapters[block.container + 'Adapter'].fromBlock(block) + '\n\n'
         })
         return text;
     },
-    fromTextToBlocks(text, type = "Editor"){
+    fromTextToBlocks(text){
         let blocks = []
         if (!text) {
             return
@@ -64,26 +29,17 @@ export const Engine = {
         }
         text.split('\n\n').forEach(textPiece => {
             if (textPiece.charAt(0) !== ':') {
-                blocks.push(TextEditorEngine.toBlock(textPiece))
+                blocks.push(adapters['TextAdapter'].toBlock(textPiece))
             } else {
-                switch (textPiece.slice(0, textPiece.indexOf(" "))) {
-                    case ":image":
-                        blocks.push(ImageEditorEngine.toBlock(textPiece))
-                        break;
-                    case ":video":
-                        blocks.push(VideoEditorEngine.toBlock(textPiece))
-                        break;
-                    case ":audio":
-                        blocks.push(AudioEditorEngine.toBlock(textPiece))
-                        break;
-                    case ":test":
-                        blocks.push(TestEditorEngine.toBlock(textPiece))
+                const blockName = textPiece.slice(1, textPiece.indexOf(" "))
+                if(blockinfo[blockName] && blockinfo[blockName].adapter){
+                    const adapterName = blockinfo[blockName].adapter
+                    blocks.push(adapters[adapterName].toBlock(textPiece))
+                } else {
+                   console.warn("[papuri] you are using adapter which is not available in this version")
                 }
             }
         })
-        return blocks.map(block => {
-            block.container += type
-            return block
-        })
+        return blocks
     }
 }

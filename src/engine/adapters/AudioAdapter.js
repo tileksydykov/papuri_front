@@ -1,7 +1,7 @@
 import {uuidv4} from "@/store/repo/functions";
-import {Axios} from "../axios/axios";
+import {Axios} from "../../axios/axios";
 
-export const AudioEditorEngine = {
+export const AudioAdapter = {
     fromBlock(block) {
         return `:audio ${block.data.id}`
     },

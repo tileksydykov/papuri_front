@@ -1,5 +1,6 @@
 <template lang="pug">
 div
+  button.btn.btn-cyan(@click="instantSave") save
   VueTiptapKatex(ref="tiptap" :options="editorOptions")
 </template>
 
@@ -38,12 +39,11 @@ export default {
     this.text = this.block ? this.block.data.text: ''
     this.editor = this.$refs.tiptap
     this.editor.setContent(this.text)
-    console.log(this.editor)
   },
   methods: {
     instantSave() {
       const block = this.block.data
-      block.text = this.editor.getHTML()
+      block.text = this.editor.getContent()
       this.$emit("save", this.block)
     },
     toggleHeading(evt){

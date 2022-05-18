@@ -1,12 +1,12 @@
 <template lang="pug">
-div(v-html="block.data.text")
+div(v-html="html")
 </template>
 
 <script>
-import {debounce} from "@/components/editor/blocks/functions";
+import katex from "katex";
 
 export default {
-  name: "TextReader",
+  name: "KatexReader",
   props: {
     block: {
       type: Object,
@@ -25,14 +25,16 @@ export default {
       text: '',
     }
   },
-  mounted() {
-    this.text = this.block.data.text
-  },
-  methods: {
-    save(){
-      debounce( () => {
-        this.$emit("save", this.block)
-      }, 1000)()
+  computed: {
+    html(){
+      console.log(this.block.data.text)
+      return this.block.data.text.split("$").map(txt => {
+        if (txt.indexOf('<') > -1) {
+          return txt
+        }else {
+          return katex.renderToString(txt, {throwOnError: false})
+        }
+      }).join('')
     }
   }
 }
