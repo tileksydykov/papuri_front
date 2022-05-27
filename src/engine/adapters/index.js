@@ -4,6 +4,7 @@ import {TestAdapter} from "./TestAdapter";
 import {TextAdapter} from "./TextAdapter";
 import {VideoAdapter} from "./VideoAdapter";
 import {KatexAdapter} from "./KatexAdapter";
+import {YoutubeAdapter} from "./YoutubeAdapter";
 
 export default {
     AudioAdapter,
@@ -12,4 +13,5 @@ export default {
     TextAdapter,
     VideoAdapter,
     KatexAdapter,
+    YoutubeAdapter
 }

@@ -21,11 +21,15 @@
       font-awesome-icon(icon="file-alt")
       span &nbsp;
       span  Test
-  div
+  div.column
     .add-button(@click="add('katex')")
       font-awesome-icon(icon="envelope-open-text")
       span &nbsp;
       span  Katex Text
+    .add-button(@click="add('youtube')")
+      font-awesome-icon(icon="envelope-open-text")
+      span &nbsp;
+      span  Youtube Video
 </template>
 
 <script>

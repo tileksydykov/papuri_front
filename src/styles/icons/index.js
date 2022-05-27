@@ -6,7 +6,7 @@ import {
     faChevronDown,
     faChevronRight, faCode,
     faColumns,
-    faCompactDisc,
+    faCompactDisc, faDragon,
     faEnvelopeOpenText,
     faEye,
     faFile,
@@ -81,6 +81,7 @@ library.add(
     faBroom,
     faArrowLeft,
     faArrowRight,
+    faDragon
 )
 
 export default function (app) {

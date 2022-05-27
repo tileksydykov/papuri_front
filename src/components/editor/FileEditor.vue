@@ -6,20 +6,31 @@ p(v-if="!file").center {{ $t("fileNotChosen") }}
     .d-flex(v-if="blocks.length > 0")
       .blocks
         .block(
-          v-for="block in blocks"
+          v-for="(block, index) in blocks"
           :key="block.id")
             div(
-              draggable="true"
               @dragover.prevent
               @dragenter.prevent
-              @dragstart="startDrag($event, block)"
               @drop="onDrop($event, block)"
             )
-              component(
-                :is="block.container + 'Editor'"
-                :block="block"
-                @save="saveBlock"
-                )
+              .d-flex
+                .block-menu
+                  .block-menu-icon
+                    font-awesome-icon(
+                      icon="times"
+                      @click="deleteBlock(index)"
+                      )
+                  .block-menu-icon(
+                      @dragstart="startDrag($event, block)"
+                      draggable="true"
+                    )
+                    font-awesome-icon(icon="dragon")
+                .block-content
+                  component(
+                    :is="block.container + 'Editor'"
+                    :block="block"
+                    @save="saveBlock"
+                  )
         BlockAdder(@add="add")
       //.preview()
       //  Reader(:content="file.content")
@@ -44,6 +55,7 @@ import Reader from "../reader/Reader";
 import blockinfo from "../../engine/blockinfo";
 import BlockAdder from "./blocks/util/BlockAdder";
 import KatexEditor from "./blocks/KatexEditor";
+import YoutubeEditor from "./blocks/YoutubeEditor";
 
 export default {
   name: "FileEditor",
@@ -55,7 +67,8 @@ export default {
     ImageEditor,
     TestEditor,
     AudioEditor,
-    KatexEditor
+    KatexEditor,
+    YoutubeEditor,
   },
   data(){
     return {
@@ -83,6 +96,10 @@ export default {
       updateFiles: "repo/updateFiles",
       fetchMedia: "media/getFiles"
     }),
+    deleteBlock(index){
+      this.blocks.splice(index, 1)
+      this.saveBlock()
+    },
     save(file){
       this.updateFiles({
         username: this.repo.user_name,
@@ -136,6 +153,18 @@ export default {
 <style scoped lang="stylus">
 .blocks
   width 100%
+  .block
+    .block-menu
+      width 30px
+      border-right 1px solid $lines_color
+      .block-menu-icon
+        font-size 20px
+        height 30px
+        width 30px
+        text-align center
+        margin-top 5px
+    .block-content
+      width 100%
 .preview
   width 50%
 

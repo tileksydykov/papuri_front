@@ -41,5 +41,12 @@ export default {
             options: [''],
         },
         adapter: "TestAdapter"
+    },
+    youtube: {
+        container: 'Youtube',
+        data: {
+            id: '',
+        },
+        adapter: "YoutubeAdapter"
     }
 }

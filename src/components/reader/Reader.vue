@@ -14,6 +14,7 @@ import TestReader from "./blocks/TestReader";
 import TextReader from "./blocks/TextReader";
 import VideoReader from "./blocks/VideoReader";
 import KatexReader from "./blocks/KatexReader";
+import YoutubeReader from "./blocks/YoutubeReader";
 
 export default {
   name: "Reader",
@@ -23,7 +24,8 @@ export default {
     TestReader,
     TextReader,
     VideoReader,
-    KatexReader
+    KatexReader,
+    YoutubeReader
   },
   props: {
     content: {
